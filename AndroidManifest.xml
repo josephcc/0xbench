@@ -11,6 +11,7 @@
 
     <application
     android:debuggable="true"
+    android:name="0xBenchmark"
     android:icon="@drawable/icon"
     >
 	<activity
