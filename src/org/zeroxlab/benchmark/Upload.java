@@ -91,6 +91,12 @@ public class Upload extends Activity implements View.OnClickListener {
         mLogin.setChecked(false);
         mLogin.setOnClickListener(this);
 
+        // prevent scrollview from scrolling to middle initially
+        // (caused by default focus to EditText)
+        mLogin.setFocusableInTouchMode(true);
+        mLogin.requestFocus();
+
+
         mBenchName = (EditText)findViewById(R.id.benchName);
         mEmail     = (EditText)findViewById(R.id.email);
         mAPIKey    = (EditText)findViewById(R.id.api);
