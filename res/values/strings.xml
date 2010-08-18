@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<string name="btn_run_text">Run</string>
+<string name="btn_show_text">Show</string>
+<string name="btn_upload_text">Upload</string>
+
+<string name="txtvw_upload_help">Click "send" to upload to default page, or check "login" to create your own page (you need to get apikey from 0xBenchWeb first).</string>
+<string name="txtvw_benchname">Upload to benchmark page:</string>
+<string name="txtvw_email">Email:</string>
+<string name="txtvw_api">API Key:</string>
+<string name="btn_send_text">Send</string>
+<string name="btn_back_text">Done</string>
+<string name="btn_login_google">Login for API-key</string>
+
+<string name="default_benchname">PublicPage</string>
+<string name="default_appspot">0xbenchmark</string>
+<string name="default_email">ZXBench@gmail.com</string>
+<string name="default_api">32935947-ed54-43b3-b3b2-a38223c6ec47</string>
+
+<string name="login">Login</string>
+
+
+<!-- its not typo -->
+<string name="banner_info_text">Hell World!</string>
+</resources>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" 
+	android:layout_height="fill_parent"
+	android:orientation="vertical"
+	>
+
+    <ScrollView
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content" 
+	android:layout_weight="5"
+    >
+        <HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            >
+            <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" >
+                <TextView
+                android:id="@+id/report_text"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:typeface="monospace"
+                />
+            </LinearLayout>
+        </HorizontalScrollView>
+    </ScrollView>
+
+	<LinearLayout android:id="@+id/buttons_container"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	>
+	<Button android:id="@+id/btn_back"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:layout_weight="1"
+	android:text="@string/btn_back_text"
+	/>
+	<Button android:id="@+id/btn_upload"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:layout_weight="1"
+	android:text="@string/btn_upload_text"
+	/>
+	</LinearLayout>
+
+</LinearLayout>
+
