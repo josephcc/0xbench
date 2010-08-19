@@ -18,9 +18,4 @@
 TOP_LOCAL_PATH:= $(call my-dir)
 include $(CLEAR_VARS)
 
-include $(TOP_LOCAL_PATH)/hello_jni/Android.mk
-
-include $(TOP_LOCAL_PATH)/gl_finish/Android.mk
-include $(TOP_LOCAL_PATH)/hello_bin/Android.mk
-
 include $(TOP_LOCAL_PATH)/libMicro-0.4.0/Android.mk

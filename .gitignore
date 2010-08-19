@@ -2,3 +2,7 @@
 local.properties
 .*.swp
 .*.swo
+bin/
+gen/
+libs/
+obj/
