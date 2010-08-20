@@ -40,6 +40,8 @@ char SCCSid[] = "@(#) @(#)dhry_1.c:3.4 -- 5/15/91 19:30:21";
 #include "dhry.h"
 #include "timeit.c"
 
+#include "socket.c"
+
 unsigned long Run_Index;
 struct timeval start;
 
@@ -50,6 +52,10 @@ void report()
     double elapse = (end.tv_sec + (end.tv_usec/1000000.0)) - (start.tv_sec + (start.tv_usec/1000000.0));
 	fprintf(stderr,"COUNT|%ld|1|lps\n", Run_Index);
     fprintf(stderr, "TIME|%f\n", elapse);
+    char buff[BUFFER_SIZE];
+    sprintf(buff, "COUNT|%ld|1|lps|%f\n", Run_Index, elapse);
+    send_socket(buff);
+    close_socket();
 	exit(0);
 }
 
@@ -118,6 +124,7 @@ char	*argv[];
   /* main program, corresponds to procedures        */
   /* Main and Proc_0 in the Ada version             */
 {
+  init_socket();
         int             duration;
         One_Fifty       Int_1_Loc;
   REG   One_Fifty       Int_2_Loc;
@@ -173,6 +180,7 @@ char	*argv[];
 
   if (argc != 2) {
     fprintf(stderr, "Usage: %s duration\n", argv[0]);
+    close_socket();
     exit(1);
     }
 

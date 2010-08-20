@@ -27,6 +27,8 @@ char SCCSid[] = "@(#) @(#)pipe.c:3.3 -- 5/15/91 19:30:20";
 #include <errno.h>
 #include "timeit.c"
 
+#include "socket.c"
+
 unsigned long iter;
 struct timeval start;
 
@@ -37,6 +39,10 @@ void report()
     double elapse = (end.tv_sec + (end.tv_usec/1000000.0)) - (start.tv_sec + (start.tv_usec/1000000.0));
 	fprintf(stderr,"COUNT|%ld|1|lps\n", iter);
     fprintf(stderr, "TIME|%f\n", elapse);
+    char buff[BUFFER_SIZE];
+    sprintf(buff, "COUNT|%ld|1|lps|%f\n", iter, elapse);
+    send_socket(buff);
+    close_socket();
 	exit(0);
 }
 
@@ -44,11 +50,13 @@ int main(argc, argv)
 int	argc;
 char	*argv[];
 {
+    init_socket();
 	char	buf[512];
 	int		pvec[2], duration;
 
 	if (argc != 2) {
 		fprintf(stderr,"Usage: %s duration\n", argv[0]);
+        close_socket();
 		exit(1);
 		}
 

@@ -33,6 +33,8 @@ char SCCSid[] = "@(#) @(#)arith.c:3.3 -- 5/15/91 19:30:19";
 #include <stdlib.h>
 #include "timeit.c"
 
+#include "socket.c"
+
 int dumb_stuff(int);
 
 unsigned long iter;
@@ -46,6 +48,10 @@ void report()
     double elapse = (end.tv_sec + (end.tv_usec/1000000.0)) - (start.tv_sec + (start.tv_usec/1000000.0));
 	fprintf(stderr,"COUNT|%ld|1|lps\n", iter);
     fprintf(stderr, "TIME|%f\n", elapse);
+    char buff[BUFFER_SIZE];
+    sprintf(buff, "COUNT|%ld|1|lps|%f\n", iter, elapse);
+    send_socket(buff);
+    close_socket();
 	exit(0);
 }
 
@@ -53,11 +59,14 @@ int main(argc, argv)
 int	argc;
 char	*argv[];
 {
+    init_socket();
+
 	int	duration;
 	int result = 0;
 
 	if (argc != 2) {
 		printf("Usage: %s duration\n", argv[0]);
+        close_socket();
 		exit(1);
 	}
 

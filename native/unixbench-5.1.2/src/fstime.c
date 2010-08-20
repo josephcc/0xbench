@@ -40,6 +40,8 @@ char SCCSid[] = "@(#) @(#)fstime.c:3.5 -- 5/15/91 19:30:19";
 #include <unistd.h>
 #include <sys/time.h>
 
+#include "socket.c"
+
 #define SECONDS 10
 
 #define MAX_BUFSIZE 8192
@@ -103,6 +105,8 @@ int main(argc, argv)
 int     argc;
 char    *argv[];
 {
+    init_socket();
+
     /* The number of seconds to run for. */
     int                     seconds = SECONDS;
 
@@ -132,15 +136,18 @@ char    *argv[];
                 case 'd':
                     if (chdir(argv[++i]) < 0) {
                         perror("fstime: chdir");
+                        close_socket();
                         exit(1);
                     }
                     break;
                 default:
                     fprintf(stderr, "Usage: fstime [-c|-r|-w] [-b <bufsize>] [-m <max_blocks>] [-t <seconds>]\n");
+                    close_socket();
                     exit(2);
             }
         } else {
             fprintf(stderr, "Usage: fstime [-c|-r|-w] [-b <bufsize>] [-m <max_blocks>] [-t <seconds>]\n");
+            close_socket();
             exit(2);
         }
     }
@@ -148,16 +155,19 @@ char    *argv[];
     if (bufsize < COUNTSIZE || bufsize > MAX_BUFSIZE) {
         fprintf(stderr, "fstime: buffer size must be in range %d-%d\n",
                 COUNTSIZE, 1024*1024);
+        close_socket();
         exit(3);
     }
     if (max_blocks < 1 || max_blocks > 1024*1024) {
         fprintf(stderr, "fstime: max blocks must be in range %d-%d\n",
                 1, 1024*1024);
+        close_socket();
         exit(3);
     }
     if (seconds < 1 || seconds > 3600) {
         fprintf(stderr, "fstime: time must be in range %d-%d seconds\n",
                 1, 3600);
+        close_socket();
         exit(3);
     }
 
@@ -168,28 +178,33 @@ char    *argv[];
     /*
     if ((buf = malloc(bufsize)) == 0) {
         fprintf(stderr, "fstime: failed to malloc %d bytes\n", bufsize);
+        close_socket();
         exit(4);
     }
     */
 
     if((f = creat(FNAME0, 0600)) == -1) {
             perror("fstime: creat");
+            close_socket();
             exit(1);
     }
     close(f);
 
     if((g = creat(FNAME1, 0600)) == -1) {
             perror("fstime: creat");
+            close_socket();
             exit(1);
     }
     close(g);
 
     if( (f = open(FNAME0, 2)) == -1) {
             perror("fstime: open");
+            close_socket();
             exit(1);
     }
     if( ( g = open(FNAME1, 2)) == -1 ) {
             perror("fstime: open");
+            close_socket();
             exit(1);
     }
 
@@ -234,14 +249,17 @@ char    *argv[];
         break;
     default:
         fprintf(stderr, "fstime: unknown test \'%c\'\n", test);
+        close_socket();
         exit(6);
     }
     if (status) {
         clean_up();
+        close_socket();
         exit(1);
     }
 
     clean_up();
+    close_socket();
     exit(0);
 }
 
@@ -305,6 +323,9 @@ int w_test(int timeSecs)
          */
         fprintf(stderr, "COUNT|%ld|0|KBps\n", write_score);
         fprintf(stderr, "TIME|%.1f\n", end - start);
+        char buff[BUFFER_SIZE];
+        sprintf(buff, "COUNT|%ld|0|KBps|%f\n", write_score, end - start);
+        send_socket(buff);
 
         return(0);
 }
@@ -370,6 +391,9 @@ int r_test(int timeSecs)
          */
         fprintf(stderr, "COUNT|%ld|0|KBps\n", read_score);
         fprintf(stderr, "TIME|%.1f\n", end - start);
+        char buff[BUFFER_SIZE];
+        sprintf(buff, "COUNT|%ld|0|KBps|%f\n", read_score, end - start);
+        send_socket(buff);
 
         return(0);
 }
@@ -452,6 +476,9 @@ int c_test(int timeSecs)
          */
         fprintf(stderr, "COUNT|%ld|0|KBps\n", copy_score);
         fprintf(stderr, "TIME|%.1f\n", end - start);
+        char buff[BUFFER_SIZE];
+        sprintf(buff, "COUNT|%ld|0|KBps|%f\n", copy_score, end - start);
+        send_socket(buff);
 
         return(0);
 }

@@ -58,6 +58,8 @@
 #include <errno.h>
 #include <string.h>
 
+#include "socket.c"
+
 #ifndef M_PI
 #define M_PI 3.14159265
 #endif /* !M_PI */
@@ -539,6 +541,10 @@ event_loop(Display *dpy, Window win)
              double time = (double) (t - startTime) / 1000000.0;
              fprintf(stderr, "COUNT|%ld|1|fps\n", runFrames);
              fprintf(stderr, "TIME|%.1f\n", time);
+             char buff[BUFFER_SIZE];
+             sprintf(buff, "COUNT|%ld|1|fps|%f\n", runFrames, time);
+             send_socket(buff);
+             close_socket();
              exit(0);
          }
 
@@ -553,6 +559,7 @@ event_loop(Display *dpy, Window win)
 int
 main(int argc, char *argv[])
 {
+   init_socket();
    Bool           use_threadsafe_api = False;
    Display       *dpy;
    Window         win;
@@ -605,6 +612,7 @@ main(int argc, char *argv[])
       if( !XInitThreads() )
       {
          fprintf(stderr, "%s: XInitThreads() failure.\n", ProgramName);
+         close_socket();
          exit(EXIT_FAILURE);
       }
    }
@@ -612,6 +620,7 @@ main(int argc, char *argv[])
    dpy = XOpenDisplay(dpyName);
    if (!dpy) {
       fprintf(stderr, "%s: Error: couldn't open display '%s'\n", ProgramName, dpyName);
+      close_socket();
       return EXIT_FAILURE;
    }
 
@@ -645,6 +654,7 @@ main(int argc, char *argv[])
    XDestroyWindow(dpy, win);
    XCloseDisplay(dpy);
 
+   close_socket();
    return EXIT_SUCCESS;
 }
 

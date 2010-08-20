@@ -262,6 +262,8 @@ structions
  #include <string.h>     /* for strcpy - 3 occurrences  */
  #include <stdlib.h>     /* for exit   - 1 occurrence   */
 
+ #include "socket.c"
+
 /***************************************************************/
 /* Timer options. You MUST uncomment one of the options below  */
 /* or compile, for example, with the '-DUNIX' option.          */
@@ -329,6 +331,7 @@ int main(argc, argv)
 int	argc;
 char	*argv[];
 {
+    init_socket();
     int count = 10, calibrate = 1;
     long xtra = 1;
     long x100 = 100;
@@ -369,6 +372,7 @@ char	*argv[];
        printf ("Cannot open results file \n\n");
        printf("Press RETURN to exit\n");
        gets(endit);
+       close_socket();
        exit (0);
       }
 #endif
@@ -566,6 +570,10 @@ char	*argv[];
 #else	/* Unixbench */
 	fprintf (stderr, "COUNT|%.3f|0|MWIPS\n", mwips);
         fprintf (stderr, "TIME|%.3f\n", TimeUsed);
+    char buff[BUFFER_SIZE];
+    sprintf(buff, "COUNT|%f|0|MWIPS|%f\n", mwips, TimeUsed);
+    send_socket(buff);
+    close_socket();
 	exit(0);
 #endif
 }

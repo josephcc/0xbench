@@ -29,6 +29,8 @@ char SCCSid[] = "@(#) @(#)context1.c:3.3 -- 5/15/91 19:30:18";
 #include <errno.h>
 #include "timeit.c"
 
+#include "socket.c"
+
 unsigned long iter;
 struct timeval start;
 
@@ -39,6 +41,10 @@ void report()
     double elapse = (end.tv_sec + (end.tv_usec/1000000.0)) - (start.tv_sec + (start.tv_usec/1000000.0));
 	fprintf(stderr, "COUNT|%lu|1|lps\n", iter);
     fprintf(stderr, "TIME|%f\n", elapse);
+    char buff[BUFFER_SIZE];
+    sprintf(buff, "COUNT|%lu|1|lps|%f\n", iter, elapse);
+    send_socket(buff);
+    close_socket();
 	exit(0);
 }
 
@@ -46,12 +52,14 @@ int main(argc, argv)
 int	argc;
 char	*argv[];
 {
+    init_socket();
 	int duration;
 	unsigned long	check;
 	int	p1[2], p2[2];
 
 	if (argc != 2) {
 		fprintf(stderr, "Usage: context duration\n");
+        close_socket();
 		exit(1);
 	}
 
@@ -63,6 +71,7 @@ char	*argv[];
 
 	if (pipe(p1) || pipe(p2)) {
 		perror("pipe create failed");
+        close_socket();
 		exit(1);
 	}
 
@@ -73,16 +82,19 @@ char	*argv[];
 			if (write(p1[1], (char *)&iter, sizeof(iter)) != sizeof(iter)) {
 				if ((errno != 0) && (errno != EINTR))
 					perror("master write failed");
+                close_socket();
 				exit(1);
 			}
 			if (read(p2[0], (char *)&check, sizeof(check)) != sizeof(check)) {
 				if ((errno != 0) && (errno != EINTR))
 					perror("master read failed");
+                close_socket();
 				exit(1);
 			}
 			if (check != iter) {
 				fprintf(stderr, "Master sync error: expect %lu, got %lu\n",
 					iter, check);
+                close_socket();
 				exit(2);
 			}
 			iter++;
@@ -98,16 +110,19 @@ char	*argv[];
 			if (read(p1[0], (char *)&check, sizeof(check)) != sizeof(check)) {
 				if ((errno != 0) && (errno != EINTR))
 					perror("slave read failed");
+                close_socket();
 				exit(1);
 			}
 			if (check != iter1) {
 				fprintf(stderr, "Slave sync error: expect %lu, got %lu\n",
 					iter, check);
+                close_socket();
 				exit(2);
 			}
 			if (write(p2[1], (char *)&iter1, sizeof(iter1)) != sizeof(check)) {
 				if ((errno != 0) && (errno != EINTR))
 					perror("slave write failed");
+                close_socket();
 				exit(1);
 			}
 			iter1++;

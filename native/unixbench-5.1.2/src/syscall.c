@@ -30,6 +30,8 @@ char SCCSid[] = "@(#) @(#)syscall.c:3.3 -- 5/15/91 19:30:21";
 #include <sys/wait.h>
 #include "timeit.c"
 
+#include "socket.c"
+
 unsigned long iter;
 struct timeval start;
 
@@ -40,6 +42,10 @@ void report()
     double elapse = (end.tv_sec + (end.tv_usec/1000000.0)) - (start.tv_sec + (start.tv_usec/1000000.0));
 	fprintf(stderr,"COUNT|%ld|1|lps\n", iter);
     fprintf(stderr, "TIME|%f\n", elapse);
+    char buff[BUFFER_SIZE];
+    sprintf(buff, "COUNT|%ld|1|lps|%f\n", iter, elapse);
+    send_socket(buff);
+    close_socket();
 	exit(0);
 }
 
@@ -47,6 +53,7 @@ int main(argc, argv)
 int	argc;
 char	*argv[];
 {
+    init_socket();
         char   *test;
 	int	duration;
 
@@ -54,6 +61,7 @@ char	*argv[];
 		fprintf(stderr,"Usage: %s duration [ test ]\n", argv[0]);
                 fprintf(stderr,"test is one of:\n");
                 fprintf(stderr,"  \"mix\" (default), \"close\", \"getpid\", \"exec\"\n");
+        close_socket();
 		exit(1);
 	}
         if (argc > 2)
@@ -93,14 +101,17 @@ char	*argv[];
                 pid_t pid = fork();
                 if (pid < 0) {
                     fprintf(stderr,"%s: fork failed\n", argv[0]);
+                    close_socket();
                     exit(1);
                 } else if (pid == 0) {
                     execl("/bin/true", (char *) 0);
                     fprintf(stderr,"%s: exec /bin/true failed\n", argv[0]);
+                    close_socket();
                     exit(1);
                 } else {
                     if (waitpid(pid, NULL, 0) < 0) {
                         fprintf(stderr,"%s: waitpid failed\n", argv[0]);
+                        close_socket();
                         exit(1);
                     }
                 }
@@ -109,6 +120,7 @@ char	*argv[];
            /* NOTREACHED */
         }
 
+        close_socket();
         exit(9);
 }
 
