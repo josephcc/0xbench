@@ -70,6 +70,8 @@ char	*argv[];
 		dur_str = argv[1];
 		if((ptr = getenv("UB_BINDIR")) != NULL)
 			sprintf(path_str,"%s/execl",ptr);
+		else
+			sprintf(path_str,"/system/bin/bench_ubench_execl");
 		fullpath=path_str;
 		time(&start_time);
 		}
@@ -91,7 +93,7 @@ char	*argv[];
 		exit(0);
 		}
 	execl(fullpath, fullpath, "0", dur_str, count_str, start_str, (void *) 0);
-	fprintf(stderr, "Exec failed at iteration %lu\n", iter);
+	fprintf(stderr, "Exec failed at iteration %lu: %s\n", iter, fullpath);
 	perror("Reason");
 	exit(1);
 }
