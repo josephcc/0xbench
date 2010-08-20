@@ -33,9 +33,13 @@ void wake_me(seconds, func)
 	int seconds;
 	void (*func)();
 {
+    int rt = 999;
 	/* set up the signal handler */
+    printf("set up SIGALRM\n");
 	signal(SIGALRM, func);
 	/* get the clock running */
-	alarm(seconds);
+    printf("send alarm: %d\n", seconds);
+	rt = alarm(seconds);
+    printf("alarm() returns: %d\n", rt);
 }
 
