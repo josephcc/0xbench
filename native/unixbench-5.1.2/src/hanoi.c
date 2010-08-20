@@ -30,9 +30,15 @@ unsigned long iter = 0;
 int num[4];
 long cnt;
 
+struct timeval start;
+
 void report()
 {
+    struct timeval end;
+    gettimeofday(&end, NULL);
+    double elapse = (end.tv_sec + (end.tv_usec/1000000.0)) - (start.tv_sec + (start.tv_usec/1000000.0));
 	fprintf(stderr,"COUNT|%ld|1|lps\n", iter);
+    fprintf(stderr, "TIME|%f\n", elapse);
 	exit(0);
 }
 
@@ -52,7 +58,7 @@ char	*argv[];
 	if(argc > 2) disk = atoi(argv[2]);
 	num[1] = disk;
 
-	wake_me(duration, report);
+    wake_me(duration, &start, report);
 
 	while(1) {
 		mov(disk,1,3);

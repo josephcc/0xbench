@@ -36,11 +36,16 @@ char SCCSid[] = "@(#) @(#)arith.c:3.3 -- 5/15/91 19:30:19";
 int dumb_stuff(int);
 
 unsigned long iter;
+struct timeval start;
 
 /* this function is called when the alarm expires */
 void report()
 {
+    struct timeval end;
+    gettimeofday(&end, NULL);
+    double elapse = (end.tv_sec + (end.tv_usec/1000000.0)) - (start.tv_sec + (start.tv_usec/1000000.0));
 	fprintf(stderr,"COUNT|%ld|1|lps\n", iter);
+    fprintf(stderr, "TIME|%f\n", elapse);
 	exit(0);
 }
 
@@ -60,7 +65,7 @@ char	*argv[];
 
 	/* set up alarm call */
 	iter = 0;	/* init iteration count */
-	wake_me(duration, report);
+	wake_me(duration, &start, report);
 
 	/* this loop will be interrupted by the alarm call */
 	while (1)

@@ -41,10 +41,15 @@ char SCCSid[] = "@(#) @(#)dhry_1.c:3.4 -- 5/15/91 19:30:21";
 #include "timeit.c"
 
 unsigned long Run_Index;
+struct timeval start;
 
 void report()
 {
+    struct timeval end;
+    gettimeofday(&end, NULL);
+    double elapse = (end.tv_sec + (end.tv_usec/1000000.0)) - (start.tv_sec + (start.tv_usec/1000000.0));
 	fprintf(stderr,"COUNT|%ld|1|lps\n", Run_Index);
+    fprintf(stderr, "TIME|%f\n", elapse);
 	exit(0);
 }
 
@@ -173,7 +178,7 @@ char	*argv[];
 
   duration = atoi(argv[1]);
   Run_Index = 0;
-  wake_me(duration, report);
+  wake_me(duration, &start, report);
 
   /***************/
   /* Start timer */

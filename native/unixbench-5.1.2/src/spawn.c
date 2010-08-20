@@ -28,10 +28,15 @@ char SCCSid[] = "@(#) @(#)spawn.c:3.3 -- 5/15/91 19:30:20";
 #include "timeit.c"
 
 unsigned long iter;
+struct timeval start;
 
 void report()
 {
+    struct timeval end;
+    gettimeofday(&end, NULL);
+    double elapse = (end.tv_sec + (end.tv_usec/1000000.0)) - (start.tv_sec + (start.tv_usec/1000000.0));
 	fprintf(stderr,"COUNT|%lu|1|lps\n", iter);
+    fprintf(stderr, "TIME|%f\n", elapse);
 	exit(0);
 }
 
@@ -50,7 +55,7 @@ char	*argv[];
 	duration = atoi(argv[1]);
 
 	iter = 0;
-	wake_me(duration, report);
+    wake_me(duration, &start, report);
 
 	while (1) {
 		if ((slave = fork()) == 0) {

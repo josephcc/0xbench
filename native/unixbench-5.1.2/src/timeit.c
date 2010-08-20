@@ -29,8 +29,11 @@
 #include <signal.h>
 #include <unistd.h>
 
-void wake_me(seconds, func)
+#include <sys/time.h>
+
+void wake_me(seconds, start, func)
 	int seconds;
+    struct timeval *start;
 	void (*func)();
 {
     if (seconds <= 0) {
@@ -39,6 +42,8 @@ void wake_me(seconds, func)
     }
 	/* set up the signal handler */
 	signal(SIGALRM, func);
+    /* record the start time */
+    gettimeofday(start, NULL);
 	/* get the clock running */
 	alarm(seconds);
 }

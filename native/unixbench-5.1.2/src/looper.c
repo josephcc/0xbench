@@ -31,9 +31,15 @@ unsigned long iter;
 char *cmd_argv[28];
 int  cmd_argc;
 
+struct timeval start;
+
 void report(void)
 {
-        fprintf(stderr,"COUNT|%lu|60|lpm\n", iter);
+    struct timeval end;
+    gettimeofday(&end, NULL);
+    double elapse = (end.tv_sec + (end.tv_usec/1000000.0)) - (start.tv_sec + (start.tv_usec/1000000.0));
+    fprintf(stderr,"COUNT|%lu|60|lpm\n", iter);
+    fprintf(stderr, "TIME|%f\n", elapse);
 	exit(0);
 }
 
@@ -71,7 +77,7 @@ exit(0);
 #endif
 
 iter = 0;
-wake_me(duration, report);
+wake_me(duration, &start, report);
 
 while (1)
 	{
