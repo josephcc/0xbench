@@ -56,7 +56,7 @@ public abstract class NativeTester extends Tester {
     public final String ENV_VAR = "ZXBENCH_PORT";
 
     public final int CHECK_FREQ = 1000;
-    public final int IDLE_KILL = 20000; //1000 * 60 * 5;
+    public final int IDLE_KILL = 20000; //1000 * 60 * 5 (5mins);
 
     public String mCommand;
     public Handler mHandler;
@@ -219,9 +219,21 @@ public abstract class NativeTester extends Tester {
                     continue;
                 }
                 reportOutputs();
-                mStdOuts.put(command, stdOut.toString());
-                mStdErrs.put(command, stdErr.toString());
-                mSockets.put(command, sckOut.toString());
+                if (!mStdOuts.containsKey(command)) {
+                    mStdOuts.put(command, mStdOuts.get(command) + stdOut.toString());
+                } else {
+                    mStdOuts.put(command, stdOut.toString());
+                }
+                if (!mStdErrs.containsKey(command)) {
+                    mStdErrs.put(command, mStdErrs.get(command) + stdErr.toString());
+                } else {
+                    mStdErrs.put(command, stdErr.toString());
+                }
+                if (!mSockets.containsKey(command)) {
+                    mSockets.put(command, sckOut.toString());
+                } else {
+                    mSockets.put(command, mSockets.get(command) + sckOut.toString());
+                }
                 stdOut = new StringBuilder();
                 stdErr = new StringBuilder();
                 sckOut = new StringBuilder();

@@ -406,10 +406,6 @@ public class NativeTesterMicro extends NativeTester {
                 }
                 if(!name.equals(sp[0]))
                     Log.i(TAG, "Incompatible bench name in socket out: " + name + " v.s. " + sp[0]);
-
-                //TODO  changing from string to float will use up too much memory
-                //      causing outOfMemory exception.
-                //      should save in string format to bundle. easier to generate xml, too.
                 try {
                     int toInt = (int)Float.parseFloat(sp[1]);
                     list.append(toInt + " ");
