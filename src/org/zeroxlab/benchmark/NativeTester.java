@@ -56,7 +56,7 @@ public abstract class NativeTester extends Tester {
     public final String ENV_VAR = "ZXBENCH_PORT";
 
     public final int CHECK_FREQ = 1000;
-    public final int IDLE_KILL = 20000; //1000 * 60 * 5 (5mins);
+    public final int IDLE_KILL = 40000; //1000 * 60 * 5 (5mins);
 
     public String mCommand;
     public Handler mHandler;
@@ -82,6 +82,8 @@ public abstract class NativeTester extends Tester {
     private Socket mClientSocket = null;
     private int mBindPort = -1;
 
+    private String mCurrentCommand;
+
     public NativeTester() {
         mRuntime = Runtime.getRuntime();
     }
@@ -97,7 +99,15 @@ public abstract class NativeTester extends Tester {
             public void handleMessage(Message msg) {
                 switch (msg.what) {
                     case GUINOTIFIER:
-                        mTextView.setText("idle time: " + mIdleTime + "\nstderr -->\n" + stdErr.toString() + "\nstdout -->\n" + stdOut.toString());
+                        StringBuilder display = new StringBuilder();
+                        display.append("Idle time: " + (int)mIdleTime + "ms");
+                        display.append("\nCommand -->\n");
+                        display.append(mCurrentCommand);
+                        display.append("\nStderr -->\n");
+                        display.append(stdErr.toString());
+                        display.append("\nStdout -->\n");
+                        display.append(stdOut.toString());
+                        mTextView.setText(display.toString());
                         mScrollView.post(new Runnable() { 
                             public void run() { 
                                 mScrollView.fullScroll(ScrollView.FOCUS_DOWN); 
@@ -112,6 +122,7 @@ public abstract class NativeTester extends Tester {
     }
 
     protected abstract List<String> getCommands();
+    protected abstract String getPath();
 
     protected abstract boolean saveResult(Intent intent);
 
@@ -154,6 +165,7 @@ public abstract class NativeTester extends Tester {
     class ProcessRunner extends Thread {
         public void run() {
             for(String command: getCommands()) {
+                mCurrentCommand = command;
                 Log.i(TAG, "------------------------ process " + command + " start ------------------------ ");
                 try {
                     mServerSocket = new ServerSocket(0);
@@ -170,7 +182,7 @@ public abstract class NativeTester extends Tester {
                     ENV_VAR + "=" + mBindPort,
                 };
                 try {
-                    mProcess = mRuntime.exec(command, envp);
+                    mProcess = mRuntime.exec(getPath() + command, envp, getFilesDir());
                     if(mProcess == null)
                         throw new Exception();
                     mProcessRunning = true;

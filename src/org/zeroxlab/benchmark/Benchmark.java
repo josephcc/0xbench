@@ -41,6 +41,7 @@ import android.os.SystemClock;
 import android.app.ProgressDialog;
 
 import org.opensolaris.hub.libmicro.*;
+import org.zeroxlab.byteunix.*;
 
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
@@ -98,7 +99,9 @@ public class Benchmark extends Activity implements View.OnClickListener {
         Case teapot = new CaseTeapot();
         Case gc     = new CaseGC();
         Case libMicro = new NativeCaseMicro();
+        Case libUbench = new NativeCaseUbench();
 
+        mCases.add(libUbench);
         // mflops
         mCases.add(arith);
         mCases.add(scimark2);

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.opensolaris.hub.libmicro;
+package org.zeroxlab.byteunix;
 
 import org.zeroxlab.benchmark.*;
 
@@ -31,7 +31,7 @@ import android.os.Bundle;
 
 import java.util.ArrayList;
 
-import org.opensolaris.hub.libmicro.NativeTesterMicro;
+import org.zeroxlab.byteunix.NativeTesterUbench;
 
 public class NativeCaseUbench  extends Case {
 
@@ -42,7 +42,7 @@ public class NativeCaseUbench  extends Case {
     public static int Round  = 1;
 
     public NativeCaseUbench() {
-        super("NativeCaseMicro", "org.opensolaris.hub.libmicro.NativeTesterMicro", Repeat, Round);
+        super("NativeCaseUbench", "org.zeroxlab.byteunix.NativeTesterUbench", Repeat, Round);
 
         mType = "UnixBench";
         String [] _tmp = {
@@ -58,7 +58,7 @@ public class NativeCaseUbench  extends Case {
     }
 
     public String getDescription() {
-        return "(Requires root and pre-deployed binaries) UnixBench is the original BYTE UNIX benchmark suite, updated and revised by many people over the years. ";
+        return "(Requires root and pre-deployed binaries) UnixBench is the original BYTE UNIX benchmark suite, updated and revised by many people over the years. Takes about 30 minutes to run.";
     }
 
     private void generateInfo() {
@@ -95,13 +95,22 @@ public class NativeCaseUbench  extends Case {
         ArrayList<Scenario> scenarios = new ArrayList<Scenario>();
 
         Bundle bundle = mInfo[0]; // only 1 run
-        for(String command: NativeTesterMicro.COMMANDS) {
+        for(String command: NativeTesterUbench.COMMANDS) {
+            if(!bundle.containsKey(command+"S") || !bundle.containsKey(command+"FA"))
+                continue;
             String name = bundle.getString(command+"S");
             String results = bundle.getString(command+"FA");
+            bundle.remove(command+"S");
+            bundle.remove(command+"FA");
             if(name == null || results == null)
                 continue;
             ArrayList<String> _mTags = new ArrayList<String>();
-            _mTags.add((String)("exe:" + command.substring(command.lastIndexOf("_")+1, command.indexOf(" "))));
+            int space = command.indexOf(" ");
+            if(space > 0)
+                _mTags.add((String)("exe:" + command.substring(0, command.indexOf(" "))));
+            else
+                _mTags.add((String)("exe:" + command));
+            //TODO add unit as tag
 
             String [] __mTags =  (String[])(_mTags.toArray(new String[_mTags.size()]));
             Scenario s = new Scenario(name, mType, __mTags, true);
@@ -114,9 +123,9 @@ public class NativeCaseUbench  extends Case {
 
     @Override
     protected boolean saveResult(Intent intent, int index) {
-        Bundle info = intent.getBundleExtra(NativeTesterMicro.RESULT);
+        Bundle info = intent.getBundleExtra(NativeTesterUbench.RESULT);
         if (info == null) {
-            Log.i(TAG, "Cannot find LibMicroInfo");
+            Log.i(TAG, "Cannot find LibUbenchInfo");
             return false;
         } else {
             mInfo[index] = info;

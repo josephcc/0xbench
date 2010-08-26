@@ -35,9 +35,10 @@ char	bss[8*1024];	/* something worthwhile */
 
 #undef main
 
+#include "socket.c"
+
 /* added by BYTE */
 char *getenv();
-
 
 int main(argc, argv)	/* the real program */
 int	argc;
@@ -90,6 +91,13 @@ char	*argv[];
 	time(&this_time);
 	if (this_time - start_time >= duration) { /* time has run out */
 		fprintf(stderr, "COUNT|%lu|1|lps\n", iter);
+        fprintf(stderr, "TIME|%lu\n", this_time - start_time);
+        init_socket();
+        char buff[BUFFER_SIZE];
+        sprintf(buff, "COUNT|%lu|1|lps|%lu\n", iter, this_time - start_time);
+        send_socket(buff);
+        close_socket();
+
 		exit(0);
 		}
 	execl(fullpath, fullpath, "0", dur_str, count_str, start_str, (void *) 0);

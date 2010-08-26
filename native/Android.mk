@@ -19,3 +19,5 @@ TOP_LOCAL_PATH:= $(call my-dir)
 include $(CLEAR_VARS)
 
 include $(TOP_LOCAL_PATH)/libMicro-0.4.0/Android.mk
+include $(TOP_LOCAL_PATH)/unixbench-5.1.2/Android.mk
+

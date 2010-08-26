@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.opensolaris.hub.libmicro;
+package org.zeroxlab.byteunix;
 
 import org.zeroxlab.benchmark.*;
 
@@ -34,35 +34,49 @@ public class NativeTesterUbench extends NativeTester {
 
     public static final String REPORT = "REPORT";
     public static final String RESULT = "RESULT";
-    private static final String Path = "/system/bin/bench_ubench_";
     public static final List<String> COMMANDS  = Arrays.asList(
         "dhry2reg 10","dhry2reg 10","dhry2reg 10","dhry2reg 10","dhry2reg 10","dhry2reg 10","dhry2reg 10","dhry2reg 10","dhry2reg 10","dhry2reg 10",
         "whetstone-double","whetstone-double","whetstone-double","whetstone-double","whetstone-double","whetstone-double","whetstone-double","whetstone-double","whetstone-double","whetstone-double",
         "execl 30","execl 30","execl 30",
-        "fstime -c -t 30 -d /data/ -b 1024 -m 2000",
-        "fstime -c -t 30 -d /data/ -b 256 -m 500",
-        "fstime -c -t 30 -d /data -b 4096 -m 8000",
+        "fstime -c -t 30 -d ./ -b 1024 -m 2000","fstime -c -t 30 -d ./ -b 1024 -m 2000","fstime -c -t 30 -d ./ -b 1024 -m 2000",
+        "fstime -c -t 30 -d ./ -b 256 -m 500","fstime -c -t 30 -d ./ -b 256 -m 500","fstime -c -t 30 -d ./ -b 256 -m 500",
+        "fstime -c -t 30 -d ./ -b 4096 -m 8000","fstime -c -t 30 -d ./ -b 4096 -m 8000","fstime -c -t 30 -d ./ -b 4096 -m 8000",
         "pipe 10","pipe 10","pipe 10","pipe 10","pipe 10","pipe 10","pipe 10","pipe 10","pipe 10","pipe 10",
         "context1 10","context1 10","context1 10",
         "spawn 30","spawn 30","spawn 30",
-        "syscall 10","syscall 10","syscall 10","syscall 10","syscall 10","syscall 10","syscall 10","syscall 10","syscall 10","syscall 10",
-        "looper 60 /system/bin/bench_ubench_multi.sh 1",
-        "looper 60 /system/bin/bench_ubench_multi.sh 8"
+        "syscall 10","syscall 10","syscall 10","syscall 10","syscall 10","syscall 10","syscall 10","syscall 10","syscall 10","syscall 10"
+//        "looper 60 /system/bin/bench_ubench_multi.sh 1",
+//        "looper 60 /system/bin/bench_ubench_multi.sh 8"
     );
     public static final HashMap<String, String> commandToName = new HashMap<String, String>() {
         {
             put("dhry2reg 10", "dhry2reg");
             put("whetstone-double", "whetstone-double");
             put("execl 30", "execl");
-            put("fstime -c -t 30 -d /data/ -b 1024 -m 2000", "fstime");
-            put("fstime -c -t 30 -d /data/ -b 256 -m 500", "fsbuffer");
-            put("fstime -c -t 30 -d /data -b 4096 -m 8000", "fsdisk-w");
             put("pipe 10", "pipe");
             put("context1 10", "context1");
             put("spawn 30", "spawn");
             put("syscall 10", "syscall");
-            put("looper 60 /system/bin/bench_ubench_multi.sh 1", "shell1");
-            put("looper 60 /system/bin/bench_ubench_multi.sh 8", "shell8");
+
+            put("arithoh 10", "Arithoh");
+            put("double 10", "Arithmetic:double");
+            put("float 10", "Arithmetic:float");
+            put("int 10", "Arithmetic:int");
+            put("long 10", "Arithmetic:long");
+            put("short 10", "Arithmetic:short");
+
+            put("fstime -c -t 30 -d ./ -b 1024 -m 2000", "fstime");
+            put("fstime -c -t 30 -d ./ -b 256 -m 500", "fsbuffer");
+            put("fstime -c -t 30 -d ./ -b 4096 -m 8000", "fsdisk");
+            put("fstime -r -t 30 -d ./ -b 1024 -m 2000", "fstime-r");
+            put("fstime -r -t 30 -d ./ -b 256 -m 500", "fsbuffer-r");
+            put("fstime -r -t 30 -d ./ -b 4096 -m 8000", "fsdisk-r");
+            put("fstime -w -t 30 -d ./ -b 1024 -m 2000", "fstime-w");
+            put("fstime -w -t 30 -d ./ -b 256 -m 500", "fsbuffer-w");
+            put("fstime -w -t 30 -d ./ -b 4096 -m 8000", "fsdisk-r");
+
+//            put("looper 60 /system/bin/bench_ubench_multi.sh 1", "shell1");
+//            put("looper 60 /system/bin/bench_ubench_multi.sh 8", "shell8");
         }
     };
 
@@ -71,12 +85,17 @@ public class NativeTesterUbench extends NativeTester {
     protected String getTag() {
         return "Native Ubench";
     };
+    @Override
+    protected String getPath() {
+        return "/system/bin/bench_ubench_";
+    }
     protected final List<String> getCommands() {
         return COMMANDS;
     }
 
     @Override
     protected boolean saveResult(Intent intent) {
+        /* The strategy of this function is ported directly from the Run perl script of byte unix */
         Bundle bundle = new Bundle();
 //        StringBuilder report = new StringBuilder();
         for (String command: getCommands()) {
@@ -86,20 +105,29 @@ public class NativeTesterUbench extends NativeTester {
 //            report.append("---------------------------\n");
             if(!mSockets.containsKey(command))
                 continue;
+            Log.i(TAG, "Socket: " + mSockets.get(command));
+            if(mSockets.get(command).trim().length() == 0)
+                continue;
             String [] lines = mSockets.get(command).trim().split("\n");
+
+            mSockets.remove(command);
+
+            Log.i(TAG, "line0: " + lines[0]);
+            String [] initFields = lines[0].split("[|]");
+            // COUNT|2734838|1|lps|10.000082
             StringBuilder list = new StringBuilder();;
-            Integer base = (int)Float.parseFloat(lines[0].trim().split("|")[1]);
-            String unit = lines[0].trim().split("|")[2];
+            Integer base = (int)Float.parseFloat(initFields[2]);
+            String unit = initFields[3];
             ArrayList<Measure> measures = new ArrayList<Measure>();
             for(String line: lines) {
-                String [] sp = line.trim().split("|");
-                if (sp.length != 4) {
+                String [] fields = line.trim().split("[|]");
+                if (fields.length != 5) {
                     Log.w(TAG, "error line: " + line.trim());
                     continue;
                 }
-                Float count = Float.parseFloat(sp[0]);
-                Float time = Float.parseFloat(sp[3]);
-                if((!sp[2].equals(unit)) || ((int)Float.parseFloat(sp[1]) != base)){
+                Float count = Float.parseFloat(fields[1]);
+                Float time = Float.parseFloat(fields[4]);
+                if((!fields[3].equals(unit)) || ((int)Float.parseFloat(fields[2]) != base)){
                     Log.w(TAG, "error line: " + line.trim());
                     continue;
                 }
@@ -114,8 +142,11 @@ public class NativeTesterUbench extends NativeTester {
                     list.append( (measure.count/(measure.time/base)) + " ");
                 }
             }
-            bundle.putString(command+"S", commandToName.get(command) + "(" + unit + ")");
+            bundle.putString(command+"S", commandToName.get(command) + "&#040;" + unit + "&#041;");
             bundle.putString(command+"FA", list.toString().trim());
+            Log.i(TAG, "command: " + command);
+            Log.i(TAG, "save `" + command+"S" + "` -> " + commandToName.get(command) + "(" + unit + ")");
+            Log.i(TAG, "save `" + command+"FA" + "` -> " + list.toString().trim());
         }
 //        bundle.putString(REPORT, report.toString());
         intent.putExtra(RESULT, bundle);
@@ -132,7 +163,6 @@ class Measure implements Comparable {
         this.count = count;
         this.time = time;
     }
-    
 
     public int compareTo (Object o) {
         if (((Measure)o).count > this.count)

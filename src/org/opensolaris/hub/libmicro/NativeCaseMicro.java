@@ -101,7 +101,7 @@ public class NativeCaseMicro  extends Case {
             if(name == null || results == null)
                 continue;
             ArrayList<String> _mTags = new ArrayList<String>();
-            _mTags.add((String)("exe:" + command.substring(command.indexOf("_")+1, command.indexOf(" "))));
+            _mTags.add((String)("exe:" + command.substring(0, command.indexOf(" "))));
 //            String [] _tmp = command.split(" +-");
 //            for(int i=1; i<_tmp.length; i++){
 //                if(_tmp[i].matches("[NECLSW].*"))
