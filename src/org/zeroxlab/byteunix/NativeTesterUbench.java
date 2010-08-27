@@ -38,13 +38,27 @@ public class NativeTesterUbench extends NativeTester {
         "dhry2reg 10","dhry2reg 10","dhry2reg 10","dhry2reg 10","dhry2reg 10","dhry2reg 10","dhry2reg 10","dhry2reg 10","dhry2reg 10","dhry2reg 10",
         "whetstone-double","whetstone-double","whetstone-double","whetstone-double","whetstone-double","whetstone-double","whetstone-double","whetstone-double","whetstone-double","whetstone-double",
         "execl 30","execl 30","execl 30",
-        "fstime -c -t 30 -d ./ -b 1024 -m 2000","fstime -c -t 30 -d ./ -b 1024 -m 2000","fstime -c -t 30 -d ./ -b 1024 -m 2000",
-        "fstime -c -t 30 -d ./ -b 256 -m 500","fstime -c -t 30 -d ./ -b 256 -m 500","fstime -c -t 30 -d ./ -b 256 -m 500",
-        "fstime -c -t 30 -d ./ -b 4096 -m 8000","fstime -c -t 30 -d ./ -b 4096 -m 8000","fstime -c -t 30 -d ./ -b 4096 -m 8000",
         "pipe 10","pipe 10","pipe 10","pipe 10","pipe 10","pipe 10","pipe 10","pipe 10","pipe 10","pipe 10",
         "context1 10","context1 10","context1 10",
         "spawn 30","spawn 30","spawn 30",
-        "syscall 10","syscall 10","syscall 10","syscall 10","syscall 10","syscall 10","syscall 10","syscall 10","syscall 10","syscall 10"
+        "syscall 10","syscall 10","syscall 10","syscall 10","syscall 10","syscall 10","syscall 10","syscall 10","syscall 10","syscall 10",
+
+        "arithoh 10","arithoh 10","arithoh 10","arithoh 10","arithoh 10","arithoh 10","arithoh 10","arithoh 10","arithoh 10","arithoh 10",
+        "double 10","double 10","double 10","double 10","double 10","double 10","double 10","double 10","double 10","double 10",
+        "float 10","float 10","float 10","float 10","float 10","float 10","float 10","float 10","float 10","float 10",
+        "int 10","int 10","int 10","int 10","int 10","int 10","int 10","int 10","int 10","int 10",
+        "long 10","long 10","long 10","long 10","long 10","long 10","long 10","long 10","long 10","long 10",
+        "short 10","short 10","short 10","short 10","short 10","short 10","short 10","short 10","short 10","short 10",
+
+        "fstime -c -t 30 -d ./ -b 1024 -m 2000","fstime -c -t 30 -d ./ -b 1024 -m 2000","fstime -c -t 30 -d ./ -b 1024 -m 2000",
+        "fstime -c -t 30 -d ./ -b 256 -m 500","fstime -c -t 30 -d ./ -b 256 -m 500","fstime -c -t 30 -d ./ -b 256 -m 500",
+        "fstime -c -t 30 -d ./ -b 4096 -m 8000","fstime -c -t 30 -d ./ -b 4096 -m 8000","fstime -c -t 30 -d ./ -b 4096 -m 8000",
+        "fstime -r -t 30 -d ./ -b 1024 -m 2000","fstime -r -t 30 -d ./ -b 1024 -m 2000","fstime -r -t 30 -d ./ -b 1024 -m 2000",
+        "fstime -r -t 30 -d ./ -b 256 -m 500","fstime -r -t 30 -d ./ -b 256 -m 500","fstime -r -t 30 -d ./ -b 256 -m 500",
+        "fstime -r -t 30 -d ./ -b 4096 -m 8000","fstime -r -t 30 -d ./ -b 4096 -m 8000","fstime -r -t 30 -d ./ -b 4096 -m 8000",
+        "fstime -w -t 30 -d ./ -b 1024 -m 2000","fstime -w -t 30 -d ./ -b 1024 -m 2000","fstime -w -t 30 -d ./ -b 1024 -m 2000",
+        "fstime -w -t 30 -d ./ -b 256 -m 500","fstime -w -t 30 -d ./ -b 256 -m 500","fstime -w -t 30 -d ./ -b 256 -m 500",
+        "fstime -w -t 30 -d ./ -b 4096 -m 8000","fstime -w -t 30 -d ./ -b 4096 -m 8000","fstime -w -t 30 -d ./ -b 4096 -m 8000"
 //        "looper 60 /system/bin/bench_ubench_multi.sh 1",
 //        "looper 60 /system/bin/bench_ubench_multi.sh 8"
     );
@@ -73,7 +87,7 @@ public class NativeTesterUbench extends NativeTester {
             put("fstime -r -t 30 -d ./ -b 4096 -m 8000", "fsdisk-r");
             put("fstime -w -t 30 -d ./ -b 1024 -m 2000", "fstime-w");
             put("fstime -w -t 30 -d ./ -b 256 -m 500", "fsbuffer-w");
-            put("fstime -w -t 30 -d ./ -b 4096 -m 8000", "fsdisk-r");
+            put("fstime -w -t 30 -d ./ -b 4096 -m 8000", "fsdisk-w");
 
 //            put("looper 60 /system/bin/bench_ubench_multi.sh 1", "shell1");
 //            put("looper 60 /system/bin/bench_ubench_multi.sh 8", "shell8");

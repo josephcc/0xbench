@@ -44,7 +44,7 @@ public class NativeCaseUbench  extends Case {
     public NativeCaseUbench() {
         super("NativeCaseUbench", "org.zeroxlab.byteunix.NativeTesterUbench", Repeat, Round);
 
-        mType = "UnixBench";
+        mType = "ByteUnix";
         String [] _tmp = {
             "system", 
         };
@@ -111,6 +111,8 @@ public class NativeCaseUbench  extends Case {
             else
                 _mTags.add((String)("exe:" + command));
             //TODO add unit as tag
+            Log.i(TAG, "name: " + name);
+            _mTags.add("unit:" + name.substring(name.indexOf("&#040;")+6, name.indexOf("&#041;")));
 
             String [] __mTags =  (String[])(_mTags.toArray(new String[_mTags.size()]));
             Scenario s = new Scenario(name, mType, __mTags, true);
