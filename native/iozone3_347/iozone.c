@@ -340,7 +340,7 @@ typedef off_t off64_t;
 #ifndef SCO_Unixware_gcc
 #ifndef UWIN
 #ifndef __DragonFly__
-typedef long long off64_t;
+//typedef long long off64_t;
 #endif
 #endif
 #endif
@@ -6774,7 +6774,7 @@ long long *data2;
 #endif
 #if defined(_HPUX_SOURCE) || defined(linux) || defined(__FreeBSD__) || defined(__DragonFly__)
 	if(read_sync)
-		file_flags |=O_RSYNC|O_SYNC;
+		file_flags |=O_SYNC;
 #endif
 
 #if ! defined(DONT_HAVE_O_DIRECT)
@@ -7747,7 +7747,7 @@ long long *data1,*data2;
 	open_flags = O_RDONLY;
 #if defined(_HPUX_SOURCE) || defined(linux)
 	if(read_sync)
-		open_flags |=O_RSYNC|O_SYNC;
+		open_flags |=O_SYNC;
 #endif
 #if ! defined(DONT_HAVE_O_DIRECT)
 #if defined(linux) || defined(__AIX__) || defined(IRIX) || defined(IRIX64) || defined(Windows) || defined (__FreeBSD__)
@@ -8313,7 +8313,7 @@ long long *data1, *data2;
 #endif
 #if defined(_HPUX_SOURCE) || defined(linux)
 	if(read_sync)
-		flags |=O_RSYNC|O_SYNC;
+		flags |=O_SYNC;
 #endif
 	filebytes64 = numrecs64*reclen;
 	for( j=0; j<2; j++ )
@@ -8778,7 +8778,7 @@ long long *data1,*data2;
 #endif
 #if defined(_HPUX_SOURCE) || defined(linux)
 	if(read_sync)
-		open_flags |=O_RSYNC|O_SYNC;
+		open_flags |=O_SYNC;
 #endif
 	numrecs64 = (kilo64*1024)/reclen;
 	filebytes64 = numrecs64*reclen;
@@ -9080,7 +9080,7 @@ long long *data1,*data2;
 #endif
 #if defined(_HPUX_SOURCE) || defined(linux)
 	if(read_sync)
-		flags |=O_RSYNC|O_SYNC;
+		flags |=O_SYNC;
 #endif
 /*
 	if (!no_unlink)
@@ -9390,7 +9390,7 @@ long long *data1, *data2;
 #endif
 #if defined(_HPUX_SOURCE) || defined(linux)
 	if(read_sync)
-		open_flags |=O_RSYNC|O_SYNC;
+		open_flags |=O_SYNC;
 #endif
 	next64 = (off64_t)0;
 	numrecs64 = (kilos64*1024)/reclen;
@@ -9715,7 +9715,7 @@ long long *data1,*data2;
 
 #if defined(_HPUX_SOURCE) || defined(linux)
 	if(read_sync)
-		flags_here |=O_RSYNC|O_SYNC;
+		flags_here |=O_SYNC;
 #endif
 
 #if ! defined(DONT_HAVE_O_DIRECT)
@@ -9979,7 +9979,7 @@ long long *data1, *data2;
 #endif
 #if defined(_HPUX_SOURCE) || defined(linux) || defined(__FreeBSD__) || defined(__DragonFly__)
 	if(read_sync)
-		open_flags |=O_RSYNC|O_SYNC;
+		open_flags |=O_SYNC;
 #endif
 	if(r_traj_flag)
 	{
@@ -10225,7 +10225,7 @@ long long *data1,*data2;
 #endif
 #if defined(_HPUX_SOURCE) || defined(linux)
 	if(read_sync)
-		flags_here |=O_RSYNC|O_SYNC;
+		flags_here |=O_SYNC;
 #endif
 
 #if ! defined(DONT_HAVE_O_DIRECT)
@@ -10563,7 +10563,7 @@ long long *data1,*data2;
 #endif
 #if defined(_HPUX_SOURCE) || defined(linux)
 	if(read_sync)
-		open_flags |=O_RSYNC|O_SYNC;
+		open_flags |=O_SYNC;
 #endif
 	numrecs64 = (kilos64*1024)/reclen;
 	filebytes64 = numrecs64*reclen;
@@ -11875,7 +11875,7 @@ thread_write_test( x)
 #endif
 #if defined(_HPUX_SOURCE) || defined(linux)
 	if(read_sync)
-		flags |=O_RSYNC|O_SYNC;
+		flags |=O_SYNC;
 #endif
 
 #if ! defined(DONT_HAVE_O_DIRECT)
@@ -12543,7 +12543,7 @@ thread_pwrite_test( x)
 #endif
 #if defined(_HPUX_SOURCE) || defined(linux)
 	if(read_sync)
-		flags |=O_RSYNC|O_SYNC;
+		flags |=O_SYNC;
 #endif
 
 #if ! defined(DONT_HAVE_O_DIRECT)
@@ -13122,7 +13122,7 @@ thread_rwrite_test(x)
 #endif
 #if defined(_HPUX_SOURCE) || defined(linux)
 	if(read_sync)
-		flags |=O_RSYNC|O_SYNC;
+		flags |=O_SYNC;
 #endif
 
 #if ! defined(DONT_HAVE_O_DIRECT)
@@ -13643,7 +13643,7 @@ thread_read_test(x)
 		flags=O_RDONLY;
 #if defined(_HPUX_SOURCE) || defined(linux)
 	if(read_sync)
-		flags |=O_RSYNC|O_SYNC;
+		flags |=O_SYNC;
 #endif
 
 #if ! defined(DONT_HAVE_O_DIRECT)
@@ -14192,7 +14192,7 @@ thread_pread_test(x)
 		flags=O_RDONLY;
 #if defined(_HPUX_SOURCE) || defined(linux)
 	if(read_sync)
-		flags |=O_RSYNC|O_SYNC;
+		flags |=O_SYNC;
 #endif
 
 #if ! defined(DONT_HAVE_O_DIRECT)
@@ -14708,7 +14708,7 @@ thread_rread_test(x)
 		flags=O_RDONLY;
 #if defined(_HPUX_SOURCE) || defined(linux)
 	if(read_sync)
-		flags |=O_RSYNC|O_SYNC;
+		flags |=O_SYNC;
 #endif
 
 #if ! defined(DONT_HAVE_O_DIRECT)
@@ -15241,7 +15241,7 @@ thread_reverse_read_test(x)
 		flags=O_RDONLY;
 #if defined(_HPUX_SOURCE) || defined(linux)
 	if(read_sync)
-		flags |=O_RSYNC|O_SYNC;
+		flags |=O_SYNC;
 #endif
 
 #if ! defined(DONT_HAVE_O_DIRECT)
@@ -15742,7 +15742,7 @@ thread_stride_read_test(x)
 		flags=O_RDONLY;
 #if defined(_HPUX_SOURCE) || defined(linux)
 	if(read_sync)
-		flags |=O_RSYNC|O_SYNC;
+		flags |=O_SYNC;
 #endif
 #if ! defined(DONT_HAVE_O_DIRECT)
 #if defined(linux) || defined(__AIX__) || defined(IRIX) || defined(IRIX64) || defined(Windows) || defined (__FreeBSD__)
@@ -16365,7 +16365,7 @@ thread_ranread_test(x)
 		flags=O_RDONLY;
 #if defined(_HPUX_SOURCE) || defined(linux)
 	if(read_sync)
-		flags |=O_RSYNC|O_SYNC;
+		flags |=O_SYNC;
 #endif
 
 #if ! defined(DONT_HAVE_O_DIRECT)
@@ -16982,7 +16982,7 @@ thread_ranwrite_test( x)
 #endif
 #if defined(_HPUX_SOURCE) || defined(linux)
 	if(read_sync)
-		flags |=O_RSYNC|O_SYNC;
+		flags |=O_SYNC;
 #endif
 
 #if ! defined(DONT_HAVE_O_DIRECT)
