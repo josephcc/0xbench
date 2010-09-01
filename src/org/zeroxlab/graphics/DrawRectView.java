@@ -41,7 +41,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 
-class DrawRectView extends SurfaceView implements SurfaceHolder.Callback {
+class DrawRectView extends SurfaceView {
 
     class ColoredRect {
         public Rect mRect;
@@ -53,18 +53,13 @@ class DrawRectView extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     private SurfaceHolder mSurfaceHolder;
-    private boolean run = true;
     private ArrayList<ColoredRect> rectengleList = new ArrayList<ColoredRect>();
 
     protected void doDraw() {
-        if (run) {
-            Canvas canvas = mSurfaceHolder.lockCanvas();
-            synchronized(mSurfaceHolder) {
-                generateNewRect();
-                drawAll(canvas);
-            }
-            mSurfaceHolder.unlockCanvasAndPost(canvas);
-        }
+        Canvas canvas = mSurfaceHolder.lockCanvas();
+        generateNewRect();
+        drawAll(canvas);
+        mSurfaceHolder.unlockCanvasAndPost(canvas);
     }
 
     private void drawAll(Canvas canvas) {
@@ -82,33 +77,20 @@ class DrawRectView extends SurfaceView implements SurfaceHolder.Callback {
         Random mRandom = new Random();
         int height = getHeight();
         int width  = getWidth();
-        Log.e("XXX", "wh: " + width + ", " + height);
-        Log.e("XXX", "rand: " + mRandom.nextInt());
 
         int cx = (int)((mRandom.nextInt() % (width*0.8) ) + (width*0.1));
         int cy = (int)((mRandom.nextInt() % (height*0.8) ) + (height*0.1));
-        int hw = (int)(mRandom.nextInt() % (width*0.4) + width*0.1)/2;
-        int hh = (int)(mRandom.nextInt() % (height*0.4) + height*0.1)/2;
+        int hw = (int)(mRandom.nextInt() % (width*0.4) + width*0.2)/2;
+        int hh = (int)(mRandom.nextInt() % (height*0.4) + height*0.2)/2;
 
-        int color = (0x0051515 | mRandom.nextInt() ) & 0x00FFFFFF | 0x77000000; 
+        int color = (0x00252525 | mRandom.nextInt() ) & 0x00FFFFFF | 0x77000000; 
 
         rectengleList.add(new ColoredRect(color, cx-hw, cy-hh, cx+hw, cy+hh));
     }
 
     public DrawRectView(Context context, AttributeSet attrs) {
         super(context, attrs);
-
         mSurfaceHolder = getHolder();
-
-        setFocusable(true);
-    }
-
-    public void surfaceCreated(SurfaceHolder holder) {
-    }
-    public void surfaceDestroyed(SurfaceHolder holder) {
-        run = false;
-    }
-    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
     }
 }
 
