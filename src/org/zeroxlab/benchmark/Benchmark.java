@@ -102,6 +102,7 @@ public class Benchmark extends Activity implements View.OnClickListener {
         Case libUbench = new NativeCaseUbench();
 
         mCases.add(new CaseDrawRect());
+        mCases.add(new CaseDrawArc());
         mCases.add(libUbench);
         // mflops
         mCases.add(arith);
