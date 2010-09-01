@@ -51,7 +51,7 @@ public class CaseDrawText extends Case{
     }
 
     public String getDescription() {
-        return "call canvas.drawText to draw circle for " + TextRound + " times";
+        return "call canvas.drawText to draw text for " + TextRound + " times";
     }
 
     @Override

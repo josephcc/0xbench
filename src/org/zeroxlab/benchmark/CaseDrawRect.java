@@ -51,7 +51,7 @@ public class CaseDrawRect extends Case{
     }
 
     public String getDescription() {
-        return "call canvas.drawRect to draw circle for " + RectRound + " times";
+        return "call canvas.drawRect to draw rectengle for " + RectRound + " times";
     }
 
     @Override

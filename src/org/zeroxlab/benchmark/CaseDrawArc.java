@@ -51,7 +51,7 @@ public class CaseDrawArc extends Case{
     }
 
     public String getDescription() {
-        return "call canvas.drawArc to draw circle for " + ArcRound + " times";
+        return "call canvas.drawArc to draw arc for " + ArcRound + " times";
     }
 
     @Override
