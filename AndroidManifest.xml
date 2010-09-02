@@ -167,6 +167,15 @@
 	</intent-filter>
 	</activity>
 
+	<activity
+	android:name="org.zeroxlab.graphics.DrawCircle2"
+	android:screenOrientation="portrait"
+	>
+	<intent-filter>
+	<action android:name="android.intent.action.MAIN" />
+	</intent-filter>
+	</activity>
+
     </application>
     <uses-sdk android:minSdkVersion="7" />
 </manifest>

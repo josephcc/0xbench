@@ -104,6 +104,7 @@ public class Benchmark extends Activity implements View.OnClickListener {
         mCases.add(new CaseDrawRect());
         mCases.add(new CaseDrawArc());
         mCases.add(new CaseDrawText());
+        mCases.add(new CaseDrawCircle2());
         mCases.add(libUbench);
         // mflops
         mCases.add(arith);
