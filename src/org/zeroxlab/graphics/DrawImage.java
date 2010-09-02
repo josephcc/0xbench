@@ -28,16 +28,18 @@ import android.graphics.Paint;
 
 import android.os.Bundle;
 import android.view.View;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
-import org.zeroxlab.graphics.DrawArcView;
+import org.zeroxlab.graphics.DrawImageView;
 
-public class DrawArc extends Tester {
+public class DrawImage extends Tester {
     /** Called when the activity is first created. */
 
-    private DrawArcView mView;
+    private DrawImageView mView;
 
     public String getTag() {
-        return "DrawArc";
+        return "DrawImage";
     }
 
     public int sleepBeforeStart() {
@@ -56,9 +58,11 @@ public class DrawArc extends Tester {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.arc);
+        setContentView(R.layout.image);
 
-        mView = (DrawArcView) findViewById(R.id.arc);
+        mView = (DrawImageView) findViewById(R.id.image);
+        Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.icon);
+        mView.setImage(bmp);
 
         startTester();
     }
