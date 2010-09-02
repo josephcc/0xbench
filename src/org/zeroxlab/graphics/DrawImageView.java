@@ -47,11 +47,15 @@ import java.util.Random;
 
 class DrawImageView extends SurfaceView {
 
+    private final int COL = 5;
+    private final int ROW = 9;
+
     private SurfaceHolder mSurfaceHolder;
-    private int position[] = {0,0,0,0,0};
-    private boolean direction[] = {true,true,true,true,true};
+    private float position[] = new float[ROW];
+    private boolean direction[] = new boolean[ROW];
     private Bitmap mBitmap;
     private Paint bgPaint;
+
 
     protected void setImage(Bitmap bmp) {
         mBitmap = bmp;
@@ -64,15 +68,18 @@ class DrawImageView extends SurfaceView {
     }
 
     private void drawImage(Canvas canvas) {
-        canvas.drawRect(0,0,getWidth(),getHeight(),bgPaint);
+        int w = getWidth();
+        int h = getHeight();
+        canvas.drawRect(0,0,w,h,bgPaint);
 
-        for(int x=0; x<5; x++) {
+        for(int x=0; x<ROW; x++) {
             int speed = (x+1) * 2;
-
-            canvas.drawBitmap(mBitmap, (getWidth() - mBitmap.getWidth())/2, position[x], null);
+            
+            for(int j=0; j<COL; j++)
+                canvas.drawBitmap(mBitmap, null, new RectF((w/(float)COL)*j, position[x], (w/(float)COL)*(j+1), position[x]+(w/(float)COL)), null);
             if(direction[x]) {
                 position[x] += speed;
-                if (position[x] + mBitmap.getHeight() >= getHeight())
+                if (position[x] + (w/(float)COL) >= getHeight())
                     direction[x] = !direction[x];
             } else {
                 position[x] -= speed;
@@ -89,6 +96,11 @@ class DrawImageView extends SurfaceView {
         bgPaint = new Paint();
         bgPaint.setColor(Color.BLACK);
         bgPaint.setStyle(Paint.Style.FILL);
+
+        for(int i=0; i<ROW; i++) {
+            position[i] = 0;
+            direction[i] = true;
+        }
     }
 }
 

@@ -55,18 +55,29 @@ class DrawArcView extends SurfaceView {
     }
 
     private void drawArc(Canvas canvas) {
-        int color = (0x00252525 | new Random().nextInt() ) | Color.BLACK; 
+        if (angle > 360) angle = 0;
+
+        int color = (0x00252525 | new Random().nextInt() ) | Color.BLACK;
         Paint p = new Paint();
         p.setAntiAlias(false);
         p.setStyle(Paint.Style.FILL);
         p.setColor(color);
 
-        canvas.drawArc(new RectF(0,0, getWidth(), getHeight()), 0, angle, center, p);
-        center = !center;
-        angle += step;
-        if (angle >= 360) {
-            angle = 0;
+        canvas.drawArc(new RectF(0,0, getWidth(), getHeight()), 0, angle, true, p);
+
+        for(int j=0; j<3; j++) for(int x=0; x<4; x++) for(int y=0; y<4; y++) {
+            color = (0x88252525 | new Random().nextInt() );
+            p = new Paint();
+            p.setAntiAlias(false);
+            p.setStyle(Paint.Style.FILL);
+            p.setColor(color);
+
+            if(x%2==0)
+                canvas.drawArc(new RectF( x*getWidth()/4, y*getHeight()/4, (1+x)*getWidth()/4, (1+y)*getHeight()/4), 0, angle, (x+y)%2 == 0, p);
+            else
+                canvas.drawArc(new RectF( x*getWidth()/4, y*getHeight()/4, (1+x)*getWidth()/4, (1+y)*getHeight()/4), 0, -angle, (x+y)%2 == 0, p);
         }
+        angle += step;
     }
 
     public DrawArcView(Context context, AttributeSet attrs) {

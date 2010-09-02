@@ -52,22 +52,26 @@ class DrawCircle2View extends SurfaceView {
     }
 
     private void drawCircle(Canvas canvas) {
-        Random mRandom = new Random();
 
-        int color = (0x00252525 | mRandom.nextInt() ) | Color.BLACK; 
-        Paint p = new Paint();
-        p.setAntiAlias(false);
-        p.setStyle(Paint.Style.FILL);
-        p.setColor(color);
+        Random mRandom = new Random();
 
         int height = getHeight();
         int width  = getWidth();
 
         int cx = (int)((mRandom.nextInt() % (width*0.8) ) + (width*0.1));
         int cy = (int)((mRandom.nextInt() % (height*0.8) ) + (height*0.1));
-        int  r = (int)((mRandom.nextInt() % (width*0.4) ) + (width*0.1));
+        int  r = (int)((mRandom.nextInt() % (width*0.3) ) + (width*0.2));
 
-        canvas.drawCircle(cx, cy, r, p);
+        int color;
+        Paint p;
+        for(int i=6; i>=0; i--) {
+            color = (0x33252525 | mRandom.nextInt()); 
+            p = new Paint();
+            p.setAntiAlias(true);
+            p.setStyle(Paint.Style.FILL);
+            p.setColor(color);
+            canvas.drawCircle(cx, cy, (int)(r*(1 + i/10.0)), p);
+        }
     }
 
     public DrawCircle2View(Context context, AttributeSet attrs) {
