@@ -101,18 +101,17 @@ public class Benchmark extends Activity implements View.OnClickListener {
         Case libMicro = new NativeCaseMicro();
         Case libUbench = new NativeCaseUbench();
 
-        mCases.add(new CaseDrawImage());
-        mCases.add(new CaseDrawRect());
-        mCases.add(new CaseDrawArc());
-        mCases.add(new CaseDrawText());
-        mCases.add(new CaseDrawCircle2());
-        mCases.add(libUbench);
         // mflops
         mCases.add(arith);
         mCases.add(scimark2);
         // 2d
         mCases.add(canvas);
         mCases.add(circle);
+        mCases.add(new CaseDrawCircle2());
+        mCases.add(new CaseDrawRect());
+        mCases.add(new CaseDrawArc());
+        mCases.add(new CaseDrawImage());
+        mCases.add(new CaseDrawText());
         // 3d
         mCases.add(glcube);
         mCases.add(nehe08);
@@ -122,6 +121,7 @@ public class Benchmark extends Activity implements View.OnClickListener {
         mCases.add(gc);
         // native
         mCases.add(libMicro);
+        mCases.add(libUbench);
 
         initViews();
 
@@ -132,7 +132,6 @@ public class Benchmark extends Activity implements View.OnClickListener {
             mTouchable = false;
             initAuto();
         }
-
     }
 
     @Override
