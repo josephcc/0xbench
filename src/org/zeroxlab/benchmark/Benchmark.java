@@ -405,12 +405,12 @@ public class Benchmark extends TabActivity implements View.OnClickListener {
             }
         };
 
-        mTabHost.addTab(mTabHost.newTabSpec(MAIN).setIndicator(MAIN).setContent(mTCF));
-        mTabHost.addTab(mTabHost.newTabSpec(D2).setIndicator(D2).setContent(mTCF));
-        mTabHost.addTab(mTabHost.newTabSpec(D3).setIndicator(D3).setContent(mTCF));
-        mTabHost.addTab(mTabHost.newTabSpec(MATH).setIndicator(MATH).setContent(mTCF));
-        mTabHost.addTab(mTabHost.newTabSpec(VM).setIndicator(VM).setContent(mTCF));
-        mTabHost.addTab(mTabHost.newTabSpec(NATIVE).setIndicator(NATIVE).setContent(mTCF));
+        mTabHost.addTab(mTabHost.newTabSpec(MAIN).setIndicator(MAIN, getResources().getDrawable(R.drawable.ic_eye)).setContent(mTCF));
+        mTabHost.addTab(mTabHost.newTabSpec(D2).setIndicator(D2, getResources().getDrawable(R.drawable.ic_2d)).setContent(mTCF));
+        mTabHost.addTab(mTabHost.newTabSpec(D3).setIndicator(D3, getResources().getDrawable(R.drawable.ic_3d)).setContent(mTCF));
+        mTabHost.addTab(mTabHost.newTabSpec(MATH).setIndicator(MATH, getResources().getDrawable(R.drawable.ic_pi)).setContent(mTCF));
+        mTabHost.addTab(mTabHost.newTabSpec(VM).setIndicator(VM, getResources().getDrawable(R.drawable.ic_vm)).setContent(mTCF));
+        mTabHost.addTab(mTabHost.newTabSpec(NATIVE).setIndicator(NATIVE, getResources().getDrawable(R.drawable.ic_c)).setContent(mTCF));
 
     }
 
