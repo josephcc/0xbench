@@ -48,8 +48,18 @@ import android.os.PowerManager.WakeLock;
 
 import android.os.Environment;
 
+import android.widget.TabWidget;
+import android.widget.TabHost;
+import android.widget.TabHost.TabContentFactory;
+
+import android.app.TabActivity;
+import android.view.ViewGroup;
+
+import java.util.HashSet;
+import java.util.HashMap;
+
 /* Construct a basic UI */
-public class Benchmark extends Activity implements View.OnClickListener {
+public class Benchmark extends TabActivity implements View.OnClickListener {
 
     public final static String TAG     = "Benchmark";
     public final static String PACKAGE = "org.zeroxlab.benchmark";
@@ -68,11 +78,28 @@ public class Benchmark extends Activity implements View.OnClickListener {
 
     private ScrollView   mScrollView;
     private LinearLayout mLinearLayout;
+    private LinearLayout mMainView;
+    private TabHost mTabHost;
 
     LinkedList<Case> mCases;
     boolean mTouchable = true;
 
     private WakeLock mWakeLock;
+
+    private final String MAIN = "Main";
+    private final String D2 = "2D";
+    private final String D3 = "3D";
+    private final String MATH = "Math";
+    private final String VM = "VM";
+    private final String NATIVE = "Native";
+
+    private CheckBox d2CheckBox;
+    private CheckBox d3CheckBox;
+    private CheckBox mathCheckBox;
+    private CheckBox vmCheckBox;
+    private CheckBox nativeCheckBox;
+
+    private HashMap< String, HashSet<Case> > mCategory = new HashMap< String, HashSet<Case> >();
 
     @Override
     protected void onDestroy() {
@@ -101,37 +128,74 @@ public class Benchmark extends Activity implements View.OnClickListener {
         Case libMicro = new NativeCaseMicro();
         Case libUbench = new NativeCaseUbench();
 
+        Case dc2 = new CaseDrawCircle2();
+        Case dr = new CaseDrawRect();
+        Case da = new CaseDrawArc();
+        Case di = new CaseDrawImage();
+        Case dt = new CaseDrawText();
+
+        mCategory.put(D2, new HashSet<Case>());
+        mCategory.put(D3, new HashSet<Case>());
+        mCategory.put(MATH, new HashSet<Case>());
+        mCategory.put(VM, new HashSet<Case>());
+        mCategory.put(NATIVE, new HashSet<Case>());
+
         // mflops
         mCases.add(arith);
         mCases.add(scimark2);
+        mCategory.get(MATH).add(arith);
+        mCategory.get(MATH).add(scimark2);
+
         // 2d
         mCases.add(canvas);
         mCases.add(circle);
-        mCases.add(new CaseDrawCircle2());
-        mCases.add(new CaseDrawRect());
-        mCases.add(new CaseDrawArc());
-        mCases.add(new CaseDrawImage());
-        mCases.add(new CaseDrawText());
+        mCases.add(dc2);
+        mCases.add(dr);
+        mCases.add(da);
+        mCases.add(di);
+        mCases.add(dt);
+
+        mCategory.get(D2).add(canvas);
+        mCategory.get(D2).add(circle);
+        mCategory.get(D2).add(dc2);
+        mCategory.get(D2).add(dr);
+        mCategory.get(D2).add(da);
+        mCategory.get(D2).add(di);
+        mCategory.get(D2).add(dt);
+
         // 3d
         mCases.add(glcube);
         mCases.add(nehe08);
         mCases.add(nehe16);
         mCases.add(teapot);
+
+        mCategory.get(D3).add(glcube);
+        mCategory.get(D3).add(nehe08);
+        mCategory.get(D3).add(nehe16);
+        mCategory.get(D3).add(teapot);
+
         // vm
         mCases.add(gc);
+        mCategory.get(VM).add(gc);
+
         // native
         mCases.add(libMicro);
         mCases.add(libUbench);
 
+        mCategory.get(NATIVE).add(libMicro);
+        mCategory.get(NATIVE).add(libUbench);
+
         initViews();
 
         Intent intent = getIntent();
+        /*
         if (intent.getBooleanExtra("AUTO", false)) {
             ImageView head = (ImageView)findViewById(R.id.banner_img);
             head.setImageResource(R.drawable.icon_auto);
             mTouchable = false;
             initAuto();
         }
+        */
     }
 
     @Override
@@ -212,6 +276,7 @@ public class Benchmark extends Activity implements View.OnClickListener {
     }
 
     private void initViews() {
+        /*
         mRun = (Button)findViewById(R.id.btn_run);
         mRun.setOnClickListener(this);
 
@@ -220,32 +285,133 @@ public class Benchmark extends Activity implements View.OnClickListener {
         mShow.setClickable(false);
 
         mLinearLayout = (LinearLayout)findViewById(R.id.list_container);
+        mMainView = (LinearLayout)findViewById(R.id.main_view);
 
         mBannerInfo = (TextView)findViewById(R.id.banner_info);
         mBannerInfo.setText("Hello!\nSelect cases to Run.\nUploaded results:\nhttp://0xbenchmark.appspot.com");
+        */
+
+        mTabHost = getTabHost();
 
         int length = mCases.size();
         mCheckList = new CheckBox[length];
         mDesc      = new TextView[length];
-        boolean gray = true;
         for (int i = 0; i < length; i++) {
             mCheckList[i] = new CheckBox(this);
             mCheckList[i].setText(mCases.get(i).getTitle());
-            mLinearLayout.addView(mCheckList[i]);
             mDesc[i] = new TextView(this);
             mDesc[i].setText(mCases.get(i).getDescription());
             mDesc[i].setTextSize(mDesc[i].getTextSize() - 2);
             mDesc[i].setPadding(42, 0, 10, 10);
-            mLinearLayout.addView(mDesc[i]);
-
-            if (gray) {
-            int color = 0xFF333333; //ARGB
-            mCheckList[i].setBackgroundColor(color);
-            mDesc[i].setBackgroundColor(color);
-            }
-
-            gray = !gray;
         }
+
+        TabContentFactory mTCF = new TabContentFactory() {
+            public View createTabContent(String tag) {
+                ViewGroup.LayoutParams fillParent = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT);
+                ViewGroup.LayoutParams fillWrap = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                LinearLayout.LayoutParams wrapContent = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                wrapContent.gravity = Gravity.CENTER;
+                LinearLayout.LayoutParams weightedFillWrap = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                weightedFillWrap.weight = 1;
+
+                if(tag.equals(MAIN)) {
+
+                    LinearLayout mMainView = new LinearLayout(Benchmark.this);
+                    mMainView.setOrientation(1);
+                        ScrollView mListScroll = new ScrollView(Benchmark.this);
+
+                            LinearLayout mMainViewContainer = new LinearLayout(Benchmark.this);
+                            mMainViewContainer.setOrientation(1);
+                                ImageView mIconView = new ImageView(Benchmark.this);
+                                mIconView.setImageResource(R.drawable.icon);
+
+                                TextView mBannerInfo = new TextView(Benchmark.this);
+                                mBannerInfo.setText("0xbench\nSelect benchmarks in the tabs,\nor batch select:");
+
+                                d2CheckBox = new CheckBox(Benchmark.this);
+                                d2CheckBox.setText(D2);
+                                d2CheckBox.setOnClickListener(Benchmark.this);
+
+                                d3CheckBox = new CheckBox(Benchmark.this);
+                                d3CheckBox.setText(D3);
+                                d3CheckBox.setOnClickListener(Benchmark.this);
+
+                                mathCheckBox = new CheckBox(Benchmark.this);
+                                mathCheckBox.setText(MATH);
+                                mathCheckBox.setOnClickListener(Benchmark.this);
+
+                                vmCheckBox = new CheckBox(Benchmark.this);
+                                vmCheckBox.setText(VM);
+                                vmCheckBox.setOnClickListener(Benchmark.this);
+
+                                nativeCheckBox = new CheckBox(Benchmark.this);
+                                nativeCheckBox.setText(NATIVE);
+                                nativeCheckBox.setOnClickListener(Benchmark.this);
+
+                                TextView mWebInfo = new TextView(Benchmark.this);
+                                mWebInfo.setText("Uploaded results:\nhttp://0xbenchmark.appspot.com");
+
+                                LinearLayout mButtonContainer = new LinearLayout(Benchmark.this);
+                                    mRun = new Button(Benchmark.this);
+                                    mShow = new Button(Benchmark.this);
+                                    mRun.setText("Run");
+                                    mShow.setText("Show");
+                                    mRun.setOnClickListener(Benchmark.this);
+                                    mShow.setOnClickListener(Benchmark.this);
+                                mButtonContainer.addView(mRun, weightedFillWrap);
+                                mButtonContainer.addView(mShow, weightedFillWrap);
+                            mMainViewContainer.addView(mIconView,wrapContent);
+                            mMainViewContainer.addView(mBannerInfo);
+                            mMainViewContainer.addView(d2CheckBox);
+                            mMainViewContainer.addView(d3CheckBox);
+                            mMainViewContainer.addView(mathCheckBox);
+                            mMainViewContainer.addView(vmCheckBox);
+                            mMainViewContainer.addView(nativeCheckBox);
+                            mMainViewContainer.addView(mWebInfo);
+                            mMainViewContainer.addView(mButtonContainer, fillWrap);
+                        mListScroll.addView(mMainViewContainer, fillParent);
+                    mMainView.addView(mListScroll, fillWrap);
+
+                    return mMainView;
+
+                }
+
+                LinearLayout mMainView = new LinearLayout(Benchmark.this);
+                mMainView.setOrientation(1);
+                    ScrollView mListScroll = new ScrollView(Benchmark.this);
+                        LinearLayout mListContainer = new LinearLayout(Benchmark.this);
+                        mListContainer.setOrientation(1);
+                    mListScroll.addView(mListContainer, fillParent);
+                mMainView.addView(mListScroll, fillWrap);
+
+                boolean gray = true;
+                int length = mCases.size();
+                Log.i(TAG, "L: " + length);
+                Log.i(TAG, "TCF: " + tag);
+                for (int i = 0; i < length; i++) {
+                    if(!mCategory.get(tag).contains(mCases.get(i)))
+                        continue;
+                    Log.i(TAG, "Add: " + i); 
+                    mListContainer.addView(mCheckList[i], fillWrap);
+                    mListContainer.addView(mDesc[i], fillWrap);
+                    if (gray) {
+                        int color = 0xFF333333; //ARGB
+                        mCheckList[i].setBackgroundColor(color);
+                        mDesc[i].setBackgroundColor(color);
+                    }
+                    gray = !gray;
+                }
+                return mMainView;
+            }
+        };
+
+        mTabHost.addTab(mTabHost.newTabSpec(MAIN).setIndicator(MAIN).setContent(mTCF));
+        mTabHost.addTab(mTabHost.newTabSpec(D2).setIndicator(D2).setContent(mTCF));
+        mTabHost.addTab(mTabHost.newTabSpec(D3).setIndicator(D3).setContent(mTCF));
+        mTabHost.addTab(mTabHost.newTabSpec(MATH).setIndicator(MATH).setContent(mTCF));
+        mTabHost.addTab(mTabHost.newTabSpec(VM).setIndicator(VM).setContent(mTCF));
+        mTabHost.addTab(mTabHost.newTabSpec(NATIVE).setIndicator(NATIVE).setContent(mTCF));
+
     }
 
     public void onClick(View v) {
@@ -270,6 +436,14 @@ public class Benchmark extends Activity implements View.OnClickListener {
             intent.putExtra(Report.XML, mXMLResult);
             intent.setClassName(Report.packageName(), Report.fullClassName());
             startActivity(intent);
+        } else if (v==d2CheckBox || v==d3CheckBox || v==mathCheckBox || v==vmCheckBox || v==nativeCheckBox) {
+            int length = mCases.size();
+            String tag = ((CheckBox)v).getText().toString();
+            for (int i = 0; i < length; i++) {
+                if(!mCategory.get(tag).contains(mCases.get(i)))
+                    continue;
+                mCheckList[i].setChecked(((CheckBox)v).isChecked());
+            }
         }
     }
 
@@ -285,7 +459,7 @@ public class Benchmark extends Activity implements View.OnClickListener {
         }
 
         if (finish) {
-            mBannerInfo.setText("Benchmarking complete.\nClick Show to upload.\nUploaded results:\nhttp://0xbenchmark.appspot.com");
+//            mBannerInfo.setText("Benchmarking complete.\nClick Show to upload.\nUploaded results:\nhttp://0xbenchmark.appspot.com");
             String result = getResult();
             writeToSDCard(mOutputFile, result);
 

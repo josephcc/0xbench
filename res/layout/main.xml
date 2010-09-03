@@ -1,56 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent" 
-	android:layout_height="fill_parent"
-	android:orientation="vertical"
-	>
+<TabHost xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@android:id/tabhost"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:padding="5dp">
+        <TabWidget
+            android:id="@android:id/tabs"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
+        <FrameLayout
+            android:id="@android:id/tabcontent"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:padding="5dp">
+<!--
 
-	<ScrollView android:id="@+id/list_scroller"
-	android:layout_width="fill_parent"
-	android:layout_height="wrap_content"
-	android:layout_weight="5"
-	>
+            <LinearLayout android:id="@+id/main_view"
+                android:layout_width="fill_parent" 
+                android:layout_height="fill_parent"
+                android:orientation="vertical"
+                >
 
-	<LinearLayout android:id="@+id/list_container"
-	android:layout_width="fill_parent"
-	android:layout_height="fill_parent"
-	android:orientation="vertical"
-	>
+                <ScrollView android:id="@+id/list_scroller"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                >
 
-	<ImageView android:id="@+id/banner_img"
-	android:src="@drawable/icon"
-	android:layout_width="wrap_content"
-	android:layout_height="wrap_content"
-	android:layout_weight="1"
-    android:layout_gravity="center"
-	/>
-	<TextView android:id="@+id/banner_info"
-	android:layout_width="fill_parent"
-	android:layout_height="wrap_content"
-	android:layout_weight="1"
-    android:gravity="center"
-	/>
+                <LinearLayout android:id="@+id/list_container"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical"
+                >
 
-	</LinearLayout>
+                <ImageView android:id="@+id/banner_img"
+                android:src="@drawable/icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                />
+                <TextView android:id="@+id/banner_info"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                />
 
-	</ScrollView>
+                </LinearLayout>
 
-	<LinearLayout android:id="@+id/buttons_container"
-	android:layout_width="fill_parent"
-	android:layout_height="wrap_content"
-	>
-	<Button android:id="@+id/btn_run"
-	android:layout_width="fill_parent"
-	android:layout_height="wrap_content"
-	android:layout_weight="1"
-	android:text="@string/btn_run_text"
-	/>
-	<Button android:id="@+id/btn_show"
-	android:layout_width="fill_parent"
-	android:layout_height="wrap_content"
-	android:layout_weight="1"
-	android:text="@string/btn_show_text"
-	/>
-	</LinearLayout>
-</LinearLayout>
+                </ScrollView>
+
+                <LinearLayout android:id="@+id/buttons_container"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                >
+                <Button android:id="@+id/btn_run"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/btn_run_text"
+                />
+                <Button android:id="@+id/btn_show"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/btn_show_text"
+                />
+                </LinearLayout>
+            </LinearLayout>
+-->
+
+
+
+
+
+        </FrameLayout>
+    </LinearLayout>
+</TabHost>
+
 
