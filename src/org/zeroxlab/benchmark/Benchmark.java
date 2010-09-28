@@ -58,6 +58,9 @@ import android.view.ViewGroup;
 import java.util.HashSet;
 import java.util.HashMap;
 
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+
 /* Construct a basic UI */
 public class Benchmark extends TabActivity implements View.OnClickListener {
 
@@ -100,6 +103,8 @@ public class Benchmark extends TabActivity implements View.OnClickListener {
     private CheckBox nativeCheckBox;
 
     private HashMap< String, HashSet<Case> > mCategory = new HashMap< String, HashSet<Case> >();
+
+    private final String trackerUrl = "http://0xbenchmark.appspot.com/static/MobileTracker.html";
 
     @Override
     protected void onDestroy() {
@@ -360,6 +365,17 @@ public class Benchmark extends TabActivity implements View.OnClickListener {
                                     mShow.setOnClickListener(Benchmark.this);
                                 mButtonContainer.addView(mRun, weightedFillWrap);
                                 mButtonContainer.addView(mShow, weightedFillWrap);
+                                WebView mTracker = new WebView(Benchmark.this);
+                                mTracker.clearCache(true);
+                                mTracker.setWebViewClient(new WebViewClient (){
+                                    public void onPageFinished(WebView view, String url){
+                                        Log.i(TAG, "Tracker: " + view.getTitle() + " -> " + url);
+                                    }
+                                    public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+                                        Log.e(TAG, "Track err: " + description);
+                                    }
+                                });
+                                mTracker.loadUrl(trackerUrl);
                             mMainViewContainer.addView(mIconView,wrapContent);
                             mMainViewContainer.addView(mBannerInfo);
                             mMainViewContainer.addView(d2CheckBox);
@@ -369,6 +385,7 @@ public class Benchmark extends TabActivity implements View.OnClickListener {
                             mMainViewContainer.addView(nativeCheckBox);
                             mMainViewContainer.addView(mWebInfo);
                             mMainViewContainer.addView(mButtonContainer, fillWrap);
+                            mMainViewContainer.addView(mTracker, 0,0);
                         mListScroll.addView(mMainViewContainer, fillParent);
                     mMainView.addView(mListScroll, fillWrap);
 
