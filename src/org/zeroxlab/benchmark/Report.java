@@ -62,6 +62,10 @@ public class Report extends Activity implements View.OnClickListener {
         } else {
             mTextView.setText(report);
         }
+
+        if (mXMLResult == null) {
+            mUpload.setEnabled(false);
+        }
     }
 
     public void onClick(View v) {
