@@ -52,6 +52,8 @@ import android.webkit.WebViewClient;
 import android.webkit.WebChromeClient;
 import android.webkit.JsResult;
 import android.graphics.Bitmap;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageInfo;
 
 
 public class Upload extends Activity implements View.OnClickListener {
@@ -161,7 +163,21 @@ public class Upload extends Activity implements View.OnClickListener {
                 eMail = mEmail.getText().toString();
             }
 
+            String versionName = "";
+            int versionCode = 0;
+            int flag = 0;
+            try {
+                PackageInfo pinfo = getPackageManager().getPackageInfo("org.zeroxlab.benchmark", flag);
+                versionCode = pinfo.versionCode;
+                versionName = pinfo.versionName;
+            }
+            catch (PackageManager.NameNotFoundException e) {
+                Log.e(TAG, "PackageManager.NameNotFoundException");
+            }
+
             attr = "";
+            attr += " BenchVersionCode=\"" + String.valueOf(versionCode) + "\"";
+            attr += " BenchVersionName=\"" + versionName + "\"";
             attr += " apiKey=\"" + apiKey + "\"";
             attr += " benchmark=\"" + benchName + "\"";
             _mXML = new StringBuffer(mXML);
