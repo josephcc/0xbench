@@ -378,9 +378,9 @@ public class Benchmark extends TabActivity implements View.OnClickListener {
                                 mTracker.loadUrl(trackerUrl);
                             mMainViewContainer.addView(mIconView,wrapContent);
                             mMainViewContainer.addView(mBannerInfo);
+                            mMainViewContainer.addView(mathCheckBox);
                             mMainViewContainer.addView(d2CheckBox);
                             mMainViewContainer.addView(d3CheckBox);
-                            mMainViewContainer.addView(mathCheckBox);
                             mMainViewContainer.addView(vmCheckBox);
                             mMainViewContainer.addView(nativeCheckBox);
                             mMainViewContainer.addView(mWebInfo);
