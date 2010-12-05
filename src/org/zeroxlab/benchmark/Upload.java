@@ -147,6 +147,20 @@ public class Upload extends Activity implements View.OnClickListener {
 
     }
 
+    private String trimTail(String text) {
+        int index;
+        if (text == null) {
+            return text;
+        }
+        index = text.length() -1;
+        while (text.charAt(index) == ' ') {
+            if (--index < 0) {
+                return "";
+            }
+        }
+        return text.substring(0, index + 1);
+    }
+
     public void onClick(View v) {
         Log.i(TAG, "onclick listener");
         if (v == mSend) {
@@ -159,6 +173,7 @@ public class Upload extends Activity implements View.OnClickListener {
             String eMail = getString(R.string.default_email);
             if (mLogin.isChecked()) {
                 benchName = mBenchName.getText().toString();
+                benchName = trimTail(benchName);
                 apiKey = mAPIKey.getText().toString();
                 eMail = mEmail.getText().toString();
             }
