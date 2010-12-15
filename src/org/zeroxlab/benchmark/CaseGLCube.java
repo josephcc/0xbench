@@ -64,7 +64,7 @@ public class CaseGLCube extends Case{
         }
 
         String result = "";
-        long total = 0;
+        float total = 0;
         int length = mResult.length;
 
         for (int i = 0; i < length; i++) {
