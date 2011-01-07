@@ -61,6 +61,8 @@ import java.util.HashMap;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import android.content.res.Configuration;
+
 /* Construct a basic UI */
 public class Benchmark extends TabActivity implements View.OnClickListener {
 
@@ -86,6 +88,7 @@ public class Benchmark extends TabActivity implements View.OnClickListener {
 
     LinkedList<Case> mCases;
     boolean mTouchable = true;
+    private int orientation = Configuration.ORIENTATION_UNDEFINED;
 
     private WakeLock mWakeLock;
 
@@ -115,6 +118,7 @@ public class Benchmark extends TabActivity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        orientation = getResources().getConfiguration().orientation;
         PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
         mWakeLock = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, TAG);
         mWakeLock.acquire();
@@ -515,6 +519,7 @@ public class Benchmark extends TabActivity implements View.OnClickListener {
         xml += " manufacturer=\"" + Build.MANUFACTURER.replace(' ', '_') + "\"";
         xml += " model=\"" + Build.MODEL.replace(' ', '_') + ":" + Build.DISPLAY + "\"";
         xml += " buildTimestamp=\"" + sdf.format(new Date(Build.TIME)) + "\"";
+        xml += " orientation=\"" + Integer.toString(orientation) + "\"";
 
         try { // read kernel version
             BufferedReader procVersion = new BufferedReader( new FileReader("/proc/version") );

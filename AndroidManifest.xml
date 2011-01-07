@@ -17,7 +17,7 @@
 	<activity
 	android:name="Benchmark"
 	android:label="0xBenchmark"
-	android:screenOrientation="portrait"
+	android:screenOrientation="nosensor"
 	>
 	<intent-filter>
 	<action android:name="android.intent.action.MAIN" />
@@ -27,7 +27,7 @@
 
 	<activity
 	android:name="TesterCanvas"
-	android:screenOrientation="portrait"
+	android:screenOrientation="nosensor"
 	>
 	<intent-filter>
 	<action android:name="android.intent.action.MAIN" />
@@ -35,7 +35,7 @@
 	</activity>
 	<activity
 	android:name="org.zeroxlab.kubench.Kubench"
-	android:screenOrientation="portrait"
+	android:screenOrientation="nosensor"
 	>
 	<intent-filter>
 	<action android:name="android.intent.action.MAIN" />
@@ -43,7 +43,7 @@
 	</activity>
 	<activity
 	android:name="org.zeroxlab.graphics.DrawCircle"
-	android:screenOrientation="portrait"
+	android:screenOrientation="nosensor"
 	>
 	<intent-filter>
 	<action android:name="android.intent.action.MAIN" />
@@ -52,7 +52,7 @@
 
 	<activity
 	android:name="org.zeroxlab.benchmark.TesterGC"
-	android:screenOrientation="portrait"
+	android:screenOrientation="nosensor"
 	>
 	<intent-filter>
 	<action android:name="android.intent.action.MAIN" />
@@ -61,7 +61,7 @@
 
 	<activity
 	android:name="org.zeroxlab.benchmark.TesterArithmetic"
-	android:screenOrientation="portrait"
+	android:screenOrientation="nosensor"
 	>
 	<intent-filter>
 	<action android:name="android.intent.action.MAIN" />
@@ -70,7 +70,7 @@
 
 	<activity
 	android:name="org.zeroxlab.benchmark.TesterScimark2"
-	android:screenOrientation="portrait"
+	android:screenOrientation="nosensor"
 	>
 	<intent-filter>
 	<action android:name="android.intent.action.MAIN" />
@@ -79,7 +79,7 @@
 
 	<activity
 	android:name="org.zeroxlab.benchmark.Report"
-	android:screenOrientation="portrait"
+	android:screenOrientation="nosensor"
 	>
 	<intent-filter>
 	<action android:name="android.intent.action.MAIN" />
@@ -88,7 +88,7 @@
 
 	<activity
 	android:name="org.zeroxlab.benchmark.Upload"
-	android:screenOrientation="portrait"
+	android:screenOrientation="nosensor"
 	>
 	<intent-filter>
 	<action android:name="android.intent.action.MAIN" />
@@ -97,7 +97,7 @@
 
 	<activity
 	android:name="com.nea.nehe.lesson08.Run"
-	android:screenOrientation="portrait"
+	android:screenOrientation="nosensor"
 	>
 	<intent-filter>
 	<action android:name="android.intent.action.MAIN" />
@@ -106,7 +106,7 @@
 
 	<activity
 	android:name="com.nea.nehe.lesson16.Run"
-	android:screenOrientation="portrait"
+	android:screenOrientation="nosensor"
 	>
 	<intent-filter>
 	<action android:name="android.intent.action.MAIN" />
@@ -115,7 +115,7 @@
 
 	<activity
 	android:name="org.itri.teapot.TeapotES"
-	android:screenOrientation="portrait"
+	android:screenOrientation="nosensor"
 	>
 	<intent-filter>
 	<action android:name="android.intent.action.MAIN" />
@@ -124,7 +124,7 @@
 
 	<activity
 	android:name="org.opensolaris.hub.libmicro.NativeTesterMicro"
-	android:screenOrientation="portrait"
+	android:screenOrientation="nosensor"
 	>
 	<intent-filter>
 	<action android:name="android.intent.action.MAIN" />
@@ -133,7 +133,7 @@
 
 	<activity
 	android:name="org.zeroxlab.byteunix.NativeTesterUbench"
-	android:screenOrientation="portrait"
+	android:screenOrientation="nosensor"
 	>
 	<intent-filter>
 	<action android:name="android.intent.action.MAIN" />
@@ -142,7 +142,7 @@
 
 	<activity
 	android:name="org.zeroxlab.graphics.DrawRect"
-	android:screenOrientation="portrait"
+	android:screenOrientation="nosensor"
 	>
 	<intent-filter>
 	<action android:name="android.intent.action.MAIN" />
@@ -151,7 +151,7 @@
 
 	<activity
 	android:name="org.zeroxlab.graphics.DrawArc"
-	android:screenOrientation="portrait"
+	android:screenOrientation="nosensor"
 	>
 	<intent-filter>
 	<action android:name="android.intent.action.MAIN" />
@@ -160,7 +160,7 @@
 
 	<activity
 	android:name="org.zeroxlab.graphics.DrawText"
-	android:screenOrientation="portrait"
+	android:screenOrientation="nosensor"
 	>
 	<intent-filter>
 	<action android:name="android.intent.action.MAIN" />
@@ -169,7 +169,7 @@
 
 	<activity
 	android:name="org.zeroxlab.graphics.DrawCircle2"
-	android:screenOrientation="portrait"
+	android:screenOrientation="nosensor"
 	>
 	<intent-filter>
 	<action android:name="android.intent.action.MAIN" />
@@ -178,7 +178,7 @@
 
 	<activity
 	android:name="org.zeroxlab.graphics.DrawImage"
-	android:screenOrientation="portrait"
+	android:screenOrientation="nosensor"
 	>
 	<intent-filter>
 	<action android:name="android.intent.action.MAIN" />
