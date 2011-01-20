@@ -60,6 +60,7 @@ public class Upload extends Activity implements View.OnClickListener {
 
     public final static String TAG = "Upload";
     public final static String XML = "XML";
+    public final static String AUTOUPLOAD = "AUTOUPLOAD";
 
     public final static String mMobileLoginUrl = "http://0xbenchmark.appspot.com/mobileLogin";
 
@@ -83,6 +84,7 @@ public class Upload extends Activity implements View.OnClickListener {
     Handler mLoginHandler;
 
     boolean mLogedin = false;
+    boolean mAutoUpload = false;
 
     @Override
     protected void onCreate(Bundle bundle) {
@@ -114,6 +116,7 @@ public class Upload extends Activity implements View.OnClickListener {
 
         Intent intent = getIntent();
         mXML = intent.getStringExtra(XML);
+        mAutoUpload = intent.getBooleanExtra(AUTOUPLOAD, false);
 
         mUploadHandler = new Handler() {
             public void handleMessage(Message msg) {
@@ -144,7 +147,9 @@ public class Upload extends Activity implements View.OnClickListener {
             }
         };
 
-
+        if (mAutoUpload) {
+            onClick(mSend);
+        }
     }
 
     private String trimTail(String text) {

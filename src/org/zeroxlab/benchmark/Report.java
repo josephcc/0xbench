@@ -34,11 +34,13 @@ public class Report extends Activity implements View.OnClickListener {
     public final static String TAG = "Repord";
     public final static String REPORT = "REPORT";
     public final static String XML = "XML";
+    public final static String AUTOUPLOAD = "AUTOUPLOAD";
     private TextView mTextView;
 
     private Button mUpload;
     private Button mBack;
     private String mXMLResult;
+    boolean mAutoUpload = false;
 
     @Override
     protected void onCreate(Bundle bundle) {
@@ -56,6 +58,7 @@ public class Report extends Activity implements View.OnClickListener {
         Intent intent = getIntent();
         String report = intent.getStringExtra(REPORT);
         mXMLResult = intent.getStringExtra(XML);
+        mAutoUpload = intent.getBooleanExtra(AUTOUPLOAD, false);
 
         if (report == null || report.equals("")) {
             mTextView.setText("oooops...report not found");
@@ -66,6 +69,10 @@ public class Report extends Activity implements View.OnClickListener {
         if (mXMLResult == null) {
             mUpload.setEnabled(false);
         }
+
+        if (mAutoUpload) {
+            onClick(mUpload);
+        }
     }
 
     public void onClick(View v) {
@@ -74,6 +81,9 @@ public class Report extends Activity implements View.OnClickListener {
         } else if (v == mUpload) {
             Intent intent = new Intent();
             intent.putExtra(Upload.XML, mXMLResult);
+            if (mAutoUpload) {
+                intent.putExtra(Upload.AUTOUPLOAD, true);
+            }
             intent.setClassName(Upload.packageName(), Upload.fullClassName());
             
             startActivity(intent);

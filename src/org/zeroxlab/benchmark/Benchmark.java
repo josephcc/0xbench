@@ -109,6 +109,14 @@ public class Benchmark extends TabActivity implements View.OnClickListener {
 
     private final String trackerUrl = "http://0xbenchmark.appspot.com/static/MobileTracker.html";
 
+    boolean mAutoRun = false;
+    boolean mCheckMath = false;
+    boolean mCheck2D = false;
+    boolean mCheck3D = false;
+    boolean mCheckVM = false;
+    boolean mCheckNative = false;
+    boolean mAutoUpload = false;
+
     @Override
     protected void onDestroy() {
         super.onPause();
@@ -197,6 +205,36 @@ public class Benchmark extends TabActivity implements View.OnClickListener {
         initViews();
 
         Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        if (bundle != null) {
+            mAutoRun = bundle.getBoolean("autorun");
+            mCheckMath = bundle.getBoolean("math");
+            mCheck2D = bundle.getBoolean("2d");
+            mCheck3D = bundle.getBoolean("3d");
+            mCheckVM = bundle.getBoolean("vm");
+            mCheckNative = bundle.getBoolean("native");
+            mAutoUpload = bundle.getBoolean("autoupload");
+        }
+
+        if (mCheckMath && !mathCheckBox.isChecked()) {
+            mathCheckBox.performClick();
+        }
+
+        if (mCheck2D && !d2CheckBox.isChecked()) {
+            d2CheckBox.performClick();
+        }
+
+        if (mCheck3D && !d3CheckBox.isChecked()) {
+            d3CheckBox.performClick();
+        }
+
+        if (mCheckVM && !vmCheckBox.isChecked()) {
+            vmCheckBox.performClick();
+        }
+
+        if (mCheckNative && !nativeCheckBox.isChecked()) {
+            nativeCheckBox.performClick();
+        }
         /*
         if (intent.getBooleanExtra("AUTO", false)) {
             ImageView head = (ImageView)findViewById(R.id.banner_img);
@@ -205,6 +243,9 @@ public class Benchmark extends TabActivity implements View.OnClickListener {
             initAuto();
         }
         */
+        if (mAutoRun) {
+            onClick(mRun);
+        }
     }
 
     @Override
@@ -455,6 +496,10 @@ public class Benchmark extends TabActivity implements View.OnClickListener {
             Intent intent = new Intent();
             intent.putExtra(Report.REPORT, result);
             intent.putExtra(Report.XML, mXMLResult);
+            if (mAutoUpload) {
+                intent.putExtra(Report.AUTOUPLOAD, true);
+                mAutoUpload = false;
+            }
             intent.setClassName(Report.packageName(), Report.fullClassName());
             startActivity(intent);
         } else if (v==d2CheckBox || v==d3CheckBox || v==mathCheckBox || v==vmCheckBox || v==nativeCheckBox) {
