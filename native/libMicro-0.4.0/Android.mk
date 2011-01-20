@@ -31,6 +31,7 @@ LOCAL_SRC_FILES := \
 	benchmark_optswitch.c \
 	benchmark_result.c
 
+LOCAL_MODULE_TAGS := optional
 LOCAL_MODULE:= libmicro
 include $(BUILD_STATIC_LIBRARY)
 
