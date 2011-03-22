@@ -1,4 +1,5 @@
 /*
+ * Copyright 2011 Linaro Limited
  * Copyright (C) 2010 0xlab - http://0xlab.org/
  * Authored by: Joseph Chang (bizkit) <bizkit@0xlab.org>
  *
@@ -32,6 +33,7 @@ import java.util.Collections;
 
 public class NativeTesterUbench extends NativeTester {
 
+    public final String TAG = "TesterUnixBench";
     public static final String REPORT = "REPORT";
     public static final String RESULT = "RESULT";
     public static final List<String> COMMANDS  = Arrays.asList(
@@ -59,8 +61,6 @@ public class NativeTesterUbench extends NativeTester {
         "fstime -w -t 30 -d ./ -b 1024 -m 2000","fstime -w -t 30 -d ./ -b 1024 -m 2000","fstime -w -t 30 -d ./ -b 1024 -m 2000",
         "fstime -w -t 30 -d ./ -b 256 -m 500","fstime -w -t 30 -d ./ -b 256 -m 500","fstime -w -t 30 -d ./ -b 256 -m 500",
         "fstime -w -t 30 -d ./ -b 4096 -m 8000","fstime -w -t 30 -d ./ -b 4096 -m 8000","fstime -w -t 30 -d ./ -b 4096 -m 8000"
-//        "looper 60 /system/bin/bench_ubench_multi.sh 1",
-//        "looper 60 /system/bin/bench_ubench_multi.sh 8"
     );
     public static final HashMap<String, String> commandToName = new HashMap<String, String>() {
         {
@@ -88,9 +88,6 @@ public class NativeTesterUbench extends NativeTester {
             put("fstime -w -t 30 -d ./ -b 1024 -m 2000", "fstime-w");
             put("fstime -w -t 30 -d ./ -b 256 -m 500", "fsbuffer-w");
             put("fstime -w -t 30 -d ./ -b 4096 -m 8000", "fsdisk-w");
-
-//            put("looper 60 /system/bin/bench_ubench_multi.sh 1", "shell1");
-//            put("looper 60 /system/bin/bench_ubench_multi.sh 8", "shell8");
         }
     };
 
@@ -111,21 +108,16 @@ public class NativeTesterUbench extends NativeTester {
     protected boolean saveResult(Intent intent) {
         /* The strategy of this function is ported directly from the Run perl script of byte unix */
         Bundle bundle = new Bundle();
-//        StringBuilder report = new StringBuilder();
+        StringBuilder report = new StringBuilder();
         for (String command: getCommands()) {
-//            report.append(mStdErrs.get(command));
-//            report.append("---------------------------\n");
-//            report.append(mStdOuts.get(command));
-//            report.append("---------------------------\n");
             if(!mSockets.containsKey(command))
                 continue;
-            Log.i(TAG, "Socket: " + mSockets.get(command));
+            report.append(commandToName.get(command));
             if(mSockets.get(command).trim().length() == 0)
                 continue;
             String [] lines = mSockets.get(command).trim().split("\n");
 
             mSockets.remove(command);
-
             Log.i(TAG, "line0: " + lines[0]);
             String [] initFields = lines[0].split("[|]");
             // COUNT|2734838|1|lps|10.000082
@@ -161,8 +153,9 @@ public class NativeTesterUbench extends NativeTester {
             Log.i(TAG, "command: " + command);
             Log.i(TAG, "save `" + command+"S" + "` -> " + commandToName.get(command) + "(" + unit + ")");
             Log.i(TAG, "save `" + command+"FA" + "` -> " + list.toString().trim());
+            report.append(" " + list.toString().trim() + "\n");
         }
-//        bundle.putString(REPORT, report.toString());
+        bundle.putString(REPORT, report.toString());
         intent.putExtra(RESULT, bundle);
         return true;
     }

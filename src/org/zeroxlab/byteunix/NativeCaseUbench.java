@@ -1,4 +1,5 @@
 /*
+ * Copyright 2011 Linaro Limited
  * Copyright (C) 2010 0xlab - http://0xlab.org/
  * Authored by: Joseph Chang (bizkit) <bizkit@0xlab.org>
  *
@@ -86,8 +87,7 @@ public class NativeCaseUbench  extends Case {
             return "No benchmark report";
         }
 
-        return "";
-//    return mInfo[0].getString(NativeTesterMicro.REPORT);
+        return mInfo[0].getString(NativeTesterUbench.REPORT);
     }
 
     @Override
