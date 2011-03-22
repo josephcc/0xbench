@@ -1,4 +1,5 @@
 /*
+ * Copyright 2011 Linaro Limited
  * Copyright (C) 2010 0xlab - http://0xlab.org/
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -231,12 +232,12 @@ public abstract class NativeTester extends Tester {
                     continue;
                 }
                 reportOutputs();
-                if (!mStdOuts.containsKey(command)) {
+                if (mStdOuts.containsKey(command)) {
                     mStdOuts.put(command, mStdOuts.get(command) + stdOut.toString());
                 } else {
                     mStdOuts.put(command, stdOut.toString());
                 }
-                if (!mStdErrs.containsKey(command)) {
+                if (mStdErrs.containsKey(command)) {
                     mStdErrs.put(command, mStdErrs.get(command) + stdErr.toString());
                 } else {
                     mStdErrs.put(command, stdErr.toString());
