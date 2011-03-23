@@ -1,4 +1,5 @@
 /*
+ * Copyright 2011 Linaro Limited
  * Copyright (C) 2010 0xlab - http://0xlab.org/
  * Authored by: Joseph Chang (bizkit) <bizkit@0xlab.org>
  *
@@ -85,9 +86,7 @@ public class NativeCaseMicro  extends Case {
         if (!couldFetchReport()) {
             return "No benchmark report";
         }
-
-        return "";
-//    return mInfo[0].getString(NativeTesterMicro.REPORT);
+        return mInfo[0].getString(NativeTesterMicro.REPORT);
     }
 
     @Override

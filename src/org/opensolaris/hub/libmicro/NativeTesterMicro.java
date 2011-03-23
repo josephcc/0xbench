@@ -1,4 +1,5 @@
 /*
+ * Copyright 2011 Linaro Limited
  * Copyright (C) 2010 0xlab - http://0xlab.org/
  * Authored by: Joseph Chang (bizkit) <bizkit@0xlab.org>
  *
@@ -29,6 +30,8 @@ import java.util.List;
 
 public class NativeTesterMicro extends NativeTester {
 
+    public final String TAG = "TesterLibMicro";
+    private final double ERROR_VALUE = -1.0;
     public static final String REPORT = "REPORT";
     public static final String RESULT = "RESULT";
     private static final String Opts = "-E -C 70 -L -S -W";
@@ -387,19 +390,62 @@ public class NativeTesterMicro extends NativeTester {
         return COMMANDS;
     }
 
+    /*
+     * The unit is usecs/call
+     */
+    private double getBenchResult(String command) {
+        String stdOut = mStdOuts.get(command);
+        int index = stdOut.lastIndexOf("mean of 95%");
+        double value = 0.0;
+        try {
+            String summary = stdOut.substring(index, stdOut.length());
+            String[] substrings = summary.toString().split("\\s+");
+            value = Double.valueOf(substrings[3]);
+            return value;
+        }
+        catch (StringIndexOutOfBoundsException sioobe) {
+            Log.d(TAG, "StringIndexOutOfBoundsException");
+        }
+        catch (ArrayIndexOutOfBoundsException aioobe) {
+            Log.d(TAG, "ArrayIndexOutOfBoundsException");
+        }
+        catch (NumberFormatException nfe) {
+            Log.d(TAG, "NumberFormatException");
+        }
+        return ERROR_VALUE;
+    }
+
+    private String getCommandName(String command) {
+        if (command == null || command.equals(""))
+            return command;
+        String stdErr = mStdErrs.get(command);
+
+        try {
+            String[] substrings = stdErr.split("\\s+");
+            String commandName = substrings[1];
+            return commandName;
+        }
+        catch (Exception ex) {
+            String[] substrings = command.toString().split("\\s+");
+            return substrings[0];
+        }
+    }
+
     @Override
     protected boolean saveResult(Intent intent) {
         Bundle bundle = new Bundle();
-//        StringBuilder report = new StringBuilder();
+        StringBuilder report = new StringBuilder();
         for (String command: getCommands()) {
-//            report.append(mStdErrs.get(command));
-//            report.append("---------------------------\n");
-//            report.append(mStdOuts.get(command));
-//            report.append("---------------------------\n");
             if(!mSockets.containsKey(command))
                 continue;
             String [] lines = mSockets.get(command).trim().split("\n");
             String name = lines[0].trim().split("\t")[0];
+            if (name.equals("")) {
+                report.append(getCommandName(command));
+            }
+            else {
+                report.append(name);
+            }
             StringBuilder list = new StringBuilder();;
             for(String line: lines) {
                 String [] sp = line.trim().split("\t");
@@ -417,11 +463,23 @@ public class NativeTesterMicro extends NativeTester {
                     continue;
                 }
             }
-            bundle.putString(command+"S", name);
-            bundle.putString(command+"FA", list.toString().trim());
 
+            if(!mStdOuts.containsKey(command)) {
+                report.append("\n");
+                continue;
+            }
+
+            double value = getBenchResult(command);
+            if (value == ERROR_VALUE) {
+                report.append(" FAIL\n");
+            }
+            else {
+                report.append(" " + value + " usecs/call\n");
+                bundle.putString(command+"S", name);
+                bundle.putString(command+"FA", list.toString().trim());
+            }
         }
-//        bundle.putString(REPORT, report.toString());
+        bundle.putString(REPORT, report.toString());
         intent.putExtra(RESULT, bundle);
         return true;
     }
