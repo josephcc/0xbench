@@ -80,6 +80,7 @@ public class Benchmark extends TabActivity implements View.OnClickListener {
     private static String mJSONResult;
     private final static String mOutputXMLFile = "0xBenchmark.xml";
     private final static String mOutputJSONFile = "0xBenchmark.bundle";
+    private final static String LAVA_RESULT_DIR = "/lava/results";
 
     private Button   mRun;
     private Button   mShow;
@@ -543,7 +544,7 @@ public class Benchmark extends TabActivity implements View.OnClickListener {
                     Log.e(TAG, "XML: " + mXMLResult);
                     writeToSDCard(mOutputXMLFile, mXMLResult);
                     Log.e(TAG, "JSON: " + mJSONResult);
-                    writeToSDCard(mOutputJSONFile, mJSONResult);
+                    writeToSDCard(LAVA_RESULT_DIR, mOutputJSONFile, mJSONResult);
                     mShow.setClickable(true);
                     onClick(mShow);
                     mTouchable = true;
@@ -702,13 +703,15 @@ public class Benchmark extends TabActivity implements View.OnClickListener {
         runCase(mCases);
     }
 
-    private boolean writeToSDCard(String filename, String output) {
+    private boolean writeToSDCard(String directory, String filename, String output) {
         if ( !SDCARD.canWrite() ) {
             Log.i(TAG, "Permission denied, maybe SDCARD mounted to PC?");
             return false;
         }
 
-        File file = new File(SDCARD, filename);
+        File resultDirectory = new File(SDCARD, directory);
+        resultDirectory.mkdirs();
+        File file = new File(resultDirectory, filename);
 
         if (file.exists()) {
             Log.i(TAG, "File exists, delete SDCARD/" + filename);
@@ -726,5 +729,9 @@ public class Benchmark extends TabActivity implements View.OnClickListener {
             return false;
         }
         return true;
+    }
+
+    private boolean writeToSDCard(String filename, String output) {
+        return writeToSDCard("", filename, output);
     }
 }
