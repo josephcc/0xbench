@@ -77,6 +77,19 @@ public class CaseGLCube extends Case{
         return result;
     }
 
+    /*
+     *  Get Average Benchmark
+     */
+    public double getBenchmark(Scenario s) {
+        double total = 0;
+        int length = mResult.length;
+        for (int i = 0; i < length; i++) {
+            double second = (mResult[i] / 1000f);
+            double fps = (double)mCaseRound / second;
+            total  += fps;
+        }
+        return total/length;
+    }
 
     @Override
     public ArrayList<Scenario> getScenarios () {

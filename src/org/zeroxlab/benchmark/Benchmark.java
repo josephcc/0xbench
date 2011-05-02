@@ -62,6 +62,10 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import android.content.res.Configuration;
+import org.json.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONException;
+import java.util.UUID;
 
 /* Construct a basic UI */
 public class Benchmark extends TabActivity implements View.OnClickListener {
@@ -73,7 +77,9 @@ public class Benchmark extends TabActivity implements View.OnClickListener {
     private final static String mOutputFile = "0xBenchmark";
 
     private static String mXMLResult;
+    private static String mJSONResult;
     private final static String mOutputXMLFile = "0xBenchmark.xml";
+    private final static String mOutputJSONFile = "0xBenchmark.bundle";
 
     private Button   mRun;
     private Button   mShow;
@@ -532,9 +538,12 @@ public class Benchmark extends TabActivity implements View.OnClickListener {
             final ProgressDialog dialogGetXml = new ProgressDialog(this).show(this, "Generating XML Report", "Please wait...", true, false);
             new Thread() {
                 public void run() {
+                    mJSONResult = getJSONResult();
                     mXMLResult = getXMLResult();
                     Log.e(TAG, "XML: " + mXMLResult);
                     writeToSDCard(mOutputXMLFile, mXMLResult);
+                    Log.e(TAG, "JSON: " + mJSONResult);
+                    writeToSDCard(mOutputJSONFile, mJSONResult);
                     mShow.setClickable(true);
                     onClick(mShow);
                     mTouchable = true;
@@ -619,6 +628,45 @@ public class Benchmark extends TabActivity implements View.OnClickListener {
 
         xml += "</result>";
         return xml;
+    }
+
+    /*
+     * Add Linaro Dashboard Bundle's JSON format support
+     * https://launchpad.net/linaro-python-dashboard-bundle/trunk
+     */
+    public String getJSONResult() {
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+        JSONObject result = new JSONObject();
+        try {
+            JSONArray testRunsArray = new JSONArray();
+            JSONObject testRunsObject = new JSONObject();
+            testRunsObject.put("analyzer_assigned_date", sdf.format(date));
+            testRunsObject.put("time_check_performed", false);
+            // TODO: should be UUID version 1
+            testRunsObject.put("analyzer_assigned_uuid", UUID.randomUUID().toString());
+            testRunsObject.put("test_id", "0xbench");
+
+            JSONArray testResultsList = new JSONArray();
+            Case myCase;
+            for (int i = 0; i < mCases.size(); i++) {
+                myCase = mCases.get(i);
+                JSONArray caseResultList = myCase.getJSONBenchmark();
+                for (int j = 0; j < caseResultList.length(); j++) {
+                    testResultsList.put(caseResultList.get(j));
+                }
+            }
+            testRunsObject.put("test_results", testResultsList);
+
+            testRunsArray.put(testRunsObject);
+            result.put("test_runs", testRunsArray);
+            result.put("format", "Dashboard Bundle Format 1.2");
+        }
+        catch (JSONException jsonE) {
+            jsonE.printStackTrace();
+        }
+        return result.toString();
     }
 
     public String getResult() {

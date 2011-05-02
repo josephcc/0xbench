@@ -78,6 +78,10 @@ public class CaseGC extends Case{
         return mStringBuf;
     }
 
+    public double getBenchmark(Scenario s) {
+        return time;
+    }
+
     @Override
     public ArrayList<Scenario> getScenarios () {
         ArrayList<Scenario> scenarios = new ArrayList<Scenario>();

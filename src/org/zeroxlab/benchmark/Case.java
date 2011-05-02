@@ -32,6 +32,9 @@ import android.view.*;
 import java.nio.*;
 
 import java.util.ArrayList;
+import org.json.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONException;
 
 public abstract class Case{
     protected String TAG = "Case";
@@ -251,6 +254,18 @@ public abstract class Case{
         return result;
     }
 
+    /*
+     *  Get Average Benchmark
+     */
+    public double getBenchmark(Scenario s) {
+        double total = 0;
+        int length = mResult.length;
+        for (int i = 0; i < length; i++) {
+            total  += mResult[i];
+        }
+        return (double)total/length;
+    }
+
     public String getXMLBenchmark() {
         if (!couldFetchReport()) {
             Log.e(TAG, "cannot fetch report: " + getTitle() + " : " + isFinish() + " : " + mInvolved);
@@ -299,6 +314,30 @@ public abstract class Case{
             result += _result;
         }
         return result;
+    }
+
+    public JSONArray getJSONBenchmark() {
+        JSONArray scenarioResult = new JSONArray();
+        if (!couldFetchReport()) {
+            Log.e(TAG, "cannot fetch report: " + getTitle() + " : " + isFinish() + " : " + mInvolved);
+            return scenarioResult;
+        }
+        ArrayList<Scenario> scenarios = getScenarios();
+
+        try {
+            for (Scenario s: scenarios) {
+                JSONObject jsonObj = new JSONObject();
+                jsonObj.put("test_case_id", s.mName.replace(" ", ""));
+                jsonObj.put("measurement", getBenchmark(s));
+                jsonObj.put("units", s.mType);
+                jsonObj.put("result", "pass");
+                scenarioResult.put(jsonObj);
+            }
+        }
+        catch (JSONException jsonE) {
+            jsonE.printStackTrace();
+        }
+        return scenarioResult;
     }
 }
 

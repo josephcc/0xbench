@@ -93,6 +93,19 @@ public class CaseScimark2 extends Case{
         return result;
     }
 
+    /*
+     *  Get Average Benchmark
+     */
+    public double getBenchmark(Scenario s) {
+        double total = 0;
+        int length = mInfo.length;
+        String name = s.mName.replaceFirst("Scimark2:", "");
+        for (int i = 0; i < length; i++) {
+            total += mInfo[i].getDouble(name, 0.0);
+        }
+        return total/length;
+    }
+
     @Override
     public ArrayList<Scenario> getScenarios () {
         ArrayList<Scenario> scenarios = new ArrayList<Scenario>();
