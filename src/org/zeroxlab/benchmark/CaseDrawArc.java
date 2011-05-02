@@ -55,7 +55,7 @@ public class CaseDrawArc extends Case{
     }
 
     @Override
-    public String getBenchmark() {
+    public String getResultOutput() {
         if (!couldFetchReport()) {
             return "DrawArc has no report";
         }
@@ -80,7 +80,7 @@ public class CaseDrawArc extends Case{
         ArrayList<Scenario> scenarios = new ArrayList<Scenario>();
 
         Scenario s = new Scenario(getTitle(), mType, mTags);
-        s.mLog = getBenchmark();
+        s.mLog = getResultOutput();
         for (int i = 0; i < mResult.length; i++) {
             float second = (mResult[i] / 1000f);
             float fps = (float)mCaseRound / second;

@@ -80,7 +80,7 @@ public class CaseArithmetic extends Case{
     }
 
     @Override
-    public String getBenchmark() {
+    public String getResultOutput() {
         String result = "\n";
         for (int i = 0; i < mInfo.length; i++) {
             result += TesterArithmetic.bundleToString(mInfo[i]);
@@ -94,7 +94,7 @@ public class CaseArithmetic extends Case{
         ArrayList<Scenario> scenarios = new ArrayList<Scenario>();
 
         Scenario s = new Scenario(getTitle(), mType, mTags);
-        s.mLog = getBenchmark();
+        s.mLog = getResultOutput();
         for (int i=0; i<mInfo.length; i++)
             s.mResults.add(mInfo[i].getDouble(TesterArithmetic.MFLOPS));
 

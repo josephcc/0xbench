@@ -80,7 +80,7 @@ public class CaseScimark2 extends Case{
     }
 
     @Override
-    public String getBenchmark() {
+    public String getResultOutput() {
         if (!couldFetchReport()) {
             return "No benchmark report";
         }

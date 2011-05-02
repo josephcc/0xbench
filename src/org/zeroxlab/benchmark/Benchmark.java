@@ -630,7 +630,7 @@ public class Benchmark extends TabActivity implements View.OnClickListener {
             result += "============================================================\n";
             result += mycase.getTitle() + "\n";
             result += "------------------------------------------------------------\n";
-            result += mycase.getBenchmark().trim() + "\n";
+            result += mycase.getResultOutput().trim() + "\n";
         }
         result += "============================================================\n";
 

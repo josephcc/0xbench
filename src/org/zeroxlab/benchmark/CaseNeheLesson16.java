@@ -57,7 +57,7 @@ public class CaseNeheLesson16 extends Case {
     }
 
     @Override
-    public String getBenchmark() {
+    public String getResultOutput() {
         if (!couldFetchReport()) {
             return "Nehe Lesson 16 has no report";
         }
@@ -81,7 +81,7 @@ public class CaseNeheLesson16 extends Case {
         ArrayList<Scenario> scenarios = new ArrayList<Scenario>();
 
         Scenario s = new Scenario(getTitle(), mType, mTags);
-        s.mLog = getBenchmark();
+        s.mLog = getResultOutput();
         for (int i = 0; i < mResult.length; i++) {
             float fps = (float)mCaseRound /  (mResult[i] / 1000f);
             s.mResults.add(((Float)fps).doubleValue());

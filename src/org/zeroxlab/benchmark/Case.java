@@ -234,8 +234,7 @@ public abstract class Case{
         return true;
     }
 
-    public String getBenchmark() {
-
+    public String getResultOutput() {
         if (!couldFetchReport()) {
             return "No benchmark report";
         }

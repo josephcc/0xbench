@@ -69,7 +69,7 @@ public class CaseGC extends Case{
     }
 
     @Override
-    public String getBenchmark() {
+    public String getResultOutput() {
 
         if (!couldFetchReport()) {
             return "No benchmark report";
@@ -83,7 +83,7 @@ public class CaseGC extends Case{
         ArrayList<Scenario> scenarios = new ArrayList<Scenario>();
 
         Scenario s = new Scenario(getTitle(), mType, mTags);
-        s.mLog = getBenchmark();
+        s.mLog = getResultOutput();
         s.mResults.add(time);
         scenarios.add(s);
 
