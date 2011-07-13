@@ -265,20 +265,29 @@ public class Benchmark extends TabActivity implements View.OnClickListener {
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
-        if (mTouchable) super.dispatchTouchEvent(event);
-        return true;
+        if (mTouchable) {
+            return super.dispatchTouchEvent(event);
+        } else {
+            return true;
+        }
     }
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
-        if (mTouchable) super.dispatchKeyEvent(event);
-        return true;
+        if (mTouchable) {
+            return super.dispatchKeyEvent(event);
+        } else {
+            return true;
+        }
     }
 
     @Override
     public boolean dispatchTrackballEvent(MotionEvent event) {
-        if (mTouchable) super.dispatchTrackballEvent(event);
-        return true;
+        if (mTouchable) {
+            return super.dispatchTrackballEvent(event);
+        } else {
+            return true;
+        }
     }
 
     private void _checkTagCase(String [] Tags) {
