@@ -25,6 +25,14 @@
 	</intent-filter>
 	</activity>
 
+        <activity
+            android:name="ActivitySettings"
+            android:screenOrientation="nosensor" >
+            <intent-filter>
+	        <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+
 	<activity
 	android:name="TesterCanvas"
 	android:screenOrientation="nosensor"
