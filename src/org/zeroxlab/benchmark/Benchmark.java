@@ -1,5 +1,9 @@
 /*
+ * Authored By Julian Chu <walkingice@0xlab.org>
+ *         and Joseph Chang (bizkit) <bizkit@0xlab.org>
+ *
  * Copyright (C) 2010 0xlab - http://0xlab.org/
+ * Copyright (C) 2011 0xlab - http://0xlab.org/
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
