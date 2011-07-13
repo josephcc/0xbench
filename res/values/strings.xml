@@ -23,6 +23,7 @@
 <string name="settings_custom_path">Customize</string>
 <string name="settings_edit_path">Edit Custom Path</string>
 
+<string name="menu_settings">Settings</string>
 <!-- its not typo -->
 <string name="banner_info_text">Hell World!</string>
 </resources>

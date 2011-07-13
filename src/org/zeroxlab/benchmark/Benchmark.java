@@ -39,6 +39,8 @@ import android.os.PowerManager.WakeLock;
 import android.os.SystemClock;
 import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,6 +76,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.opensolaris.hub.libmicro.NativeCaseMicro;
 import org.zeroxlab.byteunix.NativeCaseUbench;;
+import org.zeroxlab.utils.BenchUtil;
 
 /* Construct a basic UI */
 public class Benchmark extends TabActivity implements View.OnClickListener {
@@ -81,14 +84,15 @@ public class Benchmark extends TabActivity implements View.OnClickListener {
     public final static String TAG     = "Benchmark";
     public final static String PACKAGE = "org.zeroxlab.benchmark";
 
-    private final static File SDCARD = Environment.getExternalStorageDirectory();
     private final static String mOutputFile = "0xBenchmark";
+
+    private final static int GROUP_DEFAULT = 0;
+    private final static int SETTINGS_ID = Menu.FIRST;
 
     private static String mXMLResult;
     private static String mJSONResult;
     private final static String mOutputXMLFile = "0xBenchmark.xml";
     private final static String mOutputJSONFile = "0xBenchmark.bundle";
-    private final static String LAVA_RESULT_DIR = "/lava/results";
 
     private Button   mRun;
     private Button   mShow;
@@ -261,6 +265,21 @@ public class Benchmark extends TabActivity implements View.OnClickListener {
         if (mAutoRun) {
             onClick(mRun);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        MenuItem item1 = menu.add(GROUP_DEFAULT, SETTINGS_ID, Menu.NONE, R.string.menu_settings);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menu) {
+        if (menu.getGroupId() == GROUP_DEFAULT && menu.getItemId() == SETTINGS_ID) {
+            org.zeroxlab.utils.Util.launchActivity(this, "org.zeroxlab.benchmark.ActivitySettings");
+        }
+        return true;
     }
 
     @Override
@@ -516,7 +535,7 @@ public class Benchmark extends TabActivity implements View.OnClickListener {
         } else if (v == mShow) {
             String result = getResult();
             Log.i(TAG,"\n\n"+result+"\n\n");
-            writeToSDCard(mOutputFile, result);
+            writeResult(mOutputFile, result);
             Intent intent = new Intent();
             intent.putExtra(Report.REPORT, result);
             intent.putExtra(Report.XML, mXMLResult);
@@ -551,17 +570,17 @@ public class Benchmark extends TabActivity implements View.OnClickListener {
         if (finish) {
 //            mBannerInfo.setText("Benchmarking complete.\nClick Show to upload.\nUploaded results:\nhttp://0xbenchmark.appspot.com");
             String result = getResult();
-            writeToSDCard(mOutputFile, result);
+            writeResult(mOutputFile, result);
 
             final ProgressDialog dialogGetXml = new ProgressDialog(this).show(this, "Generating XML Report", "Please wait...", true, false);
             new Thread() {
                 public void run() {
                     mJSONResult = getJSONResult();
                     mXMLResult = getXMLResult();
-                    Log.e(TAG, "XML: " + mXMLResult);
-                    writeToSDCard(mOutputXMLFile, mXMLResult);
-                    Log.e(TAG, "JSON: " + mJSONResult);
-                    writeToSDCard(LAVA_RESULT_DIR, mOutputJSONFile, mJSONResult);
+                    Log.d(TAG, "XML: " + mXMLResult);
+                    writeResult(mOutputXMLFile, mXMLResult);
+                    Log.d(TAG, "JSON: " + mJSONResult);
+                    writeResult(mOutputJSONFile, mJSONResult);
                     mShow.setClickable(true);
                     onClick(mShow);
                     mTouchable = true;
@@ -720,18 +739,15 @@ public class Benchmark extends TabActivity implements View.OnClickListener {
         runCase(mCases);
     }
 
-    private boolean writeToSDCard(String directory, String filename, String output) {
-        if ( !SDCARD.canWrite() ) {
-            Log.i(TAG, "Permission denied, maybe SDCARD mounted to PC?");
-            return false;
+    private boolean writeResult(String filename, String output) {
+        File writeDir = new File(BenchUtil.getResultDir(this));
+        if (!writeDir.exists()) {
+            writeDir.mkdirs();
         }
 
-        File resultDirectory = new File(SDCARD, directory);
-        resultDirectory.mkdirs();
-        File file = new File(resultDirectory, filename);
-
+        File file = new File(writeDir, filename);
         if (file.exists()) {
-            Log.i(TAG, "File exists, delete SDCARD/" + filename);
+            Log.w(TAG, "File exists, delete " + writeDir.getPath() + filename);
             file.delete();
         }
 
@@ -746,9 +762,5 @@ public class Benchmark extends TabActivity implements View.OnClickListener {
             return false;
         }
         return true;
-    }
-
-    private boolean writeToSDCard(String filename, String output) {
-        return writeToSDCard("", filename, output);
     }
 }
