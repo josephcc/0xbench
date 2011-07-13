@@ -24,52 +24,56 @@ import android.util.Log;
 
 import android.app.Activity;
 import android.app.ActivityManager;
-import android.os.Bundle;
-import android.os.*;
-import android.widget.*;
-import android.view.*;
-import android.content.*;
-import java.nio.*;
-import java.io.*;
-
-import java.util.LinkedList;
-import java.util.Arrays;
-import java.util.Date;
-import java.text.SimpleDateFormat;
-import java.lang.StringBuffer;
-
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
-
-import android.os.SystemClock;
 import android.app.ProgressDialog;
-
-import org.opensolaris.hub.libmicro.*;
-import org.zeroxlab.byteunix.*;
-
+import android.app.TabActivity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.res.Configuration;
+import android.os.Build;
+import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
-
-import android.os.Environment;
-
-import android.widget.TabWidget;
-import android.widget.TabHost;
-import android.widget.TabHost.TabContentFactory;
-
-import android.app.TabActivity;
+import android.os.SystemClock;
+import android.view.Gravity;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
+import android.view.View;
 import android.view.ViewGroup;
-
-import java.util.HashSet;
-import java.util.HashMap;
-
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
+import android.widget.TabHost;
+import android.widget.TabHost.TabContentFactory;
+import android.widget.TextView;
 
-import android.content.res.Configuration;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.lang.StringBuffer;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+import java.util.UUID;
+
 import org.json.JSONObject;
 import org.json.JSONArray;
 import org.json.JSONException;
-import java.util.UUID;
+import org.opensolaris.hub.libmicro.NativeCaseMicro;
+import org.zeroxlab.byteunix.NativeCaseUbench;;
 
 /* Construct a basic UI */
 public class Benchmark extends TabActivity implements View.OnClickListener {
