@@ -28,7 +28,7 @@ import android.widget.TextView;
 import java.util.HashMap;
 import java.util.ArrayList;
 
-public class TesterScimark2 extends Tester{
+public class TesterScimark2 extends Tester {
 
     TextView mTextView;
     Bundle mInfo[];
@@ -84,7 +84,6 @@ public class TesterScimark2 extends Tester{
     }
 
     public static void average(Bundle result, Bundle[] list) {
-
         if (result == null) {
             result = new Bundle();
         }
@@ -115,8 +114,8 @@ public class TesterScimark2 extends Tester{
             Bundle info = list[i];
 
             if (info == null) {
-            Log.i("Scimark2", "one item of array is null!");
-            return;
+                Log.i("Scimark2", "one item of array is null!");
+                return;
             }
 
             composite_total     += info.getDouble(COMPOSITE    );
@@ -187,7 +186,7 @@ public class TesterScimark2 extends Tester{
 
         String result = "";
         
-        if(composite_total != 0.0) {
+        if (composite_total != 0.0) {
             result += "<scenario";
             result += " benchmark=\"" + benchName + "-COMPOSITE\" unit=\"mflops\"";
             result += ">";
@@ -197,7 +196,7 @@ public class TesterScimark2 extends Tester{
             result += "</scenario>";
         }
 
-        if(fft_total != 0.0) {
+        if (fft_total != 0.0) {
             result += "<scenario";
             result += " benchmark=\"" + benchName + "-FFT\" unit=\"mflops\"";
             result += ">";
@@ -207,7 +206,7 @@ public class TesterScimark2 extends Tester{
             result += "</scenario>";
         }
 
-        if(sor_total != 0.0) {
+        if (sor_total != 0.0) {
             result += "<scenario";
             result += " benchmark=\"" + benchName + "-SOR\" unit=\"mflops\"";
             result += ">";
@@ -217,7 +216,7 @@ public class TesterScimark2 extends Tester{
             result += "</scenario>";
         }
 
-        if(montecarlo_total != 0.0) {
+        if (montecarlo_total != 0.0) {
             result += "<scenario";
             result += " benchmark=\"" + benchName + "-MonteCarlo\" unit=\"mflops\"";
             result += ">";
@@ -227,7 +226,7 @@ public class TesterScimark2 extends Tester{
             result += "</scenario>";
         }
 
-        if(sparsematmult_total != 0.0) {
+        if (sparsematmult_total != 0.0) {
             result += "<scenario";
             result += " benchmark=\"" + benchName + "-SparseMatrixMult\" unit=\"mflops\"";
             result += ">";
@@ -237,7 +236,7 @@ public class TesterScimark2 extends Tester{
             result += "</scenario>";
         }
 
-        if(lu_total != 0.0) {
+        if (lu_total != 0.0) {
             result += "<scenario";
             result += " benchmark=\"" + benchName + "-LU\" unit=\"mflops\"";
             result += ">";

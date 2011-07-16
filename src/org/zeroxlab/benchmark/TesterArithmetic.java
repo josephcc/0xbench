@@ -26,7 +26,7 @@ import android.os.Message;
 import android.content.Intent;
 import android.widget.TextView;
 
-public class TesterArithmetic extends Tester{
+public class TesterArithmetic extends Tester {
 
     TextView mTextView;
     Bundle mInfo[];
@@ -100,8 +100,8 @@ public class TesterArithmetic extends Tester{
             Bundle info = list[i];
 
             if (info == null) {
-            Log.i("Arithmetic", "one item of array is null!");
-            return;
+                Log.i("Arithmetic", "one item of array is null!");
+                return;
             }
 
             mflops_total  += info.getDouble(MFLOPS);

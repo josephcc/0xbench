@@ -66,7 +66,7 @@ public class CaseDrawArc extends Case{
 
         for (int i = 0; i < length; i++) {
             float second = (mResult[i] / 1000f);
-            float fps = (float)mCaseRound / second; // milliseconds to seconds
+            float fps = (float) mCaseRound / second; // milliseconds to seconds
             result += "Round " + i +": fps = " + fps + "\n";
             total  += fps;
         }
@@ -83,7 +83,7 @@ public class CaseDrawArc extends Case{
         int length = mResult.length;
         for (int i = 0; i < length; i++) {
             double second = (mResult[i] / 1000f);
-            double fps = (double)mCaseRound / second;
+            double fps = (double) mCaseRound / second;
             total  += fps;
         }
         return total/length;

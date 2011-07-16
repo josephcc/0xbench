@@ -140,8 +140,8 @@ public abstract class NativeTester extends Tester {
         Log.i(TAG, stdOut.toString() );
         Log.i(TAG, stdErr.toString() );
         String [] sckOutLines = sckOut.toString().split("\n");
-        for(String sckOutLine: sckOutLines)
-            Log.i(TAG,  sckOutLine);
+        for (String sckOutLine: sckOutLines)
+            Log.i(TAG, sckOutLine);
     }
 
     public void oneRound() {
@@ -278,11 +278,11 @@ public abstract class NativeTester extends Tester {
                     Message m = new Message();
                     m.what = GUINOTIFIER;
                     mHandler.sendMessage(m);
-                    if ( mIdleTime > IDLE_KILL ) {
+                    if (mIdleTime > IDLE_KILL) {
                         Log.e(TAG, "Native process idle for over " + IDLE_KILL/1000 + " Seconds, killing.");
                         killProcess();
                         Log.w(TAG, "Monitor: ends with no update threads joined");
-                        //TODO: should find a way to end update threads gracefully
+                        // TODO: should find a way to end update threads gracefully
                         return;
 
                     }
@@ -337,7 +337,7 @@ public abstract class NativeTester extends Tester {
             char[] c = new char[1024];
             int count;
             try {
-                while ( (count = is.read(c,0,1024)) != -1) {
+                while ( (count = is.read(c, 0, 1024)) != -1) {
                     mLastRead = SystemClock.uptimeMillis();
                     mBuffer.append(c, 0, count);
                     Message m = new Message();

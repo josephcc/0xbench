@@ -26,7 +26,7 @@ import android.os.Message;
 import android.content.Intent;
 import android.widget.TextView;
 
-public class TesterGC extends Tester{
+public class TesterGC extends Tester {
 
     private TextView mTextView1;
 

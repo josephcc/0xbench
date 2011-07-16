@@ -30,7 +30,7 @@ import android.os.Bundle;
 
 import org.zeroxlab.benchmark.TesterArithmetic;
 
-public class CaseArithmetic extends Case{
+public class CaseArithmetic extends Case {
 
     public static String LIN_RESULT = "LIN_RESULT";
     protected Bundle mInfo[];
@@ -98,7 +98,7 @@ public class CaseArithmetic extends Case{
         for (int i = 0; i < length; i++) {
             total  += mInfo[i].getDouble(TesterArithmetic.MFLOPS);
         }
-        return total/length;
+        return total / length;
     }
 
     @Override

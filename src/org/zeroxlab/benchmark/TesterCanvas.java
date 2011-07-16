@@ -47,7 +47,7 @@ public class TesterCanvas extends Tester {
     }
 
     public static String getFullClassName() {
-        return getPackage()+".TesterCanvas";
+        return getPackage() + ".TesterCanvas";
     }
 
     public int sleepBetweenRound() {
@@ -80,7 +80,7 @@ public class TesterCanvas extends Tester {
         protected void onWindowVisibilityChanged(int visibility) {
             super.onWindowVisibilityChanged(visibility);
             if (visibility != View.VISIBLE) {
-            return;
+                return;
             }
 
             startTester();
@@ -89,7 +89,6 @@ public class TesterCanvas extends Tester {
         @Override
         public void onDraw(Canvas canvas) {
             super.onDraw(canvas);
-    //        int r = 0xFF & mRandom.nextInt();
             int r = (0x00151515| mRandom.nextInt() ) | Color.BLACK;
             canvas.drawRGB(r, r, r);
             decreaseCounter();

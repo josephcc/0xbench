@@ -30,7 +30,7 @@ import android.view.*;
 import java.nio.*;
 import java.util.ArrayList;
 
-public class CaseDrawImage extends Case{
+public class CaseDrawImage extends Case {
 
     public static int ImageRound = 500;
 
@@ -66,7 +66,7 @@ public class CaseDrawImage extends Case{
 
         for (int i = 0; i < length; i++) {
             float second = (mResult[i] / 1000f);
-            float fps = (float)mCaseRound / second; // milliseconds to seconds
+            float fps = (float) mCaseRound / second; // milliseconds to seconds
             result += "Round " + i +": fps = " + fps + "\n";
             total  += fps;
         }
@@ -83,10 +83,10 @@ public class CaseDrawImage extends Case{
         int length = mResult.length;
         for (int i = 0; i < length; i++) {
             double second = (mResult[i] / 1000f);
-            double fps = (double)mCaseRound / second;
+            double fps = (double) mCaseRound / second;
             total  += fps;
         }
-        return total/length;
+        return total / length;
     }
 
     @Override

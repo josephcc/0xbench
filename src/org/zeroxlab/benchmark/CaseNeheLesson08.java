@@ -86,10 +86,10 @@ public class CaseNeheLesson08 extends Case {
         int length = mResult.length;
         for (int i = 0; i < length; i++) {
             double second = (mResult[i] / 1000f);
-            double fps = (double)mCaseRound / second;
+            double fps = (double) mCaseRound / second;
             total  += fps;
         }
-        return total/length;
+        return total / length;
     }
 
     @Override

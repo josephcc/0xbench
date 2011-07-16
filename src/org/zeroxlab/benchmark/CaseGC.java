@@ -30,7 +30,7 @@ import android.view.*;
 import java.nio.*;
 import java.util.ArrayList;
 
-public class CaseGC extends Case{
+public class CaseGC extends Case {
 
     String mStringBuf = "";
     public static String GCRESULT = "GC_RESULT";

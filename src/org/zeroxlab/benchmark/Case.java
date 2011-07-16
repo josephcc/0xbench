@@ -36,7 +36,7 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-public abstract class Case{
+public abstract class Case {
     protected String TAG = "Case";
 
     protected String PACKAGE = Benchmark.PACKAGE;
@@ -304,7 +304,7 @@ public abstract class Case{
                     continue;
                 }
             } else {
-                if(s.mStringResults == null || s.mStringResults.length() == 0) {
+                if (s.mStringResults == null || s.mStringResults.length() == 0) {
                     Log.e(TAG, "string results is empty: " + s.mStringResults);
                     continue;
                 }

@@ -30,7 +30,7 @@ import java.util.ArrayList;
 
 import org.zeroxlab.benchmark.TesterScimark2;
 
-public class CaseScimark2 extends Case{
+public class CaseScimark2 extends Case {
 
     public static String LIN_RESULT = "LIN_RESULT";
     protected Bundle mInfo[];
@@ -118,13 +118,13 @@ public class CaseScimark2 extends Case{
         subBenchmarks.add(TesterScimark2.SPARSEMATMULT);
         subBenchmarks.add(TesterScimark2.LU           );
 
-        for (int i=0; i<subBenchmarks.size(); i++) {
+        for (int i = 0; i < subBenchmarks.size(); i++) {
             String benchName = subBenchmarks.get(i);
             Scenario s = new Scenario(getTitle()+":"+benchName, mType, mTags);
 
-            for(int j=0; j<mInfo.length; j++) {
+            for (int j = 0; j < mInfo.length; j++) {
                 double[] _tmp = mInfo[j].getDoubleArray(benchName + "array");
-                for(int k=0; k<_tmp.length; k++)
+                for (int k = 0; k < _tmp.length; k++)
                     s.mResults.add(_tmp[k]);
             }
 

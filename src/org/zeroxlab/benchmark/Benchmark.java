@@ -310,11 +310,11 @@ public class Benchmark extends TabActivity implements View.OnClickListener {
 
     private void _checkTagCase(String [] Tags) {
         Arrays.sort(Tags);
-        for (int i=0; i<mCheckList.length; i++) {
+        for (int i = 0; i < mCheckList.length; i++) {
             String [] caseTags = mCases.get(i).mTags;
             for (String t: caseTags) {
                 int search = Arrays.binarySearch(Tags, t);
-                if ( search  >= 0) 
+                if (search >= 0)
                     mCheckList[i].setChecked(true);
             }
         }
@@ -322,15 +322,15 @@ public class Benchmark extends TabActivity implements View.OnClickListener {
 
     private void _checkCatCase(String [] Cats) {
         Arrays.sort(Cats);
-        for (int i=0; i<mCheckList.length; i++) {
+        for (int i = 0; i < mCheckList.length; i++) {
             int search = Arrays.binarySearch(Cats, mCases.get(i).mType);
-            if ( search  >= 0) 
+            if (search  >= 0)
                 mCheckList[i].setChecked(true);
         }
     }
 
     private void _checkAllCase(boolean check) {
-        for (int i=0; i<mCheckList.length; i++) 
+        for (int i = 0; i < mCheckList.length; i++)
             mCheckList[i].setChecked(check);
     }
 
@@ -406,74 +406,74 @@ public class Benchmark extends TabActivity implements View.OnClickListener {
                 LinearLayout.LayoutParams weightedFillWrap = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 weightedFillWrap.weight = 1;
 
-                if(tag.equals(MAIN)) {
-
+                if (tag.equals(MAIN)) {
                     LinearLayout mMainView = new LinearLayout(Benchmark.this);
                     mMainView.setOrientation(1);
-                        ScrollView mListScroll = new ScrollView(Benchmark.this);
+                    ScrollView mListScroll = new ScrollView(Benchmark.this);
 
-                            LinearLayout mMainViewContainer = new LinearLayout(Benchmark.this);
-                            mMainViewContainer.setOrientation(1);
-                                ImageView mIconView = new ImageView(Benchmark.this);
-                                mIconView.setImageResource(R.drawable.icon);
+                    LinearLayout mMainViewContainer = new LinearLayout(Benchmark.this);
+                    mMainViewContainer.setOrientation(1);
+                    ImageView mIconView = new ImageView(Benchmark.this);
+                    mIconView.setImageResource(R.drawable.icon);
 
-                                TextView mBannerInfo = new TextView(Benchmark.this);
-                                mBannerInfo.setText("0xbench\nSelect benchmarks in the tabs,\nor batch select:");
+                    TextView mBannerInfo = new TextView(Benchmark.this);
+                    mBannerInfo.setText("0xbench\nSelect benchmarks in the tabs,\nor batch select:");
 
-                                d2CheckBox = new CheckBox(Benchmark.this);
-                                d2CheckBox.setText(D2);
-                                d2CheckBox.setOnClickListener(Benchmark.this);
+                    d2CheckBox = new CheckBox(Benchmark.this);
+                    d2CheckBox.setText(D2);
+                    d2CheckBox.setOnClickListener(Benchmark.this);
 
-                                d3CheckBox = new CheckBox(Benchmark.this);
-                                d3CheckBox.setText(D3);
-                                d3CheckBox.setOnClickListener(Benchmark.this);
+                    d3CheckBox = new CheckBox(Benchmark.this);
+                    d3CheckBox.setText(D3);
+                    d3CheckBox.setOnClickListener(Benchmark.this);
 
-                                mathCheckBox = new CheckBox(Benchmark.this);
-                                mathCheckBox.setText(MATH);
-                                mathCheckBox.setOnClickListener(Benchmark.this);
+                    mathCheckBox = new CheckBox(Benchmark.this);
+                    mathCheckBox.setText(MATH);
+                    mathCheckBox.setOnClickListener(Benchmark.this);
 
-                                vmCheckBox = new CheckBox(Benchmark.this);
-                                vmCheckBox.setText(VM);
-                                vmCheckBox.setOnClickListener(Benchmark.this);
+                    vmCheckBox = new CheckBox(Benchmark.this);
+                    vmCheckBox.setText(VM);
+                    vmCheckBox.setOnClickListener(Benchmark.this);
 
-                                nativeCheckBox = new CheckBox(Benchmark.this);
-                                nativeCheckBox.setText(NATIVE);
-                                nativeCheckBox.setOnClickListener(Benchmark.this);
+                    nativeCheckBox = new CheckBox(Benchmark.this);
+                    nativeCheckBox.setText(NATIVE);
+                    nativeCheckBox.setOnClickListener(Benchmark.this);
 
-                                TextView mWebInfo = new TextView(Benchmark.this);
-                                mWebInfo.setText("Uploaded results:\nhttp://0xbenchmark.appspot.com");
+                    TextView mWebInfo = new TextView(Benchmark.this);
+                    mWebInfo.setText("Uploaded results:\nhttp://0xbenchmark.appspot.com");
 
-                                LinearLayout mButtonContainer = new LinearLayout(Benchmark.this);
-                                    mRun = new Button(Benchmark.this);
-                                    mShow = new Button(Benchmark.this);
-                                    mRun.setText("Run");
-                                    mShow.setText("Show");
-                                    mRun.setOnClickListener(Benchmark.this);
-                                    mShow.setOnClickListener(Benchmark.this);
-                                mButtonContainer.addView(mRun, weightedFillWrap);
-                                mButtonContainer.addView(mShow, weightedFillWrap);
-                                WebView mTracker = new WebView(Benchmark.this);
-                                mTracker.clearCache(true);
-                                mTracker.setWebViewClient(new WebViewClient (){
-                                    public void onPageFinished(WebView view, String url){
-                                        Log.i(TAG, "Tracker: " + view.getTitle() + " -> " + url);
-                                    }
-                                    public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-                                        Log.e(TAG, "Track err: " + description);
-                                    }
-                                });
-                                mTracker.loadUrl(trackerUrl);
-                            mMainViewContainer.addView(mIconView,wrapContent);
-                            mMainViewContainer.addView(mBannerInfo);
-                            mMainViewContainer.addView(mathCheckBox);
-                            mMainViewContainer.addView(d2CheckBox);
-                            mMainViewContainer.addView(d3CheckBox);
-                            mMainViewContainer.addView(vmCheckBox);
-                            mMainViewContainer.addView(nativeCheckBox);
-                            mMainViewContainer.addView(mWebInfo);
-                            mMainViewContainer.addView(mButtonContainer, fillWrap);
-                            mMainViewContainer.addView(mTracker, 0,0);
-                        mListScroll.addView(mMainViewContainer, fillParent);
+                    LinearLayout mButtonContainer = new LinearLayout(Benchmark.this);
+                    mRun = new Button(Benchmark.this);
+                    mShow = new Button(Benchmark.this);
+                    mRun.setText("Run");
+                    mShow.setText("Show");
+                    mRun.setOnClickListener(Benchmark.this);
+                    mShow.setOnClickListener(Benchmark.this);
+                    mButtonContainer.addView(mRun, weightedFillWrap);
+                    mButtonContainer.addView(mShow, weightedFillWrap);
+                    WebView mTracker = new WebView(Benchmark.this);
+                    mTracker.clearCache(true);
+                    mTracker.setWebViewClient(new WebViewClient () {
+                        public void onPageFinished(WebView view, String url) {
+                            Log.i(TAG, "Tracker: " + view.getTitle() + " -> " + url);
+                        }
+                        public void onReceivedError(WebView view, int errorCode,
+                                                    String description, String failingUrl) {
+                            Log.e(TAG, "Track err: " + description);
+                        }
+                    });
+                    mTracker.loadUrl(trackerUrl);
+                    mMainViewContainer.addView(mIconView,wrapContent);
+                    mMainViewContainer.addView(mBannerInfo);
+                    mMainViewContainer.addView(mathCheckBox);
+                    mMainViewContainer.addView(d2CheckBox);
+                    mMainViewContainer.addView(d3CheckBox);
+                    mMainViewContainer.addView(vmCheckBox);
+                    mMainViewContainer.addView(nativeCheckBox);
+                    mMainViewContainer.addView(mWebInfo);
+                    mMainViewContainer.addView(mButtonContainer, fillWrap);
+                    mMainViewContainer.addView(mTracker, 0,0);
+                    mListScroll.addView(mMainViewContainer, fillParent);
                     mMainView.addView(mListScroll, fillWrap);
 
                     return mMainView;
@@ -482,10 +482,10 @@ public class Benchmark extends TabActivity implements View.OnClickListener {
 
                 LinearLayout mMainView = new LinearLayout(Benchmark.this);
                 mMainView.setOrientation(1);
-                    ScrollView mListScroll = new ScrollView(Benchmark.this);
-                        LinearLayout mListContainer = new LinearLayout(Benchmark.this);
-                        mListContainer.setOrientation(1);
-                    mListScroll.addView(mListContainer, fillParent);
+                ScrollView mListScroll = new ScrollView(Benchmark.this);
+                LinearLayout mListContainer = new LinearLayout(Benchmark.this);
+                mListContainer.setOrientation(1);
+                mListScroll.addView(mListContainer, fillParent);
                 mMainView.addView(mListScroll, fillWrap);
 
                 boolean gray = true;
@@ -493,7 +493,7 @@ public class Benchmark extends TabActivity implements View.OnClickListener {
                 Log.i(TAG, "L: " + length);
                 Log.i(TAG, "TCF: " + tag);
                 for (int i = 0; i < length; i++) {
-                    if(!mCategory.get(tag).contains(mCases.get(i)))
+                    if (!mCategory.get(tag).contains(mCases.get(i)))
                         continue;
                     Log.i(TAG, "Add: " + i); 
                     mListContainer.addView(mCheckList[i], fillWrap);
@@ -529,7 +529,7 @@ public class Benchmark extends TabActivity implements View.OnClickListener {
                     mCases.get(i).clear();
                 }
             }
-            if(numberOfCaseChecked>0)
+            if (numberOfCaseChecked > 0)
                 runCase(mCases);
         } else if (v == mShow) {
             String result = getResult();
@@ -544,11 +544,12 @@ public class Benchmark extends TabActivity implements View.OnClickListener {
             }
             intent.setClassName(Report.packageName(), Report.fullClassName());
             startActivity(intent);
-        } else if (v==d2CheckBox || v==d3CheckBox || v==mathCheckBox || v==vmCheckBox || v==nativeCheckBox) {
+        } else if (v == d2CheckBox || v == d3CheckBox || v == mathCheckBox ||
+                   v == vmCheckBox || v == nativeCheckBox) {
             int length = mCases.size();
             String tag = ((CheckBox)v).getText().toString();
             for (int i = 0; i < length; i++) {
-                if(!mCategory.get(tag).contains(mCases.get(i)))
+                if (!mCategory.get(tag).contains(mCases.get(i)))
                     continue;
                 mCheckList[i].setChecked(((CheckBox)v).isChecked());
             }
@@ -589,7 +590,7 @@ public class Benchmark extends TabActivity implements View.OnClickListener {
         } else {
             Intent intent = pointer.generateIntent();
             if (intent != null) {
-            startActivityForResult(intent, 0);
+                startActivityForResult(intent, 0);
             }
         }
     }
@@ -615,7 +616,7 @@ public class Benchmark extends TabActivity implements View.OnClickListener {
             BufferedReader procVersion = new BufferedReader( new FileReader("/proc/version") );
             StringBuffer sbuff = new StringBuffer();
             String tmp;
-            while ( (tmp = procVersion.readLine()) != null)
+            while ((tmp = procVersion.readLine()) != null)
                 sbuff.append(tmp);
             procVersion.close();
             tmp = sbuff.toString().replace("[\n\r]+", " ").replace(" +", ".");
@@ -625,10 +626,10 @@ public class Benchmark extends TabActivity implements View.OnClickListener {
         }
 
         try { // read and parse cpu info
-            BufferedReader procVersion = new BufferedReader( new FileReader("/proc/cpuinfo") );
+            BufferedReader procVersion = new BufferedReader(new FileReader("/proc/cpuinfo") );
             StringBuffer sbuff = new StringBuffer();
             String tmp;
-            while ( (tmp = procVersion.readLine()) != null)
+            while ((tmp = procVersion.readLine()) != null)
                 sbuff.append(tmp + "\n");
             procVersion.close();
 
@@ -650,7 +651,7 @@ public class Benchmark extends TabActivity implements View.OnClickListener {
 
             Log.e(TAG, sbuff.toString());
             xml += " cpu=\"" + sbuff.toString() + "\"";
-        } catch (IOException e){
+        } catch (IOException e) {
             Log.e(TAG, "opening /proc/version failed: " + e.toString());
         }
 
@@ -723,7 +724,7 @@ public class Benchmark extends TabActivity implements View.OnClickListener {
     
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (data == null) {
-            Log.i(TAG,"oooops....Intent is null");
+            Log.i(TAG, "oooops....Intent is null");
             return;
         }
 
@@ -731,8 +732,8 @@ public class Benchmark extends TabActivity implements View.OnClickListener {
         for (int i = 0; i < mCases.size(); i++) {
             mycase = mCases.get(i);
             if (mycase.realize(data)) {
-            mycase.parseIntent(data);
-            break;
+                mycase.parseIntent(data);
+                break;
             }
         }
         runCase(mCases);

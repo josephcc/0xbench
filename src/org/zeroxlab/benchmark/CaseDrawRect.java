@@ -30,7 +30,7 @@ import android.view.*;
 import java.nio.*;
 import java.util.ArrayList;
 
-public class CaseDrawRect extends Case{
+public class CaseDrawRect extends Case {
 
     public static int RectRound = 300;
 
@@ -86,7 +86,7 @@ public class CaseDrawRect extends Case{
             double fps = (double)mCaseRound / second;
             total  += fps;
         }
-        return total/length;
+        return total / length;
     }
 
     @Override

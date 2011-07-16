@@ -30,7 +30,7 @@ import android.view.*;
 import java.nio.*;
 import java.util.ArrayList;
 
-public class CaseDrawText extends Case{
+public class CaseDrawText extends Case {
 
     public static int TextRound = 300;
 

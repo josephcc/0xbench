@@ -32,7 +32,7 @@ import android.view.*;
 import java.nio.*;
 import java.util.ArrayList;
 
-public class CaseGLCube extends Case{
+public class CaseGLCube extends Case {
 
     public static int CubeRound = 1000;
 
@@ -88,7 +88,7 @@ public class CaseGLCube extends Case{
             double fps = (double)mCaseRound / second;
             total  += fps;
         }
-        return total/length;
+        return total / length;
     }
 
     @Override

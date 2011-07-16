@@ -70,7 +70,6 @@ class MicroBenchmark extends Thread {
         updateState(state, "");
     }
 
-
     public void upload() {
         updateState(RUNNING);
         try {
@@ -98,7 +97,7 @@ class MicroBenchmark extends Thread {
     }
 
     public void run() {
-    upload();
+        upload();
     }
 }
 

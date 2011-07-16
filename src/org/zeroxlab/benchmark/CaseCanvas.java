@@ -52,7 +52,8 @@ public class CaseCanvas extends Case{
     }
 
     public String getDescription() {
-        return "call canvas.drawRGB to fill the canvas repeatedly. It redraw for " + CanvasRound + " times";
+        return "call canvas.drawRGB to fill the canvas repeatedly. "
+               "It redraw for " + CanvasRound + " times";
     }
 
     @Override
@@ -87,7 +88,7 @@ public class CaseCanvas extends Case{
             double fps = (double)mCaseRound / second;
             total  += fps;
         }
-        return total/length;
+        return total / length;
     }
 
     @Override

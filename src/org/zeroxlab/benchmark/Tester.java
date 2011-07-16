@@ -30,7 +30,7 @@ import android.view.*;
 import android.graphics.Canvas;
 import android.os.*;
 
-public abstract class Tester extends Activity{
+public abstract class Tester extends Activity {
     private String TAG;
     public final static String PACKAGE = "org.zeroxlab.benchmark";
     int mRound;

@@ -209,14 +209,14 @@ public class Upload extends Activity implements View.OnClickListener {
             mb = new MicroBenchmark(_mXML.toString(), mURL, apiKey, benchName, mUploadHandler) ;
             // this is not really a hash
             mHash = apiKey + benchName;
-            if(!mHashSet.contains(mHash)){
+            if (!mHashSet.contains(mHash)){
                 showDialog(0);
                 mb.start();
             } else {
                 showDialog(4);
             }
         } else if (v == mLogin) {
-            if(mLogin.isChecked()) {
+            if (mLogin.isChecked()) {
                 mBenchName.setEnabled(true);
                 mEmail.setEnabled(true);
                 mAPIKey.setEnabled(true);
@@ -234,12 +234,12 @@ public class Upload extends Activity implements View.OnClickListener {
     }
 
     protected Dialog onCreateDialog(int id) {
-        switch(id) {
-            case(0):
+        switch (id) {
+            case (0):
                 ProgressDialog dialog = new ProgressDialog(this);
                 dialog.setMessage("Uploading, please wait...");
                 return dialog;
-            case(1):
+            case (1):
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setMessage("Upload complete.")
                        .setCancelable(false)
@@ -249,7 +249,7 @@ public class Upload extends Activity implements View.OnClickListener {
                            }
                        });
                 return builder.create();
-            case(2):
+            case (2):
                 AlertDialog.Builder builder2 = new AlertDialog.Builder(this);
                 builder2.setMessage("Upload failed.")
                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -258,7 +258,7 @@ public class Upload extends Activity implements View.OnClickListener {
                            }
                        });
                 return builder2.create();
-            case(3):
+            case (3):
                 String url = "http://" + getString(R.string.default_appspot) + ".appspot.com/";
 
                 AlertDialog.Builder builder3 = new AlertDialog.Builder(this);
@@ -267,14 +267,14 @@ public class Upload extends Activity implements View.OnClickListener {
                         .setPositiveButton("OK", null)
                 ;
                 return builder3.create();
-            case(4):
+            case (4):
                 AlertDialog.Builder builder4 = new AlertDialog.Builder(this);
                 builder4.setMessage( "You have already uploaded results to this location." )
                         .setTitle("Error")
                         .setPositiveButton("OK", null)
                 ;
                 return builder4.create();
-            case(5): // webview
+            case (5): // webview
                 Dialog mWebDialog = new Dialog(this);
                 mWebDialog.setContentView(R.layout.login_dialog);
                 mWebDialog.setTitle("Login to Google");
@@ -290,7 +290,7 @@ public class Upload extends Activity implements View.OnClickListener {
                 mWebView.loadUrl(mMobileLoginUrl);
                 return mWebDialog;
 
-            case(6):
+            case (6):
                 ProgressDialog dialog2 = new ProgressDialog(this);
                 dialog2.setMessage("Connecting, please wait...");
                 return dialog2;

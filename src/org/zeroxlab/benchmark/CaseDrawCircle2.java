@@ -30,7 +30,7 @@ import android.view.*;
 import java.nio.*;
 import java.util.ArrayList;
 
-public class CaseDrawCircle2 extends Case{
+public class CaseDrawCircle2 extends Case {
 
     public static int Circle2Round = 300;
 
@@ -66,12 +66,12 @@ public class CaseDrawCircle2 extends Case{
 
         for (int i = 0; i < length; i++) {
             float second = (mResult[i] / 1000f);
-            float fps = (float)mCaseRound / second; // milliseconds to seconds
+            float fps = (float) mCaseRound / second; // milliseconds to seconds
             result += "Round " + i +": fps = " + fps + "\n";
             total  += fps;
         }
 
-        result += "Average: fps = " + ((float)total/length) + "\n";
+        result += "Average: fps = " + ((float) total / length) + "\n";
         return result;
     }
 
@@ -86,7 +86,7 @@ public class CaseDrawCircle2 extends Case{
             double fps = (double)mCaseRound / second;
             total  += fps;
         }
-        return total/length;
+        return total / length;
     }
 
     @Override
