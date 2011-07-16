@@ -52,7 +52,7 @@ public class CaseCanvas extends Case{
     }
 
     public String getDescription() {
-        return "call canvas.drawRGB to fill the canvas repeatedly. "
+        return "call canvas.drawRGB to fill the canvas repeatedly. " +
                "It redraw for " + CanvasRound + " times";
     }
 
