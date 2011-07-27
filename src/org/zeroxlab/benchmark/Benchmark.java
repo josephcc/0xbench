@@ -152,6 +152,7 @@ public class Benchmark extends TabActivity implements View.OnClickListener {
         setContentView(R.layout.main);
         mCases = new LinkedList<Case>();
         Case arith  = new CaseArithmetic();
+        Case javascript = new CaseJavascript();
         Case scimark2  = new CaseScimark2();
         Case canvas = new CaseCanvas();
         Case glcube = new CaseGLCube();
@@ -178,8 +179,10 @@ public class Benchmark extends TabActivity implements View.OnClickListener {
         // mflops
         mCases.add(arith);
         mCases.add(scimark2);
+        mCases.add(javascript);
         mCategory.get(MISC).add(arith);
         mCategory.get(MISC).add(scimark2);
+        mCategory.get(MISC).add(javascript);
 
         // 2d
         mCases.add(canvas);

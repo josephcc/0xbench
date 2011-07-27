@@ -77,6 +77,15 @@
 	</activity>
 
 	<activity
+	android:name="org.zeroxlab.benchmark.TesterJavascript"
+	android:screenOrientation="nosensor"
+	>
+	<intent-filter>
+	<action android:name="android.intent.action.MAIN" />
+	</intent-filter>
+	</activity>
+
+	<activity
 	android:name="org.zeroxlab.benchmark.TesterScimark2"
 	android:screenOrientation="nosensor"
 	>
