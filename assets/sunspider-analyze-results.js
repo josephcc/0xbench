@@ -259,10 +259,3 @@ function printOutput()
     }
 }
 
-initialize();
-computeItemTotals();
-computeTotals();
-computeMeans();
-computeStdDevs();
-computeStdErrors();
-printOutput();

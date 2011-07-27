@@ -30,16 +30,17 @@
 -->
 
 <title>SunSpider 0.9.1 JavaScript Benchmark (@SUITE@ test suite - In Progress...)</title>
-<link rel="stylesheet" href="../sunspider.css">
+<link rel="stylesheet" href="sunspider.css">
 </head>
 
 <body onload="start()">
 
 <h2><span id="logo">&#x2600;</span>SunSpider JavaScript Benchmark <small>(In Progress...)</small></h2>
 <h3>Content Version: @SUITE@</h3>
-
 <script src="sunspider-test-prefix.js"></script>
 <script src="sunspider-test-contents.js"></script>
+<script src="json2.js"></script>
+
 <script>
 var testIndex = -1;
 var currentRepeat = -1;
@@ -50,7 +51,11 @@ output.length = repeatCount;
 for (var i = 0; i < output.length; i++) {
     output[i] = {};
 }
+</script>
 
+<script src="sunspider-analyze-results.js"></script>
+
+<script>
 function start() 
 {
     window.setTimeout(reallyNext, 500);
@@ -90,22 +95,56 @@ function recordResult(time)
 
 function finish()
 {
-    var outputString = "{";
-    outputString += '"v": "@SUITE@", ';
-    for (var test in output[0]) {
-        outputString += '"' + test + '":[';
-        for (var i = 0; i < output.length; i++) {
-             outputString += output[i][test] + ",";
-        }
-        outputString = outputString.substring(0, outputString.length - 1);
-        outputString += "],";
-    }
-    outputString = outputString.substring(0, outputString.length - 1);
-    outputString += "}";
+    initialize();
+    computeItemTotals();
+    computeTotals();
+    computeMeans();
+    computeStdDevs();
+    computeStdErrors();
 
-    location = "results.html?" + encodeURI(outputString);
+    var finalOutput = getOutput();
+    window.ANDROID_OBJ.finish(finalOutput);
+
 }
 
+function pivot(input)
+{
+    var output = [];
+    for (var test in input) {
+        for (var i = 0; i < input[test].length; i++) {
+            if (!output[i])
+            output[i] = {};
+            output[i][test] =  input[test][i];
+        }
+    }
+    return output;
+}
+
+function getOutput()
+{
+    var labelWidth = computeLabelWidth();
+    var meanWidth = computeMeanWidth();
+    var outputString = "";
+
+    if (count == 1)
+        outputString += "RESULTS\n";
+    else
+        outputString += "RESULTS (means and 95% confidence intervals)\n";
+    outputString += "--------------------------------------------\n";
+    outputString += resultLine(labelWidth, 0, "Total", meanWidth, mean, stdErr);
+    outputString += "\n--------------------------------------------\n";
+    for (var category in categoryMeans) {
+        outputString += resultLine(labelWidth, 2, category, meanWidth, categoryMeans[category], categoryStdErrs[category]);
+        outputString += "\n";
+        for (var test in testMeansByCategory[category]) {
+            var shortName = test.replace(/^[^-]*-/, "");
+            outputString += resultLine(labelWidth, 4, shortName, meanWidth, testMeansByCategory[category][test], testStdErrsByCategory[category][test]);
+            outputString += "\n";
+        }
+    }
+
+    return outputString;
+}
 </script>
 
 <div id="frameparent">
