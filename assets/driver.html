@@ -102,8 +102,9 @@ function finish()
     computeStdDevs();
     computeStdErrors();
 
+	var formattedOutput = getOutputForUpload();
     var finalOutput = getOutput();
-    window.ANDROID_OBJ.finish(finalOutput);
+    window.ANDROID_OBJ.finish(finalOutput, formattedOutput);
 
 }
 
@@ -141,6 +142,19 @@ function getOutput()
             outputString += resultLine(labelWidth, 4, shortName, meanWidth, testMeansByCategory[category][test], testStdErrsByCategory[category][test]);
             outputString += "\n";
         }
+    }
+
+    return outputString;
+}
+
+function getOutputForUpload()
+{
+    var outputString = "";
+
+	outputString += "Total\t" + mean.toString() + "\n";
+    for (var category in categoryMeans) {
+		outputString += category + "\t" + categoryMeans[category].toString();
+        outputString += "\n";
     }
 
     return outputString;

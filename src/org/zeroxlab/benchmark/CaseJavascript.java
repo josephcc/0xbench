@@ -30,9 +30,12 @@ import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.os.Bundle;
 
+import java.lang.Float;
+
 public class CaseJavascript extends Case {
 
     public static String SUNSPIDER_RESULT = "SUNSPIDER_RESULT";
+    public static String SUNSPIDER_FORMATTED_RESULT = "SUNSPIDER_FORMATTED_RESULT";
     public static String SUNSPIDER_TOTAL  = "SUNSPIDER_TOTAL";
 
     public static int sRepeat = 1;
@@ -41,9 +44,10 @@ public class CaseJavascript extends Case {
     private double mTotal = 0.0;
 
     protected String[] mJSResults;
+	protected String mFormattedResult;
     CaseJavascript() {
         super("CaseJavascript", "org.zeroxlab.benchmark.TesterJavascript", sRepeat, sRound);
-        mType = "msec";
+        mType = "msec-js";
         mTags = new String[]{new String("javascript")};
     }
 
@@ -79,13 +83,19 @@ public class CaseJavascript extends Case {
 
     @Override
     public ArrayList<Scenario> getScenarios () {
+
         ArrayList<Scenario> scenarios = new ArrayList<Scenario>();
+		String results[] = mFormattedResult.split("\n");
+		for (String result: results) {
+			String name_time[] = result.split("\t");
+			String title = getTitle() + ":" + name_time[0];
+			Log.i(TAG, "JS title: " + title);
+			Log.i(TAG, "JS time: " + name_time[1]);
 
-        Scenario s = new Scenario(getTitle(), mType, mTags);
-        s.mLog = getResultOutput();
-        s.mResults.add(mTotal);
-
-        scenarios.add(s);
+            Scenario s = new Scenario(title, mType, mTags);
+			s.mResults.add( Double.parseDouble(name_time[1]) );
+            scenarios.add(s);
+		}
 
         return scenarios;
     }
@@ -101,6 +111,14 @@ public class CaseJavascript extends Case {
         } else {
             mJSResults[index] = result;
         }
+
+        String formatted_result = intent.getStringExtra(SUNSPIDER_FORMATTED_RESULT);
+        if (result == null) {
+            Log.e(TAG, "Weird! cannot find SunSpiderInfo for formatted");
+            return false;
+        } else {
+			mFormattedResult = formatted_result;
+		}
 
         return true;
     }

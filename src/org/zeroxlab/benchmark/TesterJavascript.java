@@ -24,6 +24,7 @@ import android.os.Message;
 import android.content.Intent;
 import android.webkit.WebView;
 import android.webkit.WebSettings;
+import android.util.Log;
 
 public class TesterJavascript extends Tester {
 
@@ -32,6 +33,7 @@ public class TesterJavascript extends Tester {
 
     private double mTotalTime = 0.0;
     private String mResult = "";
+    private String mFormattedResult = "";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -74,13 +76,16 @@ public class TesterJavascript extends Tester {
     @Override
     protected boolean saveResult(Intent intent) {
         intent.putExtra(CaseJavascript.SUNSPIDER_RESULT, mResult);
+        intent.putExtra(CaseJavascript.SUNSPIDER_FORMATTED_RESULT, mFormattedResult);
         intent.putExtra(CaseJavascript.SUNSPIDER_TOTAL, mTotalTime);
         return true;
     }
 
     class MsgCallback {
-        public void finish(String result) {
+        public void finish(String result, String formatted_result) {
+			Log.i("Benchmark", "JS result got");
             mResult = result;
+            mFormattedResult = formatted_result;
             decreaseCounter();
         }
     }
