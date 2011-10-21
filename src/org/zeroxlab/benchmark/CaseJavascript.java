@@ -89,8 +89,6 @@ public class CaseJavascript extends Case {
 		for (String result: results) {
 			String name_time[] = result.split("\t");
 			String title = getTitle() + ":" + name_time[0];
-			Log.i(TAG, "JS title: " + title);
-			Log.i(TAG, "JS time: " + name_time[1]);
 
             Scenario s = new Scenario(title, mType, mTags);
 			s.mResults.add( Double.parseDouble(name_time[1]) );

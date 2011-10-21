@@ -24,7 +24,6 @@ import android.os.Message;
 import android.content.Intent;
 import android.webkit.WebView;
 import android.webkit.WebSettings;
-import android.util.Log;
 
 public class TesterJavascript extends Tester {
 
@@ -83,7 +82,6 @@ public class TesterJavascript extends Tester {
 
     class MsgCallback {
         public void finish(String result, String formatted_result) {
-			Log.i("Benchmark", "JS result got");
             mResult = result;
             mFormattedResult = formatted_result;
             decreaseCounter();
