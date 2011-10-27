@@ -1,0 +1,7 @@
+Ver 1.1.5 (Uploaded to Android Market)
+	- Add SunSpider JavaScript benchmark
+	- Allow customized result output path
+	- Support dashboard bundle format used in Linaro Automated Validation Architecture
+	- Enable detailed report of libmicro and UnixBench
+	- Android 2.3+ build fixes
+	- Package name changed from org.zeroxlab.benchmark to org.zeroxlab.zeroxbenchmark
