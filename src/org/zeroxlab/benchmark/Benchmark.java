@@ -17,7 +17,7 @@
  *             Joseph Chang (bizkit) <bizkit@0xlab.org>
  */
 
-package org.zeroxlab.benchmark;
+package org.zeroxlab.zeroxbenchmark;
 
 import android.util.Log;
 
@@ -81,7 +81,7 @@ import org.zeroxlab.utils.BenchUtil;
 public class Benchmark extends TabActivity implements View.OnClickListener {
 
     public final static String TAG     = "Benchmark";
-    public final static String PACKAGE = "org.zeroxlab.benchmark";
+    public final static String PACKAGE = "org.zeroxlab.zeroxbenchmark";
 
     private final static String mOutputFile = "0xBenchmark";
 
@@ -287,7 +287,7 @@ public class Benchmark extends TabActivity implements View.OnClickListener {
     @Override
     public boolean onOptionsItemSelected(MenuItem menu) {
         if (menu.getGroupId() == GROUP_DEFAULT && menu.getItemId() == SETTINGS_ID) {
-            org.zeroxlab.utils.Util.launchActivity(this, "org.zeroxlab.benchmark.ActivitySettings");
+            org.zeroxlab.utils.Util.launchActivity(this, "org.zeroxlab.zeroxbenchmark.ActivitySettings");
         }
         return true;
     }

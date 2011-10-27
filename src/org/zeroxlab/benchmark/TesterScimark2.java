@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.zeroxlab.benchmark;
+package org.zeroxlab.zeroxbenchmark;
 
 import jnt.scimark2.commandline;
 

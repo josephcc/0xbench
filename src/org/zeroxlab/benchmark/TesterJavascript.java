@@ -16,7 +16,7 @@
  * Authored by Julian Chu <walkingice@0xlab.org>
  */
 
-package org.zeroxlab.benchmark;
+package org.zeroxlab.zeroxbenchmark;
 
 import android.app.Activity;
 import android.os.Bundle;

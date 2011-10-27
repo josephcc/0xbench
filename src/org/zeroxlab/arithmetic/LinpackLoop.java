@@ -1,6 +1,6 @@
 package org.zeroxlab.arithmetic;
 
-import org.zeroxlab.benchmark.TesterArithmetic;
+import org.zeroxlab.zeroxbenchmark.TesterArithmetic;
 import android.os.Bundle;
 import android.util.Log;
 

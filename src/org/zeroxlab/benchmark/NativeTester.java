@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.zeroxlab.benchmark;
+package org.zeroxlab.zeroxbenchmark;
 
 import java.lang.Runtime;
 import java.lang.IllegalThreadStateException;

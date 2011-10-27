@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.zeroxlab.benchmark;
+package org.zeroxlab.zeroxbenchmark;
 
 import android.util.Log;
 

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.zeroxlab.benchmark;
+package org.zeroxlab.zeroxbenchmark;
 
 import android.util.Log;
 
@@ -32,7 +32,7 @@ import android.os.*;
 
 public abstract class Tester extends Activity {
     private String TAG;
-    public final static String PACKAGE = "org.zeroxlab.benchmark";
+    public final static String PACKAGE = "org.zeroxlab.zeroxbenchmark";
     int mRound;
     int mNow;
     int mIndex;

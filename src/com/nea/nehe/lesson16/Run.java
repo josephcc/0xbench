@@ -18,7 +18,7 @@
 
 package com.nea.nehe.lesson16;
 
-import org.zeroxlab.benchmark.Tester;
+import org.zeroxlab.zeroxbenchmark.Tester;
 
 import android.app.Activity;
 import android.os.Bundle;

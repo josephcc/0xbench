@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.zeroxlab.benchmark;
+package org.zeroxlab.zeroxbenchmark;
 
 import android.util.Log;
 
@@ -91,10 +91,10 @@ public class Report extends Activity implements View.OnClickListener {
     }
 
     public static String fullClassName() {
-        return "org.zeroxlab.benchmark.Report";
+        return "org.zeroxlab.zeroxbenchmark.Report";
     }
 
     public static String packageName() {
-        return "org.zeroxlab.benchmark";
+        return "org.zeroxlab.zeroxbenchmark";
     }
 }

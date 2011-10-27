@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.zeroxlab.benchmark;
+package org.zeroxlab.zeroxbenchmark;
 
 import java.util.ArrayList;
 
@@ -28,7 +28,7 @@ import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.os.Bundle;
 
-import org.zeroxlab.benchmark.TesterArithmetic;
+import org.zeroxlab.zeroxbenchmark.TesterArithmetic;
 
 public class CaseArithmetic extends Case {
 
@@ -39,7 +39,7 @@ public class CaseArithmetic extends Case {
     public static int Round  = 3;
 
     CaseArithmetic() {
-        super("CaseArithmetic", "org.zeroxlab.benchmark.TesterArithmetic", Repeat, Round);
+        super("CaseArithmetic", "org.zeroxlab.zeroxbenchmark.TesterArithmetic", Repeat, Round);
 
         mType = "mflops";
         String [] _tmp = {

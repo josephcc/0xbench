@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.zeroxlab.benchmark;
+package org.zeroxlab.zeroxbenchmark;
 
 import android.util.Log;
 
@@ -35,7 +35,7 @@ import android.graphics.Color;
 
 public class TesterCanvas extends Tester {
     public final String TAG = "TesterCanvas";
-    public final static String PACKAGE = "org.zeroxlab.benchmark";
+    public final static String PACKAGE = "org.zeroxlab.zeroxbenchmark";
     MyView mView;
 
     public String getTag() {

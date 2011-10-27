@@ -16,7 +16,7 @@
 
 package org.zeroxlab.graphics;
 
-import org.zeroxlab.benchmark.R;
+import org.zeroxlab.zeroxbenchmark.R;
 
 import android.content.Context;
 import android.content.res.Resources;

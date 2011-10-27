@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package org.zeroxlab.benchmark;
+package org.zeroxlab.zeroxbenchmark;
 
 import android.util.Log;
 
 import android.os.SystemClock;
 
-import org.zeroxlab.benchmark.Scenario;
+import org.zeroxlab.zeroxbenchmark.Scenario;
 
 import android.app.Activity;
 import android.content.Context;

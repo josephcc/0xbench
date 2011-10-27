@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.zeroxlab.benchmark;
+package org.zeroxlab.zeroxbenchmark;
 
 import android.util.Log;
 
@@ -28,7 +28,7 @@ import android.os.Bundle;
 
 import java.util.ArrayList;
 
-import org.zeroxlab.benchmark.TesterScimark2;
+import org.zeroxlab.zeroxbenchmark.TesterScimark2;
 
 public class CaseScimark2 extends Case {
 
@@ -39,7 +39,7 @@ public class CaseScimark2 extends Case {
     public static int Round  = 1;
 
     CaseScimark2() {
-        super("CaseScimark2", "org.zeroxlab.benchmark.TesterScimark2", Repeat, Round);
+        super("CaseScimark2", "org.zeroxlab.zeroxbenchmark.TesterScimark2", Repeat, Round);
 
         mType = "mflops";
         String [] _tmp = {

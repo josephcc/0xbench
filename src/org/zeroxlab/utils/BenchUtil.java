@@ -26,7 +26,7 @@ import android.os.Environment;
 
 public class BenchUtil extends Util {
 
-    public final static String ACTIVITY_SETTINGS = "org.zeroxlab.benchmark.ActivitySettings";
+    public final static String ACTIVITY_SETTINGS = "org.zeroxlab.zeroxbenchmark.ActivitySettings";
     public final static String PREF_FILENAME = "ZeroxBench_Preference";
     public final static String KEY_RESULT_CUSTOM_DIR = "KEY_RESULT_CUSTOM_DIR";
     public final static String KEY_RESULT_SELECTION = "KEY_RESULT_SELECTION";

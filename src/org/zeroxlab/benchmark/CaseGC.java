@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.zeroxlab.benchmark;
+package org.zeroxlab.zeroxbenchmark;
 
 import android.util.Log;
 
@@ -38,7 +38,7 @@ public class CaseGC extends Case {
     public static double time = 0.0;
 
     CaseGC() {
-        super("CaseGC", "org.zeroxlab.benchmark.TesterGC", 1, 1); // GC benchmark only run once
+        super("CaseGC", "org.zeroxlab.zeroxbenchmark.TesterGC", 1, 1); // GC benchmark only run once
 
         mType = "msec";
         String [] _tmp = {

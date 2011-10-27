@@ -16,7 +16,7 @@
  * Authored by Julian Chu <walkingice@0xlab.org>
  */
 
-package org.zeroxlab.benchmark;
+package org.zeroxlab.zeroxbenchmark;
 
 import java.util.ArrayList;
 
@@ -46,7 +46,7 @@ public class CaseJavascript extends Case {
     protected String[] mJSResults;
 	protected String mFormattedResult;
     CaseJavascript() {
-        super("CaseJavascript", "org.zeroxlab.benchmark.TesterJavascript", sRepeat, sRound);
+        super("CaseJavascript", "org.zeroxlab.zeroxbenchmark.TesterJavascript", sRepeat, sRound);
         mType = "msec-js";
         mTags = new String[]{new String("javascript")};
     }

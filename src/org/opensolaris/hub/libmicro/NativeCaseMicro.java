@@ -19,7 +19,7 @@
 
 package org.opensolaris.hub.libmicro;
 
-import org.zeroxlab.benchmark.*;
+import org.zeroxlab.zeroxbenchmark.*;
 
 import android.util.Log;
 

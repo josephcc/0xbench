@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package org.zeroxlab.benchmark;
+package org.zeroxlab.zeroxbenchmark;
 
-import org.zeroxlab.benchmark.MicroBenchmark;
+import org.zeroxlab.zeroxbenchmark.MicroBenchmark;
 
 import android.util.Log;
 import android.content.SharedPreferences;
@@ -187,7 +187,7 @@ public class Upload extends Activity implements View.OnClickListener {
             int versionCode = 0;
             int flag = 0;
             try {
-                PackageInfo pinfo = getPackageManager().getPackageInfo("org.zeroxlab.benchmark", flag);
+                PackageInfo pinfo = getPackageManager().getPackageInfo("org.zeroxlab.zeroxbenchmark", flag);
                 versionCode = pinfo.versionCode;
                 versionName = pinfo.versionName;
             }
@@ -365,11 +365,11 @@ public class Upload extends Activity implements View.OnClickListener {
     }
 
     public static String fullClassName() {
-        return "org.zeroxlab.benchmark.Upload";
+        return "org.zeroxlab.zeroxbenchmark.Upload";
     }
 
     public static String packageName() {
-        return "org.zeroxlab.benchmark";
+        return "org.zeroxlab.zeroxbenchmark";
     }
 
 }

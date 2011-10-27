@@ -245,7 +245,7 @@ public class Cube {
      */
     public void loadGLTexture(GL10 gl, Context context) {
         //Get the texture from the Android resource directory
-        InputStream is = context.getResources().openRawResource(org.zeroxlab.benchmark.R.drawable.crate);
+        InputStream is = context.getResources().openRawResource(org.zeroxlab.zeroxbenchmark.R.drawable.crate);
         Bitmap bitmap = null;
         try {
             //BitmapFactory is an Android graphics utility for images

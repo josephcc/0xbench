@@ -46,7 +46,7 @@
 
 package org.zeroxlab.gc;
 
-import org.zeroxlab.benchmark.TesterGC;
+import org.zeroxlab.zeroxbenchmark.TesterGC;
 
 import android.os.Message;
 
