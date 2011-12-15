@@ -89,13 +89,18 @@ benchmark_initrun()
 
 	j = FIRSTPORT;
 	for (;;) {
-		(void) memset(&adds, 0, sizeof (struct sockaddr_in));
-		adds.sin_family = AF_INET;
-		adds.sin_port = htons(j++);
-		(void) memcpy(&adds.sin_addr.s_addr, host->h_addr_list[0],
+		union {
+			struct sockaddr_in *in;
+			struct sockaddr *sa;
+		} ad;
+		ad.in = &adds;
+		(void) memset(&ad.in, 0, sizeof (struct sockaddr_in));
+		ad.in->sin_family = AF_INET;
+		ad.in->sin_port = htons(j++);
+		(void) memcpy(&ad.in->sin_addr.s_addr, host->h_addr_list[0],
 		    sizeof (struct in_addr));
 
-		if (bind(sock, (struct sockaddr *)&adds,
+		if (bind(sock, ad.sa,
 		    sizeof (struct sockaddr_in)) == 0) {
 			break;
 		}

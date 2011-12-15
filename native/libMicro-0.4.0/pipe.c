@@ -338,6 +338,11 @@ prepare_localtcp_once(tsd_t *ts)
 	int			j;
 	int			opt = 1;
 	struct hostent	*host;
+	union {
+		struct sockaddr_in	*in;
+		struct sockaddr		*sa;
+	} tsad;
+	tsad.in = &ts->ts_add;
 
 	j = FIRSTPORT;
 
@@ -358,13 +363,13 @@ prepare_localtcp_once(tsd_t *ts)
 	for (;;) {
 		(void) memset(&ts->ts_add, 0,
 		    sizeof (struct sockaddr_in));
-		ts->ts_add.sin_family = AF_INET;
-		ts->ts_add.sin_port = htons(j++);
-		(void) memcpy(&ts->ts_add.sin_addr.s_addr,
+		tsad.in->sin_family = AF_INET;
+		tsad.in->sin_port = htons(j++);
+		(void) memcpy(&tsad.in->sin_addr.s_addr,
 		    host->h_addr_list[0], sizeof (struct in_addr));
 
 		if (bind(ts->ts_lsn,
-		    (struct sockaddr *)&ts->ts_add,
+		    tsad.sa,
 		    sizeof (struct sockaddr_in)) == 0) {
 			break;
 		}
@@ -385,9 +390,15 @@ int
 prepare_localtcp(tsd_t *ts)
 {
 	int			result;
-	struct sockaddr_in	addr;
+	struct sockaddr		addr;
 	int			opt = 1;
 	socklen_t		size;
+
+	union {
+		struct sockaddr_in *in;
+		struct sockaddr *sa;
+	} tsad;
+	tsad.in = &ts->ts_add;
 
 	if (ts->ts_once++ == 0) {
 		if (prepare_localtcp_once(ts) == -1) {
@@ -404,7 +415,7 @@ prepare_localtcp(tsd_t *ts)
 		return (-1);
 	}
 
-	result = connect(ts->ts_out, (struct sockaddr *)&ts->ts_add,
+	result = connect(ts->ts_out, tsad.sa,
 	    sizeof (struct sockaddr_in));
 	if ((result == -1) && (errno != EINPROGRESS)) {
 		return (-1);

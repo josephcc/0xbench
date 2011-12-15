@@ -233,7 +233,7 @@ benchmark(void *tsd, result_t *res)
 	tsd_t			*ts = (tsd_t *)tsd;
 	int			i;
 	int			result;
-	struct sockaddr_in	addr;
+	struct sockaddr		addr;
 	socklen_t		size;
 
 	for (i = 0; i < lm_optB; i++) {

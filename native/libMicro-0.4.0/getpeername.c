@@ -69,7 +69,10 @@ benchmark_initrun()
 	int			result;
 	socklen_t		size;
 	struct hostent	*host;
-	struct sockaddr_in	adds;
+	union {
+		struct sockaddr_in in;
+		struct sockaddr	sa;
+	} adds;
 	int			sock2, sock3;
 
 	sock2 = socket(AF_INET, SOCK_STREAM, 0);
@@ -92,12 +95,12 @@ benchmark_initrun()
 	j = FIRSTPORT;
 	for (;;) {
 		(void) memset(&adds, 0, sizeof (struct sockaddr_in));
-		adds.sin_family = AF_INET;
-		adds.sin_port = htons(j++);
-		(void) memcpy(&adds.sin_addr.s_addr, host->h_addr_list[0],
+		adds.in.sin_family = AF_INET;
+		adds.in.sin_port = htons(j++);
+		(void) memcpy(&adds.in.sin_addr.s_addr, host->h_addr_list[0],
 		    sizeof (struct in_addr));
 
-		if (bind(sock2, (struct sockaddr *)&adds,
+		if (bind(sock2, &adds.sa,
 		    sizeof (struct sockaddr_in)) == 0) {
 			break;
 		}
@@ -124,7 +127,7 @@ benchmark_initrun()
 		exit(1);
 	}
 
-	result = connect(sock3, (struct sockaddr *)&adds,
+	result = connect(sock3, &adds.sa,
 	    sizeof (struct sockaddr_in));
 	if ((result == -1) && (errno != EINPROGRESS)) {
 		perror("connect");
@@ -132,7 +135,7 @@ benchmark_initrun()
 	}
 
 	size = sizeof (struct sockaddr);
-	sock = accept(sock2, (struct sockaddr *)&adds, &size);
+	sock = accept(sock2, &adds.sa, &size);
 	if (sock == -1) {
 		perror("accept");
 		exit(1);
@@ -146,7 +149,7 @@ int
 benchmark(void *tsd, result_t *res)
 {
 	int			i;
-	struct sockaddr_in	adds;
+	struct sockaddr		adds;
 	socklen_t		size;
 
 	for (i = 0; i < lm_optB; i++) {

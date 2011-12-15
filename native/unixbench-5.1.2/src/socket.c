@@ -39,10 +39,13 @@ int make_socket()
     int flag = 1;
     setsockopt(sock, IPPROTO_TCP, TCP_NODELAY, (char *) &flag, sizeof(int));  
 
-    struct sockaddr_in servername;
+    union {
+        struct sockaddr_in in;
+        struct sockaddr sa;
+    } servername;
     /* Connect to the server. */
-    init_sockaddr (&servername, SERVERHOST, PORT);
-    if ( 0 > connect(sock, (struct sockaddr *) &servername, sizeof (servername)) ) {
+    init_sockaddr (&servername.in, SERVERHOST, PORT);
+    if ( 0 > connect(sock, &servername.sa, sizeof (servername)) ) {
         fprintf (stderr, "cannot connect to server.");
         fflush(stderr);
         exit (EXIT_FAILURE);

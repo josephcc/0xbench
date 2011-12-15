@@ -176,10 +176,13 @@ int make_socket()
     int flag = 1;
     setsockopt(sock, IPPROTO_TCP, TCP_NODELAY, (char *) &flag, sizeof(int));  
 
-    struct sockaddr_in servername;
+    union {
+        struct sockaddr_in servername;
+        struct sockaddr servername_g;
+    } sa;
     /* Connect to the server. */
-    init_sockaddr (&servername, SERVERHOST, PORT);
-    if ( 0 > connect(sock, (struct sockaddr *) &servername, sizeof (servername)) ) {
+    init_sockaddr (&sa.servername, SERVERHOST, PORT);
+    if ( 0 > connect(sock, &sa.servername_g, sizeof (sa.servername)) ) {
         fprintf (stderr, "cannot connect to server.");
         fflush(stderr);
         exit (EXIT_FAILURE);

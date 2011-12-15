@@ -157,7 +157,10 @@ benchmark_initbatch(void *tsd)
 	tsd_t			*ts = (tsd_t *)tsd;
 	int			i;
 	int			result;
-	struct sockaddr_in	addr;
+	union {
+		struct sockaddr_in	in;
+		struct sockaddr 	sa;
+	} addr;
 	socklen_t		size;
 	int			errors = 0;
 
@@ -175,8 +178,14 @@ benchmark_initbatch(void *tsd)
 			continue;
 		}
 
+		union {
+			struct sockaddr *sa;
+			struct sockaddr_in *in;
+		} ts_add;
+		ts_add.in = &ts->ts_adds[i];
+
 		result = connect(ts->ts_cons[i],
-		    (struct sockaddr *)&ts->ts_adds[i],
+		    ts_add.sa,
 		    sizeof (struct sockaddr_in));
 
 		if ((result == -1) && (errno != EINPROGRESS)) {
@@ -186,7 +195,7 @@ benchmark_initbatch(void *tsd)
 		}
 
 		size = sizeof (struct sockaddr);
-		result = accept(ts->ts_lsns[i], (struct sockaddr *)&addr,
+		result = accept(ts->ts_lsns[i], &addr.sa,
 		    &size);
 		if (result == -1) {
 			perror("accept");
