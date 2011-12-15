@@ -37,7 +37,7 @@ void wake_me(seconds, start, func)
 	void (*func)();
 {
     if (seconds <= 0) {
-        printf(stderr, "duration second should be >0, set to 1\n");
+        fprintf(stderr, "duration second should be >0, set to 1\n");
         seconds = 1;
     }
 	/* set up the signal handler */
