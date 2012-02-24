@@ -115,14 +115,14 @@ public class Benchmark extends TabActivity implements View.OnClickListener {
     private final String D3 = "3D";
     private final String MATH = "Math";
     private final String VM = "VM";
-    private final String NATIVE = "Native";
+//    private final String NATIVE = "Native";
     private final String MISC = "Misc";
 
     private CheckBox d2CheckBox;
     private CheckBox d3CheckBox;
     private CheckBox mathCheckBox;
     private CheckBox vmCheckBox;
-    private CheckBox nativeCheckBox;
+//    private CheckBox nativeCheckBox;
     private CheckBox miscCheckBox;
 
     private HashMap< String, HashSet<Case> > mCategory = new HashMap< String, HashSet<Case> >();
@@ -134,7 +134,7 @@ public class Benchmark extends TabActivity implements View.OnClickListener {
     boolean mCheck2D = false;
     boolean mCheck3D = false;
     boolean mCheckVM = false;
-    boolean mCheckNative = false;
+//    boolean mCheckNative = false;
     boolean mCheckMisc = false;
     boolean mAutoUpload = false;
 
@@ -164,8 +164,8 @@ public class Benchmark extends TabActivity implements View.OnClickListener {
         Case nehe16 = new CaseNeheLesson16();
         Case teapot = new CaseTeapot();
         Case gc     = new CaseGC();
-        Case libMicro = new NativeCaseMicro();
-        Case libUbench = new NativeCaseUbench();
+//        Case libMicro = new NativeCaseMicro();
+//        Case libUbench = new NativeCaseUbench();
 
         Case dc2 = new CaseDrawCircle2();
         Case dr = new CaseDrawRect();
@@ -177,7 +177,7 @@ public class Benchmark extends TabActivity implements View.OnClickListener {
         mCategory.put(D3, new HashSet<Case>());
         mCategory.put(MATH, new HashSet<Case>());
         mCategory.put(VM, new HashSet<Case>());
-        mCategory.put(NATIVE, new HashSet<Case>());
+//        mCategory.put(NATIVE, new HashSet<Case>());
         mCategory.put(MISC, new HashSet<Case>());
 
         // mflops
@@ -221,11 +221,11 @@ public class Benchmark extends TabActivity implements View.OnClickListener {
         mCategory.get(VM).add(gc);
 
         // native
-        mCases.add(libMicro);
-        mCases.add(libUbench);
+//        mCases.add(libMicro);
+//        mCases.add(libUbench);
 
-        mCategory.get(NATIVE).add(libMicro);
-        mCategory.get(NATIVE).add(libUbench);
+//        mCategory.get(NATIVE).add(libMicro);
+//        mCategory.get(NATIVE).add(libUbench);
 
         initViews();
 
@@ -237,7 +237,7 @@ public class Benchmark extends TabActivity implements View.OnClickListener {
             mCheck2D = bundle.getBoolean("2d");
             mCheck3D = bundle.getBoolean("3d");
             mCheckVM = bundle.getBoolean("vm");
-            mCheckNative = bundle.getBoolean("native");
+//            mCheckNative = bundle.getBoolean("native");
             mAutoUpload = bundle.getBoolean("autoupload");
         }
 
@@ -257,9 +257,9 @@ public class Benchmark extends TabActivity implements View.OnClickListener {
             vmCheckBox.performClick();
         }
 
-        if (mCheckNative && !nativeCheckBox.isChecked()) {
-            nativeCheckBox.performClick();
-        }
+//        if (mCheckNative && !nativeCheckBox.isChecked()) {
+//            nativeCheckBox.performClick();
+//        }
 
         if (mCheckMisc && !miscCheckBox.isChecked()) {
             miscCheckBox.performClick();
@@ -428,7 +428,7 @@ public class Benchmark extends TabActivity implements View.OnClickListener {
                     mIconView.setImageResource(R.drawable.icon);
 
                     TextView mBannerInfo = new TextView(Benchmark.this);
-                    mBannerInfo.setText("0xbench\nSelect benchmarks in the tabs,\nor batch select:");
+                    mBannerInfo.setText("0xbench\nSelect benchmarks in the tabs,\nor batch select::");
 
                     d2CheckBox = new CheckBox(Benchmark.this);
                     d2CheckBox.setText(D2);
@@ -446,9 +446,9 @@ public class Benchmark extends TabActivity implements View.OnClickListener {
                     vmCheckBox.setText(VM);
                     vmCheckBox.setOnClickListener(Benchmark.this);
 
-                    nativeCheckBox = new CheckBox(Benchmark.this);
-                    nativeCheckBox.setText(NATIVE);
-                    nativeCheckBox.setOnClickListener(Benchmark.this);
+//                    nativeCheckBox = new CheckBox(Benchmark.this);
+//                    nativeCheckBox.setText(NATIVE);
+//                    nativeCheckBox.setOnClickListener(Benchmark.this);
 
                     miscCheckBox = new CheckBox(Benchmark.this);
                     miscCheckBox.setText(MISC);
@@ -484,7 +484,7 @@ public class Benchmark extends TabActivity implements View.OnClickListener {
                     mMainViewContainer.addView(d2CheckBox);
                     mMainViewContainer.addView(d3CheckBox);
                     mMainViewContainer.addView(vmCheckBox);
-                    mMainViewContainer.addView(nativeCheckBox);
+//                    mMainViewContainer.addView(nativeCheckBox);
                     mMainViewContainer.addView(miscCheckBox);
                     mMainViewContainer.addView(mWebInfo);
                     mMainViewContainer.addView(mButtonContainer, fillWrap);
@@ -493,7 +493,6 @@ public class Benchmark extends TabActivity implements View.OnClickListener {
                     mMainView.addView(mListScroll, fillWrap);
 
                     return mMainView;
-
                 }
 
                 LinearLayout mMainView = new LinearLayout(Benchmark.this);
@@ -530,7 +529,7 @@ public class Benchmark extends TabActivity implements View.OnClickListener {
         mTabHost.addTab(mTabHost.newTabSpec(D3).setIndicator(D3, getResources().getDrawable(R.drawable.ic_3d)).setContent(mTCF));
         mTabHost.addTab(mTabHost.newTabSpec(MATH).setIndicator(MATH, getResources().getDrawable(R.drawable.ic_pi)).setContent(mTCF));
         mTabHost.addTab(mTabHost.newTabSpec(VM).setIndicator(VM, getResources().getDrawable(R.drawable.ic_vm)).setContent(mTCF));
-        mTabHost.addTab(mTabHost.newTabSpec(NATIVE).setIndicator(NATIVE, getResources().getDrawable(R.drawable.ic_c)).setContent(mTCF));
+//        mTabHost.addTab(mTabHost.newTabSpec(NATIVE).setIndicator(NATIVE, getResources().getDrawable(R.drawable.ic_c)).setContent(mTCF));
         mTabHost.addTab(mTabHost.newTabSpec(MISC).setIndicator(MISC, getResources().getDrawable(R.drawable.ic_misc)).setContent(mTCF));
     }
 
@@ -560,8 +559,10 @@ public class Benchmark extends TabActivity implements View.OnClickListener {
             }
             intent.setClassName(Report.packageName(), Report.fullClassName());
             startActivity(intent);
+//        } else if (v == d2CheckBox || v == d3CheckBox || v == mathCheckBox ||
+//                   v == vmCheckBox || v == nativeCheckBox || v == miscCheckBox) {
         } else if (v == d2CheckBox || v == d3CheckBox || v == mathCheckBox ||
-                   v == vmCheckBox || v == nativeCheckBox || v == miscCheckBox) {
+                   v == vmCheckBox ||  v == miscCheckBox) {
             int length = mCases.size();
             String tag = ((CheckBox)v).getText().toString();
             for (int i = 0; i < length; i++) {
@@ -628,23 +629,26 @@ public class Benchmark extends TabActivity implements View.OnClickListener {
         xml += " buildTimestamp=\"" + sdf.format(new Date(Build.TIME)) + "\"";
         xml += " orientation=\"" + Integer.toString(orientation) + "\"";
 
+		String tmp;
+
+		tmp = "";
         try { // read kernel version
             BufferedReader procVersion = new BufferedReader( new FileReader("/proc/version") );
             StringBuffer sbuff = new StringBuffer();
-            String tmp;
             while ((tmp = procVersion.readLine()) != null)
                 sbuff.append(tmp);
             procVersion.close();
             tmp = sbuff.toString().replace("[\n\r]+", " ").replace(" +", ".");
-            xml += " version=\"" + tmp + "\"";
         } catch (IOException e){
             Log.e(TAG, "opening /proc/version failed: " + e.toString());
+			tmp = "UNKNOWN";
         }
+		xml += " version=\"" + tmp + "\"";
 
+		tmp = "";
         try { // read and parse cpu info
             BufferedReader procVersion = new BufferedReader(new FileReader("/proc/cpuinfo") );
             StringBuffer sbuff = new StringBuffer();
-            String tmp;
             while ((tmp = procVersion.readLine()) != null)
                 sbuff.append(tmp + "\n");
             procVersion.close();
@@ -666,10 +670,12 @@ public class Benchmark extends TabActivity implements View.OnClickListener {
             if (m3.find()) sbuff.append(":"+m3.group(2));
 
             Log.e(TAG, sbuff.toString());
-            xml += " cpu=\"" + sbuff.toString() + "\"";
+			tmp = sbuff.toString();
         } catch (IOException e) {
             Log.e(TAG, "opening /proc/version failed: " + e.toString());
+			tmp = "UNKNOWN";
         }
+		xml += " cpu=\"" + tmp + "\"";
 
         xml += ">";
 
